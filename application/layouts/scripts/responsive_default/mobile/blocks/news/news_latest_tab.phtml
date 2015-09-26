@@ -1,0 +1,25 @@
+<?php
+$front_template = Zend_Registry::get('front_template');
+$this->translator = Zend_Registry::get('translator');
+$global_conf = Zend_Registry::get('global_conf');
+$auth = Zend_Auth::getInstance();
+$tab_title_recent_title = $this->translator->translator('block_recent_title', '', '', $front_template['theme_folder']);
+?>
+
+<div class="panel-group margin-top-bottom-10" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading cursor-point" role="tab" id="headingNews" data-toggle="collapse" data-parent="#accordion" href="#collapseNews" aria-expanded="true" aria-controls="collapseNews">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseNews" aria-expanded="true" aria-controls="collapseNews">
+                    <span class="caret margin-top-bottom-6 pull-right"></span>
+                    <?php echo strtoupper($this->translator->translator('block_news_title', '', '', $front_template['theme_folder'])); ?>
+                </a>
+            </h4>
+        </div>
+        <div id="collapseNews" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNews">
+            <div class="panel-body">
+                <?php echo $this->partial('mobile/blocks/news/contents/news_latest.phtml'); ?>
+            </div>
+        </div>
+    </div>
+</div>

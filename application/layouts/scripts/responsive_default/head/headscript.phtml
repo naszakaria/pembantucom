@@ -1,0 +1,93 @@
+<?php
+$front_template = Zend_Registry::get('front_template');
+$is_frontend = new Eicra_Model_DbTable_Frontend();
+$global_conf = Zend_Registry::get('global_conf');
+$locale = Eicra_Global_Variable::getSession()->sess_lang;
+$locale_arr = explode('_', $locale);
+$locale_direction = Eicra_Global_Variable::getSession()->site_direction;
+$style_direction = ($locale_direction == 'rtl') ? '_' . $locale_direction : '';
+$cdnExt = 'http://static.busana.com/';
+$bower_assests = $cdnExt . 'bower_components/';
+echo $this->headLink()->setStylesheet($cdnExt . 'css/global.min.css', 'screen');
+//echo $this->headScript()->setFile($cdnExt.'global.min.js', 'text/javascript');
+//echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/jquery/jquery-1-11-3/jquery.min.js', '');
+//echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/bootstrap/3-3-4/bootstrap.min.js', '');
+//echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/jui/jui-1-10-3/green/jquery-ui.custom.js', '');
+echo $this->headScript()->setFile($cdnExt . 'js/jui/jui-1-10-3/responsive-template/jquery-ui.custom.js', 'text/javascript');
+if (!$is_frontend->isFrontend()) {
+    echo $this->headScript()->setFile($bower_assests . 'readmore/readmore.min.js', 'text/javascript');
+}
+echo $this->headScript()->setFile($bower_assests . 'jquery-lazy/jquery.lazy.min.js', 'text/javascript');
+//echo $this->headScript()->setFile($cdnExt.'js/unslider.min.js', 'text/javascript');
+echo $this->headScript()->setFile($cdnExt . 'js/jquery.switchButton.js', 'text/javascript');
+echo $this->headScript()->setFile($cdnExt . 'js/jquery.bxslider.js', 'text/javascript');
+//echo $this->headScript()->setFile($cdnExt.'js/jquery.fitvids.js', 'text/javascript');
+//echo $this->headScript()->setFile($cdnExt.'js/global.min.js', 'text/javascript');
+//echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/js/jquery.idTabs.min.js', '');
+//echo $this->headScript()->setFile($cdnExt.'js/jquery.idTabs.min.js', 'text/javascript');
+//echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/js/slicker.js', '');
+//echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/js/common.js', '');
+echo $this->headScript()->setFile($cdnExt . 'js/common.js', 'text/javascript');
+//echo $this->headScript()->setFile($cdnExt.'js/scroll.js', 'text/javascript');
+//echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/js/global.min.js', '');
+//echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/js/jquery.hoverpulse.js', '');
+//echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/bootstrap/css/bootstrap.min.css');
+//echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/css/font-awesome/font-awesome.min.css');
+//echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/jui/jui-1-10-3/green/jquery-ui.custom.css');
+//echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/css/template.css');
+//echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/css/general.css');
+
+
+/* * *******************************************************Kendo Start******************************************** */
+$kendo_theme = 'Metro';
+//echo $this->headScript()->setFile($cdnExt.'kendo/js/kendo.web.min.js', 'text/javascript');
+//echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/kendo/js/kendo.web.min.js', '');
+//echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/kendo/js/cultures/kendo.culture.'.$locale_arr[0].'.min.js', '');
+//echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/kendo/js/cultures/kendo.culture.'.implode('-', $locale_arr).'.min.js', '');
+//echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/kendo/js/cultures/kendo.culture.'.str_ireplace('_', '-', $global_conf['default_locale']).'.min.js', '');
+//echo $this->headScript()->setFile($this->baseUrl().'/application/modules/Portfolio/js/uploader.js', '');
+//echo $this->headLink()->setStylesheet($this->baseUrl().'/vendor/scripts/kendo/src/styles/kendo.common.css');
+//echo $this->headLink()->setStylesheet($this->baseUrl().'/vendor/scripts/kendo/src/styles/kendo.'.strtolower($kendo_theme).'.css');
+/* * *******************************************************Kendo End******************************************** */
+
+
+if ($locale_direction == 'rtl') {
+    /*     * *******************************************************Kendo Right Start******************************************** */
+    echo $this->headLink()->setStylesheet($this->baseUrl() . '/vendor/scripts/kendo/styles/kendo.rtl.min.css');
+    /*     * *******************************************************Kendo Right End******************************************** */
+    echo $this->headLink()->setStylesheet('application/layouts/scripts/' . $front_template['theme_folder'] . '/bootstrap/css/bootstrap' . $style_direction . '.css');
+    echo $this->headLink()->setStylesheet('application/layouts/scripts/' . $front_template['theme_folder'] . '/css/template' . $style_direction . '.css');
+    echo $this->headLink()->setStylesheet('application/layouts/scripts/' . $front_template['theme_folder'] . '/css/general' . $style_direction . '.css');
+}
+//echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/css/pagination.css');
+?>
+
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<script>
+    $(document).ready(function () {
+        $(document).unbind('tooltip');
+        $(document).tooltip({
+            items: "input[title],textarea[title],div[title],td[title],span[title],img[title],a[title],li[title]",
+            //show: { effect: "slide" },
+            content: function () {
+                var element = $(this);
+                if (element.attr('link') && !element.hasClass('noTitle'))
+                {
+                    return (element.attr('title')) ? "<img  src='" + element.attr('link') + "' width='250' /><br />" + element.attr('title') : "<img  src='" + element.attr('link') + "' width='250' />";
+                }
+                else
+                {
+                    if (element.attr('title') && !element.hasClass('noTitle'))
+                    {
+                        return element.attr('title');
+                    }
+                }
+            },
+            track: true
+        });
+    });
+</script>

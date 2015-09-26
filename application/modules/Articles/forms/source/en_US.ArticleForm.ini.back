@@ -1,0 +1,57 @@
+[registration]
+
+;Add an Article Name element
+registration.elements.article_name.type = "text"
+registration.elements.article_name.options.size = 100
+registration.elements.article_name.options.required = true
+registration.elements.article_name.options.label = "Nama Artikel:"
+registration.elements.article_name.options.title = "Masukkan Nama Artikel"
+registration.elements.article_name.options.value = ""
+registration.elements.article_name.options.filters.trim.filter = "StringTrim"
+
+;Add an Article Title element
+registration.elements.article_title.type = "text"
+registration.elements.article_title.options.size = 100
+registration.elements.article_title.options.required = true
+registration.elements.article_title.options.label = "Judul Halaman Artikel:"
+registration.elements.article_title.options.title = "Masukkan Judul Halaman Artikel"
+registration.elements.article_title.options.value = ""
+registration.elements.article_title.options.filters.trim.filter = "StringTrim"
+
+
+; Content element
+registration.elements.article_content.type = "textarea"
+registration.elements.article_content.options.cols = 90
+registration.elements.article_content.options.rows = 40
+registration.elements.article_content.options.label = "Content:"
+registration.elements.article_content.options.title = "Masukkan Isi Halaman"
+registration.elements.article_content.options.required = true
+
+;meta title element
+registration.elements.article_meta_title.type = "text"
+registration.elements.article_meta_title.options.size = 100
+registration.elements.article_meta_title.options.label = "Judul Meta:"
+registration.elements.article_meta_title.options.title = "Masukkan Judul Meta sini. Meta Judul adalah bagian yang sangat penting dari kode HTML untuk SEO robot perhatian. Biasanya mereka termasuk ringkasan singkat dari isi halaman web dan Anda harus memasukkan kata kunci yang relevan di dalamnya. Kebanyakan meta tag yang termasuk dalam 'header' kode dari sebuah situs web"
+registration.elements.article_meta_title.options.validators.strlen.validator = "StringLength"
+registration.elements.article_meta_title.options.filters.StripTags.filter = "StripTags"
+registration.elements.article_meta_title.options.filters.trim.filter = "StringTrim"
+
+;meta Key element
+registration.elements.article_meta_key.type = "text"
+registration.elements.article_meta_key.options.size = 100
+registration.elements.article_meta_key.options.label = "Kata Kunci:"
+registration.elements.article_meta_key.options.title = "Masukkan Kata kunci di sini. Menjelaskan meta tag kata kunci dan memberikan tips untuk optimasi mesin pencari dengan kata kunci meta tag"
+registration.elements.article_meta_key.options.validators.strlen.validator = "StringLength"
+registration.elements.article_meta_key.options.validators.strlen.options.min = "6"
+registration.elements.article_meta_key.options.validators.strlen.options.max = "500"
+registration.elements.article_meta_key.options.filters.StripTags.filter = "StripTags"
+registration.elements.article_meta_key.options.filters.trim.filter = "StringTrim"
+
+;article_meta_desc element
+registration.elements.article_meta_desc.type = "textarea"
+registration.elements.article_meta_desc.options.cols = 90
+registration.elements.article_meta_desc.options.rows = 15
+registration.elements.article_meta_desc.options.label = "Deskripsi:"
+registration.elements.article_meta_desc.options.title = "Masukkan Meta Description di sini. Meta Deskripsi adalah bagian yang sangat penting dari kode HTML untuk robot SEO. Biasanya mereka termasuk ringkasan singkat dari isi halaman web dan Anda harus memasukkan kata kunci yang relevan di dalamnya. Kebanyakan meta tag yang termasuk dalam 'header' kode dari sebuah situs web"
+registration.elements.article_meta_desc.options.filters.StripTags.filter = "StripTags"
+registration.elements.article_meta_desc.options.filters.trim.filter = "StringTrim"

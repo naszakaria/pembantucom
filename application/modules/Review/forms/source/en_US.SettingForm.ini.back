@@ -1,0 +1,167 @@
+[setting]
+
+; Group Name element
+setting.elements.group_name.type = "text"
+setting.elements.group_name.options.size = 50
+setting.elements.group_name.options.required = true
+setting.elements.group_name.options.label = "Nama Kelompok :"
+setting.elements.group_name.options.title = "Inputkan Nama Kelompok"
+setting.elements.group_name.options.value = ""
+setting.elements.group_name.options.filters.trim.filter = "StringTrim"
+setting.elements.group_name.options.filters.StripTags.filter = "StripTags"
+
+;Add an setting Dynamic form element
+setting.elements.form_id.type = "select"
+setting.elements.form_id.options.label = "Pilih Formulir:"
+setting.elements.form_id.options.title = "Pilih Formulir Dinamis"
+setting.elements.form_id.options.value = "0"
+setting.elements.form_id.options.multiOptions.0 = "None"
+
+; no_of_list_per_page element
+setting.elements.no_of_list_per_page.type = "text"
+setting.elements.no_of_list_per_page.options.size = 50
+setting.elements.no_of_list_per_page.options.required = true
+setting.elements.no_of_list_per_page.options.label = "Jumlah Daftar Ulasan per Halaman :"
+setting.elements.no_of_list_per_page.options.title = "Inputkan Jumlah Daftar Ulasan per Halaman"
+setting.elements.no_of_list_per_page.options.value = "5"
+setting.elements.no_of_list_per_page.options.validators.Int.validator = "Int"
+setting.elements.no_of_list_per_page.options.filters.trim.filter = "StringTrim"
+setting.elements.no_of_list_per_page.options.filters.StripTags.filter = "StripTags"
+
+; Auto Publish element
+setting.elements.auto_publish.type = "radio"
+setting.elements.auto_publish.options.required = true
+setting.elements.auto_publish.options.label = "Publikasi Otomatis:"
+setting.elements.auto_publish.options.title = "Apakah Anda ingin mempublikasikan secara otomatis tanpa persetujuan admin ?"
+setting.elements.auto_publish.options.value = "0"
+setting.elements.auto_publish.options.separator = ""
+setting.elements.auto_publish.options.multiOptions.1 = "Ya"
+setting.elements.auto_publish.options.multiOptions.0 = "Tidak"
+
+;Add an Order wise Sorting form element
+setting.elements.order_by.type = "select"
+setting.elements.order_by.options.label = "Sortir Berdasarkan:"
+setting.elements.order_by.options.title = "Pilih sortir berdasarkan"
+setting.elements.order_by.options.value = "g_date"
+setting.elements.order_by.options.multiOptions.g_date = "Tanggal"
+setting.elements.order_by.options.multiOptions.id = "ID"
+
+;Add an Order wise Sorting form element
+setting.elements.sort_type.type = "select"
+setting.elements.sort_type.options.label = "Sortir Tipe:"
+setting.elements.sort_type.options.title = "Pilih Sortir Tipe"
+setting.elements.sort_type.options.value = "DESC"
+setting.elements.sort_type.options.multiOptions.DESC = "Menurun"
+setting.elements.sort_type.options.multiOptions.ASC = "Menaik"
+
+; name_title_field element
+setting.elements.name_title_field.type = "text"
+setting.elements.name_title_field.options.size = 50
+setting.elements.name_title_field.options.required = true
+setting.elements.name_title_field.options.label = "Judul nama field :"
+setting.elements.name_title_field.options.title = "Inputkan judul nama field"
+setting.elements.name_title_field.options.value = ""
+setting.elements.name_title_field.options.filters.trim.filter = "StringTrim"
+setting.elements.name_title_field.options.filters.StripTags.filter = "StripTags"
+
+; primary_image_field element
+setting.elements.primary_image_field.type = "text"
+setting.elements.primary_image_field.options.size = 50
+setting.elements.primary_image_field.options.required = false
+setting.elements.primary_image_field.options.label = "Gambar default nama field :"
+setting.elements.primary_image_field.options.title = "Artinya, bila pengguna memilih gambar sebagai Default Gambar, maka akan ditampilkan di bagian atas halaman"
+setting.elements.primary_image_field.options.value = ""
+setting.elements.primary_image_field.options.filters.trim.filter = "StringTrim"
+setting.elements.primary_image_field.options.filters.StripTags.filter = "StripTags"
+
+; secondary_image_field element
+setting.elements.secondary_image_field.type = "text"
+setting.elements.secondary_image_field.options.size = 50
+setting.elements.secondary_image_field.options.required = false
+setting.elements.secondary_image_field.options.label = "Gambar lain nama field :"
+setting.elements.secondary_image_field.options.title = "Masukkan gambar lain nama field ketika Anda dapat memungkinkan menambahkan beberapa gambar sebagai produk terkait"
+setting.elements.secondary_image_field.options.value = ""
+setting.elements.secondary_image_field.options.filters.trim.filter = "StringTrim"
+setting.elements.secondary_image_field.options.filters.StripTags.filter = "StripTags"
+
+
+; short_desc_field code element
+setting.elements.short_desc_field.type = "text"
+setting.elements.short_desc_field.options.size = 50
+setting.elements.short_desc_field.options.required = true
+setting.elements.short_desc_field.options.label = "Deskripsi singkat nama field:"
+setting.elements.short_desc_field.options.title = "Masukkan deskripsi pendek nama field"
+setting.elements.short_desc_field.options.value = ""
+setting.elements.short_desc_field.options.filters.trim.filter = "StringTrim"
+setting.elements.short_desc_field.options.filters.StripTags.filter = "StripTags"
+
+; broad_desc_field code element
+setting.elements.broad_desc_field.type = "text"
+setting.elements.broad_desc_field.options.size = 50
+setting.elements.broad_desc_field.options.required = true
+setting.elements.broad_desc_field.options.label = "Deskripsi yang luas nama field:"
+setting.elements.broad_desc_field.options.title = "Masukkan uraian nama bidang yang luas"
+setting.elements.broad_desc_field.options.value = ""
+setting.elements.broad_desc_field.options.filters.trim.filter = "StringTrim"
+setting.elements.broad_desc_field.options.filters.StripTags.filter = "StripTags"
+
+
+; item_id_field code element
+setting.elements.item_id_field.type = "text"
+setting.elements.item_id_field.options.size = 50
+setting.elements.item_id_field.options.required = false
+setting.elements.item_id_field.options.label = "Item ID nama field:"
+setting.elements.item_id_field.options.title = "Masukkan Barang ID nama field"
+setting.elements.item_id_field.options.value = ""
+setting.elements.item_id_field.options.filters.trim.filter = "StringTrim"
+setting.elements.item_id_field.options.filters.StripTags.filter = "StripTags"
+
+; item_name_field code element
+setting.elements.item_name_field.type = "text"
+setting.elements.item_name_field.options.size = 50
+setting.elements.item_name_field.options.required = false
+setting.elements.item_name_field.options.label = "Nama Item nama field:"
+setting.elements.item_name_field.options.title = "Masukkan Nama Item nama field"
+setting.elements.item_name_field.options.value = ""
+setting.elements.item_name_field.options.filters.trim.filter = "StringTrim"
+setting.elements.item_name_field.options.filters.StripTags.filter = "StripTags"
+
+; item_table_name code element
+setting.elements.item_table_name.type = "text"
+setting.elements.item_table_name.options.size = 50
+setting.elements.item_table_name.options.required = false
+setting.elements.item_table_name.options.label = "Barang Nama Tabel:"
+setting.elements.item_table_name.options.title = "Masukkan Nama Item Tabel
+setting.elements.item_table_name.options.value = ""
+setting.elements.item_table_name.options.filters.trim.filter = "StringTrim"
+setting.elements.item_table_name.options.filters.StripTags.filter = "StripTags"
+
+;short_page_fields element
+setting.elements.short_page_fields.type = "textarea"
+setting.elements.short_page_fields.options.cols = 60
+setting.elements.short_page_fields.options.rows = 8
+setting.elements.short_page_fields.options.required = true
+setting.elements.short_page_fields.options.label = "Field mana yang menunjukkan nilai di kanan atas halaman rincian:"
+setting.elements.short_page_fields.options.title = "Inputkan Nama Field, dipisahkan dengan koma"
+setting.elements.short_page_fields.options.filters.trim.filter = "StringTrim"
+setting.elements.short_page_fields.options.filters.StripTags.filter = "StripTags"
+
+;details_page_fields element
+setting.elements.details_page_fields.type = "textarea"
+setting.elements.details_page_fields.options.cols = 60
+setting.elements.details_page_fields.options.rows = 8
+setting.elements.details_page_fields.options.required = true
+setting.elements.details_page_fields.options.label = "Field mana yang menunjukkan nilai di halaman rincian:"
+setting.elements.details_page_fields.options.title = "Inputkan nama field dipisahkan dengan koma"
+setting.elements.details_page_fields.options.filters.StripTags.filter = "StripTags"
+setting.elements.details_page_fields.options.filters.trim.filter = "StringTrim"
+
+;rating_fields element
+setting.elements.rating_fields.type = "textarea"
+setting.elements.rating_fields.options.cols = 60
+setting.elements.rating_fields.options.rows = 8
+setting.elements.rating_fields.options.required = false
+setting.elements.rating_fields.options.label = "Field mana yang memperlihatkan nilai rating:"
+setting.elements.rating_fields.options.title = "Inputkan nama field dipisahkan dengan koma"
+setting.elements.rating_fields.options.filters.StripTags.filter = "StripTags"
+setting.elements.rating_fields.options.filters.trim.filter = "StringTrim"

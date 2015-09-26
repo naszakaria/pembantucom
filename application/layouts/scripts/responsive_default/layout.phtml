@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<?php
+$front_template = Zend_Registry::get('front_template');
+$is_frontend = new Eicra_Model_DbTable_Frontend();
+$license = new Zend_Session_Namespace('License');
+$validation_data = $license->license_data;
+$locale = Eicra_Global_Variable::getSession()->sess_lang;
+$locale_arr = explode('_', $locale);
+$locale_direction = Eicra_Global_Variable::getSession()->site_direction;
+$detect = new Mobile_Detect;
+$cdnExt = 'http://static.busana.com/';
+$bower_assests = $cdnExt . 'bower_components/';
+$deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
+$scriptVersion = $detect->getScriptVersion();
+?> 
+<html dir="<?php echo $locale_direction; ?>" lang="<?php echo $locale_arr[0]; ?>"> 
+    <head>
+        <meta charset="utf-8">
+        <base href="<?php echo $this->serverUrl() . $this->baseUrl(); ?>/" /> 
+        <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">-->
+        <link rel="stylesheet" href="<?php echo $bower_assests . 'bootstrap-legacy/dist/css/bootstrap.min.css' ?>">
+        <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">-->
+        <!--<script src="https://code.jquery.com/jquery.js"></script>-->
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+        <script src="<?php echo $bower_assests . 'jquery-legacy/dist/jquery.min.js' ?>"></script>
+        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+        <!--<script src="http://static.busana.com/js/bootstrap-3.3.4.min.js"></script>-->
+        <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+        <script src="<?php echo $bower_assests . 'bootstrap-legacy/dist/js/bootstrap.min.js' ?>"></script>        
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>-->
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>-->
+        <script src="<?php echo $bower_assests . 'jquery.easing/js/jquery.easing.min.js' ?>"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!--<link rel="stylesheet" href="<?php echo $bower_assests . 'components-font-awesome/css/font-awesome.min.css' ?>">-->
+        <!--<link href='//fonts.googleapis.com/css?family=Open+Sans:700,600,400' rel='stylesheet' type='text/css'>-->
+        
+        <?php
+        if ($detect->isMobile()) {
+            ?>
+            <link rel="stylesheet" href="<?php echo $bower_assests . 'jasny-bootstrap/dist/css/jasny-bootstrap.min.css' ?>">
+            <script src="<?php echo $bower_assests . 'jasny-bootstrap/dist/js/jasny-bootstrap.min.js' ?>"></script>
+            <?php
+        }
+        ?>
+        <link rel="shortcut icon" href="<?php
+        $global_conf = Zend_Registry::get('global_conf');
+        echo $global_conf['frontend_favicon'];
+        ?>" />
+              <?php echo $this->headMeta(); ?>
+              <?php echo html_entity_decode($this->headTitle(), ENT_QUOTES, "UTF-8"); ?>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property='og:title' content="<?php echo $this->translator->translator('og_title', '', '', $front_template['theme_folder']); ?>"/>
+    <meta property='og:image' content="<?php echo $this->serverUrl() . $this->baseUrl() . '/application/layouts/scripts/responsive_default/images/logo-site.png'; ?>"/>
+    <meta property='og:description' content="<?php echo $this->translator->translator('og_description', '', '', $front_template['theme_folder']); ?>"/>
+    <meta property='og:url' content="<?php echo $this->serverUrl() . $this->baseUrl(); ?>" />
+        <?php
+        $version = new Eicra_License_Version();
+        echo $this->partial('head/headscript.phtml');
+        $auth = Zend_Auth::getInstance();
+        $frontController = Zend_Controller_Front::getInstance();
+        $moduleName = strtolower($frontController->getRequest()->getModuleName());
+        $controllerName = strtolower($frontController->getRequest()->getControllerName());
+        $actionName = strtolower($frontController->getRequest()->getActionName());
+        $acount_link = 'Members-Dashboard';
+        $add_url = ($auth->hasIdentity()) ? $this->url(array('module' => 'Property', 'controller' => 'Backendpro', 'action' => 'add'), 'adminrout', true) : $this->serverUrl() . $this->baseUrl() . '/Frontend-Login';
+        $hasIdentity = $auth->hasIdentity();
+        ?>
+    </head> 
+    <body>
+        <?php
+        echo $this->layout()->render('header');
+        if ($detect->isMobile() && !$detect->version('iPad') && !$detect->isTablet()) {
+            echo $this->partial('mobile/blocks/topmenu/top_menu.phtml');
+//            if ($is_frontend->isFrontend()) {
+            echo $this->partial('mobile/blocks/search/property_home_search.phtml');
+//            }
+            ?>
+            <section class="container"> 
+                <?php
+//                echo $this->partial('mobile/blocks/topmenu/top_menu.phtml');
+//            echo $this->partial('blocks/test/test.phtml');
+                if ($is_frontend->isFrontend()) {
+//                    echo $this->partial('blocks/banner/home_banner_slideshow.phtml');
+//                    echo $this->partial('mobile/blocks/search/property_home_search.phtml');
+                    echo $this->partial('mobile/blocks/showcase/showcase_block.phtml');
+                } else {
+                    ?>
+                    <!--                    <div id="banner-inner">
+                                            <div class="container">            
+                                                <h1><?php echo $this->translator->translator('banner_inner_slogan', '', '', $front_template['theme_folder']); ?></h1>
+                                            </div>
+                                        </div>-->
+                    <?php
+                }
+            } else {
+//                echo $this->layout()->render('header');
+                echo $this->partial('blocks/topmenu/top_menu.phtml');
+//                echo $this->partial('blocks/test/test.phtml');
+                if ($is_frontend->isFrontend()) {
+                    echo $this->partial('blocks/banner/home_banner_slideshow.phtml');
+                } else {
+                    ?>
+                    <!--                                        <div id="banner-inner">
+                                                                <div class="container">            
+                                                                    <h1><?php echo $this->translator->translator('banner_inner_slogan', '', '', $front_template['theme_folder']); ?></h1>
+                                                                </div>
+                                                            </div>-->
+                    <?php
+                }
+                ?>
+                <section class="container">
+                    <div class="content-container">
+                        <?php
+                        if ($is_frontend->isFrontend()) {
+                            echo $this->partial('blocks/search/property_home_search.phtml');
+                            echo $this->partial('blocks/showcase/showcase_tab_bootstrap.phtml');
+                            echo $this->partial('blocks/oldlib/ad_home_banner.phtml');
+                        }
+                    }
+                    ?>
+                    <?php
+                    if ($is_frontend->isFrontend()) {
+                        ?>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <?php
+                                if (!$detect->isMobile()) {
+                                    echo $this->partial('blocks/featured/property_home_featured.phtml');
+                                }
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <?php echo $this->partial('blocks/state/property_home_content_state.phtml'); ?>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php
+//                                  if (!$detect->isMobile()) {
+//                                    echo $this->partial('blocks/property_home_content_agents.phtml');
+//                                }
+//                                
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <?php // echo $this->partial('blocks/newsletter.phtml');  ?>
+                                <?php // echo $this->partial('blocks/social.phtml');  ?>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="block-ad home-content-ad">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inner Layout Start -->
+                        <?php
+                    } else {
+                        if (!$detect->isMobile()) {
+                            $body_content_class = 'col-md-12';
+                            if (!empty($moduleName) && $actionName != 'home') {
+                                switch ($moduleName) {
+                                    case 'property':
+                                        if ($actionName != 'confirm') {
+                                            $body_content_class = 'col-md-9';
+                                            ?>	
+                                            <!-- Inner Side Bar Start-->
+                                            <div id="sidebar-inner" class="col-md-3">
+                                                <?php echo $this->partial('blocks/search/block_advance_search.phtml'); ?>
+                                                <?php // echo $this->partial('blocks/property_inner_sidebar_search.phtml');  ?>
+                                                <?php echo $this->partial('blocks/ads/ad_inner_leftsidebar.phtml'); ?>
+                                            </div>
+
+                                            <!-- Inner Side Bar End -->	
+                                            <?php
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                        ?>
+
+                        <!-- Inner Layout End -->
+
+                        <!-- Content Start-->
+                        <div class="<?php echo $body_content_class; ?>"> 
+                            <?php echo $this->layout()->content; ?>
+                        </div>
+                        <!-- Content End-->
+                        <?php
+                    }
+                    ?> 
+                </div>
+                <?php
+                if ($detect->isMobile() && $is_frontend->isFrontend()) {
+//                    echo $this->partial('mobile/blocks/news/news_latest_tab.phtml');
+                }
+                ?>
+            </section>
+            <!-- Body End-->
+
+            <!--Footer Start-->
+            <?php echo $this->layout()->render('footer'); ?>
+            <!--Footer End-->
+
+            <!--<div class="go-top"><a href="#top" id="scroll-top"><?php // echo $this->translator->translator('footer_top', '', '', $front_template['theme_folder']);    ?></a></div>-->
+            <?php
+//                echo $this->headScript()->setFile('application/layouts/scripts/' . $front_template['theme_folder'] . '/vendor/scripts/js/scroll.js'); 
+//                echo $this->headScript()->setFile($cdnExt.'js/scroll.js', 'text/javascript');
+            ?>
+
+    </body>
+</html>
+<?php echo $this->escape($global_conf['analytics_code']); ?>

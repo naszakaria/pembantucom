@@ -1,0 +1,192 @@
+<script type="text/javascript">
+    function scrolling(class_name)
+    {
+        $.easing.elasout = function (x, t, b, c, d) {
+            var s = 1.70158;
+            var p = 0;
+            var a = c;
+            if (t == 0)
+                return b;
+            if ((t /= d) == 1)
+                return b + c;
+            if (!p)
+                p = d * .3;
+            if (a < Math.abs(c)) {
+                a = c;
+                var s = p / 4;
+            }
+            else
+                var s = p / (2 * Math.PI) * Math.asin(c / a);
+            return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;
+        };
+        $('a.' + class_name).click(function () {//$.scrollTo works EXACTLY the same way, but scrolls the whole screen
+            var rel = $(this).attr('rel');
+            var id_arr = rel.split('-');
+            var id_no = parseInt(id_arr[1]);
+<?php
+if (empty($property_type_arr[0]) || !in_array($this->view_datas['property_type'], $property_type_arr)) {
+    ?>
+                if (id_no == '8' || id_no == '7')
+                {
+                    --id_no;
+                }
+    <?php
+}
+?>
+            $('#tabs').tabs({active: --id_no});
+            $.scrollTo(rel, 1500, {easing: 'swing'});
+            return false;
+        });
+    }
+
+
+    function changeImageScrolling()
+    {
+        $.easing.elasout = function (x, t, b, c, d) {
+            var s = 1.70158;
+            var p = 0;
+            var a = c;
+            if (t == 0)
+                return b;
+            if ((t /= d) == 1)
+                return b + c;
+            if (!p)
+                p = d * .3;
+            if (a < Math.abs(c)) {
+                a = c;
+                var s = p / 4;
+            }
+            else
+                var s = p / (2 * Math.PI) * Math.asin(c / a);
+            return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;
+        };
+
+
+        $("a.change_img").click(function () {
+            var self = this;
+            var src = $(self).children("img:nth-child(1)").attr('src');
+            $("div.ad-image").children("img:nth-child(1)").attr('src', src);
+            $.scrollTo('#gallery', 1500, {easing: 'swing'});
+            return false;
+        });
+    }
+
+    $(function () {
+        var galleries = $('.ad-gallery').adGallery({
+            slideshow: {
+                enable: true,
+                autostart: true,
+                speed: 5000,
+                start_label: 'Start',
+                stop_label: 'Stop',
+                stop_on_scroll: true,
+                countdown_prefix: '(',
+                countdown_sufix: ')',
+                onStart: false,
+                onStop: false
+            }
+        });
+        $('#switch-effect').change(
+                function () {
+                    galleries[0].settings.effect = $(this).val();
+                    return false;
+                }
+        );
+        $('#toggle-slideshow').click(
+                function () {
+                    galleries[0].slideshow.toggle();
+                    return false;
+                }
+        );
+        $('#toggle-description').click(
+                function () {
+                    if (!galleries[0].settings.description_wrapper) {
+                        galleries[0].settings.description_wrapper = $('#descriptions');
+                    } else {
+                        galleries[0].settings.description_wrapper = false;
+                    }
+                    return false;
+                }
+        );
+    });
+
+
+    $(function () {
+        $('#slickbox').hide();
+        $('a.slick-slidetoggle').click(function () {
+            $('#slickbox').slideToggle(400);
+            return false;
+        });
+        $("a.change_img").click(function () {
+            var self = this;
+            var src = $(self).children("img:nth-child(1)").attr('src');
+            $("img.big_image").attr('src', src);
+        });
+
+    });
+
+    $(document).ready(function () {
+        $('a.print_btn').click(function (event) {
+
+            var width = 1200;
+            var height = 700;
+            var left = parseInt((screen.availWidth / 2) - (width / 2));
+            var top = parseInt((screen.availHeight / 2) - (height / 2));
+            var windowSizeArray = ["width=" + width + ",height=" + height + ",left=" + left + ",top=" + top + "screenX=" + left + ",screenY=" + top + ",scrollbars=yes",
+                "width=" + width + ",height=" + height + ",scrollbars=yes"];
+            var url = "<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'print', 'property_title' => $this->escape($this->view_datas['property_title'])), 'Property-print/:property_title', true); ?>";
+            var windowName = "popUp";
+            var windowSize = windowSizeArray[$(this).attr("rel")];
+
+            window.open(url, windowName, windowSize);
+
+            event.preventDefault();
+
+        });
+        
+        function openMsgDialog(msg)
+	{
+		$('#dialog_container').html(msg).dialog({
+					autoOpen: true,
+					modal: false,
+					show: 'explode',
+					resizable: true,				
+					buttons: [{ text: "<?php echo html_entity_decode($this->translator->translator('common_ok'), ENT_QUOTES, 'UTF-8'); ?>", click: function() { $(this).dialog('option', 'hide', 'explode').dialog("close"); } } ],
+					open: function(event, ui)
+						 {
+							setTimeout(function() 
+							{									
+								if($('#' + event.target.id).dialog('isOpen'))
+								{
+									$('#' + event.target.id).dialog('option', 'hide', 'explode').dialog('close');										
+								}
+							}, 10000);
+						  }
+				});
+	}
+
+        $('a.save_property_btn').click(function () {
+            var self = this;
+            var id = $(self).attr('rel');
+            $.ajax({
+                url: "<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'save'), 'adminrout', true) ?>",
+                type: 'POST',
+                data: {id: id},
+                success: function (response) {
+                    //alert(response);
+                    var json_arr = eval("(" + response + ")");
+                    if (json_arr.status === 'ok')
+                    {
+                        openMsgDialog(json_arr.msg);
+                    }
+                    else
+                    {
+                        openMsgDialog(json_arr.msg);
+                    }
+                    $(self).html('<?php echo $this->translator->translator("property_front_page_save_property"); ?>');
+                }
+            });
+        });
+    });
+
+</script>

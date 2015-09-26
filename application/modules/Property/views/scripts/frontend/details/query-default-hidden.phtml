@@ -1,0 +1,22 @@
+            <input type="hidden" name="property_name_LIKE" id="property_name" value="<?php
+            if ($this->postValue['property_name_LIKE']) {
+                echo $this->postValue['property_name_LIKE'];
+            } else {
+                echo $this->translator->translator("common_any_language");
+            }
+            ?>" class="name"/>       
+            <input type="hidden" name="post_code_LIKE" id="post_code" value="<?php
+            if ($this->postValue['post_code_LIKE']) {
+                echo $this->postValue['post_code_LIKE'];
+            } else {
+                echo $this->translator->translator("common_any_language");
+            }
+            ?>" />                    
+
+            <input type="hidden" name="property_price_LIKE" id="property_price" value="<?php
+            if ($this->postValue['property_price_LIKE']) {
+                echo $this->postValue['property_price_LIKE'];
+            } else {
+                echo $this->translator->translator("common_any_language");
+            }
+            ?>" />

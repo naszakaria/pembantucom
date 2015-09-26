@@ -1,0 +1,89 @@
+<?php
+$host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$exceptions = array('Review-Write', 'testimoni');
+$conflict = false;
+$front_template = Zend_Registry::get('front_template');
+$this->translator = Zend_Registry::get('translator');
+$global_conf = Zend_Registry::get('global_conf');
+$auth = Zend_Auth::getInstance();
+if ($auth->hasIdentity()) {
+    $globalIdentity = $auth->getIdentity();
+    $role_id = $globalIdentity->role_id;
+    $role = $globalIdentity->role_name;
+}
+$devider = ' | ';
+$acount_link = 'Members/index/profile';
+$my_account_link = ($auth->hasIdentity()) ? '<a href="Members/index/profile" class="topbar_logout_btn">' . $this->translator->translator('header_account', '', '', $front_template['theme_folder']) . $devider . '</a>' : '<a href="">' . '</a>';
+$sugnIn_link = ($auth->hasIdentity()) ? '<a href="javascript:void(0);" class="topbar_logout_btn">' . $this->translator->translator('header_signout', '', '', $front_template['theme_folder']) . '</a>' : '<a href="Frontend-Login">' . $this->translator->translator('header_signin', '', '', $front_template['theme_folder']) . '</a>';
+$sugnIn_link_agency = ($auth->hasIdentity()) ? '' : '<a href="Sign-In">' . $this->translator->translator('header_login', '', '', $front_template['theme_folder']) . '</a>' . $devider;
+$register_link_agency = ($auth->hasIdentity()) ? '<a href="Property/backendpro/saved">' . $this->translator->translator('short_list', '', '', $front_template['theme_folder']) . '</a>' . $devider : '<a href="Register">' . $this->translator->translator('header_agent_registration', '', '', $front_template['theme_folder']) . '</a>' . $devider;
+$welcome_text = ($auth->hasIdentity()) ? $this->translator->translator('header_welcome', '', '', $front_template['theme_folder']) . ' ' . $globalIdentity->firstName . ' ' . $globalIdentity->lastName : $this->translator->translator('header_welcome_to', '', '', $front_template['theme_folder']);
+$add_url = ($auth->hasIdentity()) ? $this->baseUrl() . 'Property/backendpro/add' : $this->baseUrl() . 'Frontend-Login';
+foreach ($exceptions as $exception) {
+    if (false !== strpos($host, $exception)) {
+        $conflict = true;
+        break;
+    }
+}
+?>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        logOut('a.topbar_logout_btn', '<img src="application/layouts/scripts/<?php echo $front_template['theme_folder']; ?>/images/loader/ajax-loader-email.gif" />', '', '<?php echo $this->translator->translator('common_front_header_signin', '', '', $front_template['theme_folder']); ?>');
+    });
+</script>
+<div id="top-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4 user-link">
+                <?php echo $welcome_text; ?> | <?php echo $sugnIn_link; ?> <?php if (!$auth->hasIdentity()) { ?>| <a href="Registration/104"><?php echo $this->translator->translator('header_register', '', '', $front_template['theme_folder']); ?></a><?php } ?>
+            </div>
+            <div class="col-xs-8 top-links">
+                <?php echo $my_account_link ?>
+                <!--<a href="<?php // echo $acount_link;    ?>"><?php echo $this->translator->translator('header_account', '', '', $front_template['theme_folder']); ?></a> |-->
+                <?php
+                echo $sugnIn_link_agency;
+                echo $register_link_agency;
+                ?>
+<!--                <a href="Register"><?php echo $this->translator->translator('header_agent_registration', '', '', $front_template['theme_folder']); ?></a> |-->
+                <a href="testimoni"><?php echo $this->translator->translator('header_feedback', '', '', $front_template['theme_folder']); ?></a> |
+                <a href="peta-situs"><?php echo $this->translator->translator('header_sitemap', '', '', $front_template['theme_folder']); ?></a> | 
+                <!--<a href="hubungi-kami"><?php // echo $this->translator->translator('header_contact', '', '', $front_template['theme_folder']);    ?></a><span class="divider"><?php echo $devider; ?></span>-->
+                <div class="flags">
+                    <?php echo $this->partial('blocks/header_language.phtml'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="logo">
+                    <?php
+                    if ($conflict) { ?>
+                        <a href="#"><img class="img-responsive" src="application/layouts/scripts/<?php echo $front_template['theme_folder']; ?>/images/logo-site.png" alt="<?php echo $this->escape($global_conf['site_title']); ?>" title="<?php echo $this->escape($global_conf['site_title']); ?>" border="0"></a>
+                   <?php } else {
+                        ?>
+                        <a href="#">
+                            <img class="lazy img-responsive" src="" data-src="<?php
+                            if ($global_conf['frontend_header_logo']) {
+                                echo $global_conf['frontend_header_logo'];
+                            } else {
+                                ?>application/layouts/scripts/<?php echo $front_template['theme_folder']; ?>/images/logo-site.png<?php } ?>" alt="<?php echo $this->escape($global_conf['site_title']); ?>" title="<?php echo $this->escape($global_conf['site_title']); ?>" border="0"></a>
+                        <?php } ?>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <?php
+                $properties = new Property_Model_DbTable_Properties();
+                $listings = $properties->numOfProperty();
+                ?>
+                <span class="listing-add"><a href="<?php echo $add_url; ?>"><i class="fa fa-plus-circle fa-3x"></i><br><?php echo $this->translator->translator('header_add_btn', '', '', $front_template['theme_folder']); ?></a></span>
+                <span class="listing-count"><span class="no"><?php echo $listings; ?></span> <?php echo $this->translator->translator('header_listings', '', '', $front_template['theme_folder']); ?></span>
+            </div>
+        </div>
+    </div>
+</div>

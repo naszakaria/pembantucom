@@ -1,0 +1,36 @@
+[letter]
+
+;Add an Newsletter Subject element
+letter.elements.subject.type = "text"
+letter.elements.subject.options.size = 50
+letter.elements.subject.options.required = true
+letter.elements.subject.options.label = "Subyek:"
+letter.elements.subject.options.title = "Inputkan Subyek"
+letter.elements.subject.options.value = ""
+letter.elements.subject.options.filters.trim.filter = "StringTrim"
+
+;Add an Name element
+letter.elements.email_name.type = "select"
+letter.elements.email_name.options.size = 5
+letter.elements.email_name.options.style = "lebar:270px;"
+letter.elements.email_name.options.multiple	= "multiple"
+letter.elements.email_name.options.label = "Pilih Penerima:"
+letter.elements.email_name.options.title = "Pilih Penerima"
+letter.elements.email_name.options.value = "all"
+letter.elements.email_name.options.multiOptions.all = "Semua"
+
+;Add an Templates element
+letter.elements.templates_name.type = "select"
+letter.elements.templates_name.options.size = 1
+letter.elements.templates_name.options.label = "Pilih Template:"
+letter.elements.templates_name.options.title = "Pilih Template"
+letter.elements.templates_name.options.value = "0"
+letter.elements.templates_name.options.multiOptions.0 = "Pilih......."
+
+; Newsletter Template Description element
+letter.elements.templates_desc.type = "textarea"
+letter.elements.templates_desc.options.cols = 92
+letter.elements.templates_desc.options.rows = 40
+letter.elements.templates_desc.options.label = "Konten:"
+letter.elements.templates_desc.options.title = "Inputkan Deskripsi:"
+letter.elements.templates_desc.options.required = true

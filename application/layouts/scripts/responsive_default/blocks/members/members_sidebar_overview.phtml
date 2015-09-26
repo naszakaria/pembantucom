@@ -1,0 +1,164 @@
+<?php
+class members_account_overview
+{
+	protected	$_front_template;
+	protected	$_view;
+	protected	$_modules_license;
+	protected	$translator;
+	protected	$auth;
+	protected	$version;
+	protected	$comment_db;
+	protected	$article_db;
+	protected	$gallery_db;
+	protected	$news_db;
+	protected	$invoice_db;
+	protected	$hotels_db;
+	protected	$vacation_db;
+	protected	$tours_db;
+	protected	$property_db;
+	protected	$autos_db;
+	
+	public function __construct($view) 
+	{
+		$this->_front_template 	= 	Zend_Registry::get('front_template'); 
+		$this->_view 			=	$view;	
+		$this->_modules_license = 	new Administrator_Controller_Helper_ModuleLoader();
+		$this->translator 		= 	Zend_Registry::get('translator');	
+		$this->auth				= 	Zend_Auth::getInstance ();	
+		$this->version 			= 	Zend_Registry::get('version'); 	
+		
+		$this->comment_db 	= 	new Comment_Model_DbTable_Comment();
+		$this->article_db 	= 	new Articles_Model_DbTable_ArticleList();
+		$this->gallery_db 	= 	(class_exists(Gallery_Model_DbTable_Product)) ? new Gallery_Model_DbTable_Product() : null;
+		$this->news_db 		= 	(class_exists(News_Model_DbTable_Page)) ? new News_Model_DbTable_Page() : null;
+		$this->invoice_db 	=	(class_exists(Invoice_Model_DbTable_Invoices)) ?  new	Invoice_Model_DbTable_Invoices() : null;
+		$this->hotels_db 	=	(class_exists(Hotels_Model_DbTable_Hotels) && $this->_modules_license->checkModulesLicense('Hotels')) ?  new	Hotels_Model_DbTable_Hotels() : null;
+		$this->vacation_db 	=	(class_exists(Vacationrentals_Model_DbTable_Vacationrentals) && $this->_modules_license->checkModulesLicense('Vacationrentals')) ?  new	Vacationrentals_Model_DbTable_Vacationrentals() : null;
+		$this->tours_db 	=	(class_exists(Tours_Model_DbTable_Tours) && $this->_modules_license->checkModulesLicense('Tours')) ?  new	Tours_Model_DbTable_Tours() : null;
+		$this->property_db 	=	(class_exists(Property_Model_DbTable_Properties) && $this->_modules_license->checkModulesLicense('Property')) ?  new	Property_Model_DbTable_Properties() : null;
+		$this->autos_db 	=	(class_exists(Autos_Model_DbTable_Autos) && $this->_modules_license->checkModulesLicense('Autos')) ?  new	Autos_Model_DbTable_Autos() : null;
+	}
+	
+	public function truncate($phrase,$start_words, $max_words)
+	{
+	   $phrase_array = explode(' ',$phrase);
+	   if(count($phrase_array) > $max_words && $max_words > 0)
+		  $phrase = implode(' ',array_slice($phrase_array, $start_words, $max_words)).'...';  
+	   return $phrase;
+	}	
+	
+	public function class_body()
+	{		
+		$article_info = $this->article_db->getListInfo();	
+		$comment_info_no = ($this->auth->hasIdentity ()) ? $this->comment_db->countCommentByEntry('', '', $this->auth->getIdentity ()->user_id, false) : 0;		
+		$invoice_info = (class_exists(Invoice_Model_DbTable_Invoices)) ? $this->invoice_db->getListInfo('2') : array();	
+		$invoice_info = ($invoice_info && !is_array($invoice_info)) ? $invoice_info->toArray() : $invoice_info;
+?>
+		<div class="member-block block-account-overview">
+            <div class="block-heading">
+                <div class="symbol"><?php echo $this->translator->translator('members_account_overview_head_title', '', '', $this->_front_template['theme_folder']); ?></div>
+            </div>
+            <div class="block-body">
+                <ul>
+                	<?php
+					switch($this->version->getProductType())
+					{
+						case 2: 
+							if($this->property_db)
+							{
+								if($this->_view->allow('list', 'members', 'Property'))
+								{
+									$listing_info	=	$this->property_db->getPropertiesInfoByGroup();
+					?>                	
+                    				<li><a href="Members-Property-List"><div><?php echo $this->translator->translator('members_account_overview_item_listing', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo count($listing_info); ?></span></a></li>                    
+                    <?php
+								}
+							}
+							break;
+						case 4:
+							if($this->autos_db)
+							{ 
+							$listing_info	=	$this->autos_db->getAutosInfoByGroup();
+					?>                	
+                    		<li><a href="Members-Auto-List"><div><?php echo $this->translator->translator('members_account_overview_item_listing', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo count($listing_info); ?></span></a></li>                    
+                    <?php
+							}
+							break;
+						case 5: 
+						case 6: 
+							if($this->hotels_db)
+							{ 
+							$listing_info	=	$this->hotels_db->getHotelsInfoByGroup();
+					?>                	
+                    		<li><a href="Members-Hotel-List"><div><?php echo $this->translator->translator('members_account_overview_item_listing', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo count($listing_info); ?></span></a></li>                    
+                    <?php
+							}
+							break;
+						case 7: 
+							if($this->vacation_db)
+							{
+							$listing_info	=	$this->vacation_db->getVacationrentalsInfoByGroup();
+					?>                	
+                    		<li><a href="Members-Vacationrental-List"><div><?php echo $this->translator->translator('members_account_overview_item_listing', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo count($listing_info); ?></span></a></li>                    
+                    <?php
+							}
+							break;
+						case 9: 
+							if($this->tours_db)
+							{
+								$listing_info	=	$this->tours_db->getToursInfoByGroup();
+					?>                	
+                    		<li><a href="Members-Tour-List"><div><?php echo $this->translator->translator('members_account_overview_item_listing', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo count($listing_info); ?></span></a></li>                    
+                    <?php
+							}
+							break;
+					}
+						if($this->_view->allow('list', 'backendcomment', 'Comment'))
+						{
+					?>
+                    		<li><a href="<?php echo $this->_view->url(array('module' => 'Comment', 'controller'=>'backendcomment', 'action'=>'list'), 'adminrout', true);?>"><div><?php echo $this->translator->translator('members_account_overview_item_comments', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo $comment_info_no; ?></span></a></li>
+                   <?php
+						}
+						if($this->_view->allow('list', 'members', 'Articles'))
+						{
+					?>
+                    <li><a href="<?php echo $this->_view->url(array('module' => 'Articles','controller'=>'members', 'action'=>'list'),'Members-Article-List/*',true);?>"><div><?php echo $this->translator->translator('members_account_overview_item_article', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo count($article_info); ?></span></a></li>
+                    <?php
+						}
+						if($this->_modules_license->checkModulesLicense('Gallery') && $this->_view->allow('list', 'members', 'Gallery'))
+						{
+							$gallery_info = $this->gallery_db->getListInfo();
+                    ?>
+                    	<li><a href="<?php echo $this->_view->url(array('module' => 'Gallery','controller'=>'members', 'action'=>'list'),'Members-Gallery-Item-List',true); ?>"><div><?php echo $this->translator->translator('members_account_overview_item_gallery', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo count($gallery_info); ?></span></a></li>
+                    <?php
+						}
+                    ?>
+                    <?php
+						if($this->_modules_license->checkModulesLicense('News') && $this->_view->allow('list', 'members', 'News'))
+						{
+							$posted_data['filter']['filters'][0] = array('field' => 'group_id', 'operator' => 'eq', 'value' => '1');
+                    		$news_info = $this->news_db->getListInfo('1', $posted_data);
+                    ?>
+                    	<li><a href="<?php echo $this->_view->url(array('module' => 'News','controller'=>'members', 'action'=>'list', 'group_id' => 1),'Members-News-Item-List-By-Group/:group_id',true); ?>"><div><?php echo $this->translator->translator('members_account_overview_item_news', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo count($news_info); ?></span></a></li>
+                    <?php
+						}
+                    ?>
+                    <?php if(class_exists(Invoice_Model_DbTable_Invoices) && $this->_view->allow('list', 'members', 'Invoice')){ ?>
+                    <li><a href="<?php echo $this->_view->url(array('module' => 'Invoice','controller'=>'members', 'action'=>'list', 'status' => 2),'Members-Invoice-Item-List/*',true);?>"><div><?php echo $this->translator->translator('members_account_overview_item_invoice', '', '', $this->_front_template['theme_folder']); ?></div> <span><?php echo count($invoice_info); ?></span></a></li>
+                	<?php } ?>
+                </ul>
+            </div>
+        </div>	
+<?php			
+	}
+}
+try
+{
+	$members_account_overview_class = new members_account_overview($this);
+	$members_account_overview_class->class_body();
+}
+catch(Exception $e)
+{
+	echo $e->getMessage();
+}	
+?>

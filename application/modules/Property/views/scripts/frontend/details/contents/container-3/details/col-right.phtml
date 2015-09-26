@@ -1,0 +1,514 @@
+<div class="col-md-6">
+            <div class="panel panel-primary">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><i class="fa fa-filter margin-right-4"></i><?php echo $this->translator->translator('profile_of_maid'); ?></div>
+                <!-- Table -->
+                <table class="table">
+                    <tbody>
+                        <?php
+                        if ($getPropertyProfesion) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyProfesionLabel; ?></td>
+                                <td class="value-table"><?php echo $getPropertyProfesion; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyAge) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyAgeLabel; ?></td>
+                                <td class="value-table"><?php echo $setPropertyAge; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyExperience) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyExperienceLabel; ?></td>
+                                <td class="value-table"><?php echo $setPropertyExperience; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyLatestEduc) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyLatestEducLabel; ?></td>
+                                <td class="value-table"><?php echo $property_latest_educ; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyHeight) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyHeightLabel; ?></td>
+                                <td class="value-table"><?php echo $setPropertyHeight; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyWeight) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyWeightLabel; ?></td>
+                                <td class="value-table"><?php echo $setPropertyWeight; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyAddedOn) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo ucwords($getPropertyAddedOnLabel); ?></td>
+                                <td class="value-table"><?php echo $property_added_on; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyEthOrig) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyEthOrigLabel; ?></td>
+                                <td class="value-table"><?php echo ucwords($getPropertyEthOrig); ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyPoliceLetter) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyPoliceLetterLabel; ?></td>
+                                <td class="value-table"><?php echo ucwords($property_police_letter); ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyDocLetter) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyDocLetterLabel; ?></td>
+                                <td class="value-table"><?php echo ucwords($property_letter_doctor); ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if ($getPropertyRefLetter) {
+                            ?>
+                            <tr>
+                                <td class="label-table"><?php echo $getPropertyRefLetterLabel; ?></td>
+                                <td class="value-table"><?php echo ucwords($property_ref_letter); ?></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+<!--                                <tr>
+                        <td class="label-table">Label</td>
+                        <td class="value-table">Value</td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="panel panel-success">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><i class="fa fa-university margin-right-4"></i>Penyalur</div>
+                <div class="panel-body">
+
+                    <?php
+                    //Checking Membership Package Option
+//                    if ($packages->checkFormAvailable('Default Info')) {
+//                        $default_form_id = $forms_db->getFormId('Default Info');
+//                        $default_form_info['form_id'] = $default_form_id[0]['id'];
+//                        $default_general_info = $general_db->getAllValues($default_form_id[0]['id']);
+//                        $dynamic_valu_db = new Members_Model_DbTable_FieldsValue();
+//                        if ($default_general_info) {
+//                            $default_general_info = (!empty($default_general_info[0]) && !empty($default_general_info[0]['id'])) ? $default_general_info : $default_general_info->toArray();
+//                            $default_form_info = $dynamic_valu_db->getFieldsValueInfo($default_form_info, $default_general_info[0]['id']);
+//                        } else {
+//                            $default_form_info = null;
+//                        }
+//                    } else {
+//                        $default_form_info = null;
+//                    }
+                    if ($packages->isPackageFrontend($mem_info['user_id'], $mem_info['role_id'])) {
+                        if ($packages->isPackageFrontendField($module, $controller, $action, $mem_info['user_id'], $mem_info['role_id'])) {
+                            $package_no = $packages->getPackageFrontendFieldValue($module, $controller, $action, $mem_info['user_id'], $mem_info['role_id']);
+                        } else {
+                            $package_no = 'Non-aktif';
+                        }
+                    } else {
+                        $package_no = 'Aktif';
+                    }
+
+                    if ($package_no == 'Aktif') {
+                        if ($hasIdentity) {
+                            ?>
+                            <div class="content margin-top-bottom-8">
+                                <?php
+                                if ($this->escape($this->view_datas['property_owner'])) {
+                                    $mem_db = new Members_Model_DbTable_MemberList();
+                                    $owner_info = (isnot_int($this->view_datas['property_owner'])) ? $this->escape($this->view_datas['property_owner']) : $mem_db->getMemberInfo($this->escape($this->view_datas['property_owner']));
+                                    $owner_name = (is_array($owner_info)) ? $owner_info['firstName'] . ' ' . $owner_info['lastName'] : $owner_info;
+                                    $mem_user_id = (is_array($owner_info)) ? $owner_info['user_id'] : $mem_info['user_id'];
+                                    $mem_role_id = (is_array($owner_info)) ? $owner_info['role_id'] : $mem_info['role_id'];
+                                    if (is_array($owner_info)) {
+                                        $role_db = new Members_Model_DbTable_Role();
+                                        $role_info = $role_db->getRoleInfo($owner_info['role_id']);
+                                        $owner_info['form_id'] = $role_info['form_id'];
+                                        $dynamic_valu_db = new Members_Model_DbTable_FieldsValue();
+                                        $owner_info = $dynamic_valu_db->getFieldsValueInfo($owner_info, $owner_info['user_id']);
+                                        foreach ($owner_info as $key => $value) {
+                                            $field_name_arr = explode('_', $key);
+                                            if (in_array('package', $field_name_arr)) {
+                                                $package_info = $packages->getFormAllDatas($value);
+                                            }
+                                        }
+                                    } else {
+                                        $mem_user_id = $mem_info['user_id'];
+                                        $mem_role_id = $mem_info['role_id'];
+                                        $role_db = new Members_Model_DbTable_Role();
+                                        $role_info = $role_db->getRoleInfo($mem_role_id);
+                                        $mem_info['form_id'] = $role_info['form_id'];
+                                        $dynamic_valu_db = new Members_Model_DbTable_FieldsValue();
+                                        $mem_info = $dynamic_valu_db->getFieldsValueInfo($mem_info, $mem_user_id);
+                                        foreach ($mem_info as $key => $value) {
+                                            $field_name_arr = explode('_', $key);
+                                            if (in_array('package', $field_name_arr)) {
+                                                $package_info = $packages->getFormAllDatas($value);
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    $mem_user_id = $mem_info['user_id'];
+                                    $mem_role_id = $mem_info['role_id'];
+                                    $role_db = new Members_Model_DbTable_Role();
+                                    $role_info = $role_db->getRoleInfo($mem_role_id);
+                                    $mem_info['form_id'] = $role_info['form_id'];
+                                    $dynamic_valu_db = new Members_Model_DbTable_FieldsValue();
+                                    $mem_info = $dynamic_valu_db->getFieldsValueInfo($mem_info, $mem_user_id);
+                                    foreach ($mem_info as $key => $value) {
+                                        $field_name_arr = explode('_', $key);
+                                        if (in_array('package', $field_name_arr)) {
+                                            $package_info = $packages->getFormAllDatas($value);
+                                        }
+                                    }
+                                }
+
+                                if (is_array($owner_info)) {
+                                    if (!empty($owner_info['member_photo'])) {
+                                        $owner_forms_info = $forms_db->getFormsInfo($role_info['form_id']);
+                                        $member_photo_path = $owner_forms_info['attach_file_path'];
+                                        $member_photo = $member_photo_path . '/' . $owner_info['member_photo'];
+                                        $member_photo_width = 'width="' . $default_form_info['member_photo_width_default'] . '"';
+                                        $member_photo_height = 'height="' . $default_form_info['member_photo_height_default'] . '"';
+                                    } else {
+                                        if (!empty($default_form_info)) {
+                                            $member_photo = $this->serverUrl() . $this->baseUrl() . '/' . $default_form_id[0]['attach_file_path'] . '/' . $default_form_info['member_photo_default'];
+                                            $member_photo_width = 'width="' . $default_form_info['member_photo_width_default'] . '"';
+                                            $member_photo_height = 'height="' . $default_form_info['member_photo_height_default'] . '"';
+                                        } else {
+                                            $member_photo = 'data/frontImages/property/design_images/no_user_image.png';
+                                            $member_photo_width = 'width="75"';
+                                            $member_photo_height = 'height="87"';
+                                        }
+                                    }
+                                } else {
+                                    if (!empty($default_form_info)) {
+                                        $member_photo = $this->serverUrl() . $this->baseUrl() . '/' . $default_form_id[0]['attach_file_path'] . '/' . $default_form_info['member_photo_default'];
+                                        $member_photo_width = 'width="' . $default_form_info['member_photo_width_default'] . '"';
+                                        $member_photo_height = 'height="' . $default_form_info['member_photo_height_default'] . '"';
+                                    } else {
+                                        $member_photo = 'data/frontImages/property/design_images/no_user_image.png';
+                                        $member_photo_width = 'width="75"';
+                                        $member_photo_height = 'height="87"';
+                                    }
+                                }
+                                ?>
+                                <!--<img src="<?php echo $member_photo; ?>" <?php echo $member_photo_width . ' ' . $member_photo_height; ?> class="avatar" />-->
+
+                                <!--                                        <div>
+                                                                            <span class="label"><?php echo $this->translator->translator('property_front_page_label_presented'); ?></span>
+                                                                            <br/>
+                                                                            <span class="value">
+                                <?php
+                                if ($this->escape($this->view_datas['property_owner'])) {
+                                    echo $this->escape($owner_name);
+                                }
+                                ?>
+                                                                            </span>
+                                                                        </div>-->
+                                <!--
+                                                                        <div>
+                                                                            <div class="pkg-img">
+                                <?php
+                                if ($packages->isPackageFrontendField($module, $controller, $action . '_pic', $mem_user_id, $mem_role_id)) {
+                                    $package_pic_info = $packages->getPackageFrontendFieldDetailsValue($module, $controller, $action . '_pic', $mem_user_id, $mem_role_id);
+                                    if (!empty($package_pic_info)) {
+                                        $forms_info = $forms_db->getFormsInfo($package_pic_info['form_id']);
+                                        if (!empty($package_pic_info['field_value'])) {
+                                            $package_pic = $this->serverUrl() . $this->baseUrl() . '/' . $forms_info['attach_file_path'] . '/' . $package_pic_info['field_value'];
+                                            $package_pic_width = $packages->getPackageFrontendFieldValue($module, $controller, $action . '_pic_width', $mem_user_id, $mem_role_id);
+                                            $package_pic_height = $packages->getPackageFrontendFieldValue($module, $controller, $action . '_pic_height', $mem_user_id, $mem_role_id);
+                                            $package_pic_width_field = ($package_pic_width) ? 'width="' . $package_pic_width . '"' : '';
+                                            $package_pic_height_field = ($package_pic_width) ? 'height="' . $package_pic_height . '"' : '';
+                                        } else {
+                                            $package_pic = $this->serverUrl() . $this->baseUrl() . '/' . $default_form_id[0]['attach_file_path'] . '/' . $default_form_info['property_frontend_details_pic_default'];
+                                            $package_pic_width_field = (!empty($default_form_info['property_frontend_details_pic_width_default'])) ? 'width="' . $default_form_info['property_frontend_details_pic_width_default'] . '"' : '';
+                                            $package_pic_height_field = (!empty($default_form_info['property_frontend_details_pic_height_default'])) ? 'height="' . $default_form_info['property_frontend_details_pic_height_default'] . '"' : '';
+                                        }
+                                    } else {
+                                        $package_pic = $this->serverUrl() . $this->baseUrl() . '/' . $default_form_id[0]['attach_file_path'] . '/' . $default_form_info['property_frontend_details_pic_default'];
+                                        $package_pic_width_field = (!empty($default_form_info['property_frontend_details_pic_width_default'])) ? 'width="' . $default_form_info['property_frontend_details_pic_width_default'] . '"' : '';
+                                        $package_pic_height_field = (!empty($default_form_info['property_frontend_details_pic_height_default'])) ? 'height="' . $default_form_info['property_frontend_details_pic_height_default'] . '"' : '';
+                                    }
+                                } else {
+                                    $package_pic = $this->serverUrl() . $this->baseUrl() . '/' . $default_form_id[0]['attach_file_path'] . '/' . $default_form_info['property_frontend_details_pic_default'];
+                                    $package_pic_width_field = (!empty($default_form_info['property_frontend_details_pic_width_default'])) ? 'width="' . $default_form_info['property_frontend_details_pic_width_default'] . '"' : '';
+                                    $package_pic_height_field = (!empty($default_form_info['property_frontend_details_pic_height_default'])) ? 'height="' . $default_form_info['property_frontend_details_pic_height_default'] . '"' : '';
+                                }
+                                if ($package_pic) {
+                                    ?>
+                                                                                            <img src="<?php echo $package_pic; ?>" width="80px" height="80px" />
+                                    <?php
+                                }
+                                ?>	
+                                                                            </div>   
+                                                                            <span class="label"><?php
+                                if (($package_info[0]['field_value'])) {
+                                    echo $this->translator->translator('common_package_name_title');
+                                }
+                                ?></span><br />
+                                                                            <div class="pkg-title"><?php echo $this->escape($package_info[0]['field_value']); ?></div>
+                                                                        </div>
+                                
+                                                                        <hr />-->
+
+                                <?php
+                                if ($packages->isPackageFrontendField($module, $controller, $action . '_contact_directly', $mem_user_id, $mem_role_id)) {
+                                    $contact_directly = $packages->getPackageFrontendFieldValue($module, $controller, $action . '_contact_directly', $mem_user_id, $mem_role_id);
+                                } else {
+                                    $contact_directly = 'Tidak';
+                                }
+                                if ($contact_directly == 'Ya') {
+                                    ?>                                   
+                                    <?php
+                                    if ($packages->isPackageFrontendField($module, $controller, $action . '_certified', $mem_user_id, $mem_role_id)) {
+                                        $allow_certified = $packages->getPackageFrontendFieldValue($module, $controller, $action . '_certified', $mem_user_id, $mem_role_id);
+                                    } else {
+                                        $allow_certified = 'Tidak';
+                                    }
+                                    if ($packages->isPackageFrontendField($module, $controller, $action . '_allow_logo', $mem_user_id, $mem_role_id)) {
+                                        $allow_logo = $packages->getPackageFrontendFieldValue($module, $controller, $action . '_allow_logo', $mem_user_id, $mem_role_id);
+                                    } else {
+                                        $allow_logo = 'Tidak';
+                                    }
+                                    ?>
+                                    <?php
+                                    if ($allow_logo == 'Ya') {
+                                        if (is_array($owner_info)) {
+                                            if ($owner_info['company_logo']) {
+                                                $company_logo_path = $owner_forms_info['attach_file_path'];
+                                                $member_photo_paths = 'data/frontImages/attachFiles';
+                                                $company_logo = $member_photo_paths . '/' . $owner_info['company_logo'];
+                                                $company_logo_width = ($default_form_info['company_logo_width_default']) ? 'width="' . $default_form_info['company_logo_width_default'] . '"' : '';
+                                                $company_logo_height = ($default_form_info['company_logo_height_default']) ? 'height="' . $default_form_info['company_logo_height_default'] . '"' : '';
+                                            } else {
+                                                if (!empty($default_form_info)) {
+                                                    $company_logo = $this->serverUrl() . $this->baseUrl() . '/' . $default_form_id[0]['attach_file_path'] . '/' . $default_form_info['company_logo_default'];
+                                                    $company_logo_width = ($default_form_info['company_logo_width_default']) ? 'width="' . $default_form_info['company_logo_width_default'] . '"' : '';
+                                                    $company_logo_height = ($default_form_info['company_logo_height_default']) ? 'height="' . $default_form_info['company_logo_height_default'] . '"' : '';
+                                                } else {
+                                                    $company_logo = 'images/frontImages/property/design_images/no_company_logo.gif';
+                                                    $company_logo_width = 'width="80"';
+                                                    $company_logo_height = 'height="60"';
+                                                }
+                                            }
+                                        } else {
+                                            if (!empty($default_form_info)) {
+                                                $company_logo = $this->serverUrl() . $this->baseUrl() . '/' . $default_form_id[0]['attach_file_path'] . '/' . $default_form_info['company_logo_default'];
+                                                $company_logo_width = ($default_form_info['company_logo_width_default']) ? 'width="' . $default_form_info['company_logo_width_default'] . '"' : '';
+                                                $company_logo_height = ($default_form_info['company_logo_height_default']) ? 'height="' . $default_form_info['company_logo_height_default'] . '"' : '';
+                                            } else {
+                                                $company_logo = 'images/frontImages/property/design_images/no_company_logo.gif';
+                                                $company_logo_width = 'width="80"';
+                                                $company_logo_height = 'height="60"';
+                                            }
+                                        }
+                                        ?>
+                                        <div class="pull-center margin-bottom-12">
+                                            <img src="<?php echo $company_logo; ?>" <?php echo $company_logo_width . ' ' . $company_logo_height; ?> class="company-logo" />
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+
+                                    <?php
+                                    if (is_array($owner_info)) {
+                                        ?> 
+                                        <div class="panel panel-default">
+
+                                            <!-- Table -->
+                                            <table class="table">
+                                                <tbody>                                                  
+                                                    <tr>
+                                                        <td class="label-table"><?php echo $this->translator->translator('property_front_page_label_company'); ?></td>
+                                                        <td class="value-table">
+                                                            <?php
+                                                            if ($owner_info['companyName']) {
+                                                                echo $this->escape($owner_info['companyName']);
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="label-table"><?php echo $this->translator->translator('property_front_page_label_address'); ?></td>
+                                                        <td class="value-table">
+                                                            <?php
+                                                            if ($owner_info['address']) {
+                                                                echo " " . ucwords($this->escape($owner_info['address']));
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="label-table"><?php echo $this->translator->translator('property_front_page_label_city'); ?></td>
+                                                        <td class="value-table">
+                                                            <?php
+                                                            if ($owner_info['city']) {
+                                                                echo " " . ucwords($this->escape($owner_info['city']));
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="label-table"><?php echo $this->translator->translator('property_front_page_label_province'); ?></td>
+                                                        <td class="value-table">
+                                                            <?php
+                                                            if ($owner_info['state']) {
+                                                                echo " " . ucwords($this->escape($owner_info['state']));
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    if ($owner_info['country']) {
+                                                        ?>
+                                                        <tr>
+                                                            <td class="label-table"><?php echo $this->translator->translator('property_front_page_label_country'); ?></td>
+                                                            <td class="value-table"><?php echo $country_name; ?></td>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                                    if ($owner_info['phone']) {
+                                                        ?>                                                    
+                                                        <tr>
+                                                            <td class="label-table"><?php echo $this->translator->translator('property_front_page_label_phone'); ?></td>
+                                                            <td class="value-table"><?php echo $this->escape($owner_info['phone']); ?></td>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                                    if ($owner_info['website']) {
+                                                        $site_url = 'http://' . $this->escape($owner_info['website']);
+                                                        $site_name = $this->escape($owner_info['website']);
+                                                        ?> 
+                                                        <tr>
+                                                            <td class="label-table"><?php echo $this->translator->translator('property_front_page_label_web'); ?></td>
+                                                            <td class="value-table">
+                                                                <a href="<?php echo $site_url; ?>" title="<?php echo $site_name; ?>" target="_blank" rel="nofollow" class="agent-web">
+                                                                    <?php echo property_substract($site_name, 20); ?>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    <?php } ?>
+                <!--                                                    <tr>
+                                                    <td class="label-table">Label</td>
+                                                    <td class="value-table">Value</td>
+                                                </tr>-->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="pull-center margin-top-4">
+                                            <span class="btn btn-xs btn-info">
+                                                <a href="<?php
+                                                if (is_array($owner_info)) {
+                                                    echo 'mailto:' . strtolower($this->escape($owner_info['username']));
+                                                } else {
+                                                    echo 'mailto:' . strtolower($this->escape($this->view_datas['house_email']));
+                                                }
+                                                ?>" class="white"><?php echo $this->translator->translator('property_front_page_label_email_lang'); ?></a>
+                                            </span>
+                                            <span class="btn btn-xs btn-primary"><a class="white" href="<?php echo $this->baseUrl() . 'Agent-Property-List/' . $mem_user_id; ?>"><?php echo $this->translator->translator('stock_of_maids'); ?></a></span>
+                                        <hr/>
+                                <?php if ($global_conf['payment_system'] == 'On') { ?>
+                                    <span class="btn btn-success btn-lg"><a class="white no-decoration" href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'emails', 'action' => 'owner', 'property_title' => $this->escape($this->view_datas['property_title']), 'form_id' => $this->translator->translator('contact_owner_form_id')), 'Contact-Owner/:property_title/:form_id', true); ?>"><?php echo $this->translator->translator('property_front_page_book_btn'); ?></a></span>
+                                <?php } ?> 
+                                        </div>                                
+                                        <!-- /Email -->
+                                    <?php } ?>
+                                    <?php
+                                }
+                                ?>
+
+                                <!-- Certificate -->
+                                
+                                <div class="pull-center certificate">
+                                    <?php
+                                    if ($allow_certified == 'Ya') {
+                                        if ($packages->isPackageFrontendField($module, $controller, $action . '_pic_certi', $mem_user_id, $mem_role_id)) {
+                                            $package_pic_certi_info = $packages->getPackageFrontendFieldDetailsValue($module, $controller, $action . '_pic_certi', $mem_user_id, $mem_role_id);
+                                            if (!empty($package_pic_certi_info)) {
+                                                $forms_info = $forms_db->getFormsInfo($package_pic_certi_info['form_id']);
+                                                if (!empty($package_pic_certi_info['field_value'])) {
+                                                    $package_pic_certi = $this->serverUrl() . $this->baseUrl() . '/' . $forms_info['attach_file_path'] . '/' . $package_pic_certi_info['field_value'];
+                                                    $package_pic_certi_width = $packages->getPackageFrontendFieldValue($module, $controller, $action . '_pic_certi_width', $mem_user_id, $mem_role_id);
+                                                    $package_pic_certi_height = $packages->getPackageFrontendFieldValue($module, $controller, $action . '_pic_certi_height', $mem_user_id, $mem_role_id);
+                                                    $package_pic_certi_width_field = ($package_pic_certi_width) ? 'width="' . $package_pic_certi_width . '"' : '';
+                                                    $package_pic_certi_height_field = ($package_pic_certi_height) ? 'height="' . $package_pic_certi_height . '"' : '';
+                                                } else {
+                                                    $package_pic_certi = $this->serverUrl() . $this->baseUrl() . '/' . $default_form_id[0]['attach_file_path'] . '/' . $default_form_info['property_frontend_details_pic_certi_default'];
+                                                    $package_pic_certi_width_field = ($default_form_info['property_frontend_details_pic_certi_width_default']) ? 'width="' . $default_form_info['property_frontend_details_pic_certi_width_default'] . '"' : '';
+                                                    $package_pic_certi_height_field = ($default_form_info['property_frontend_details_pic_certi_height_default']) ? 'height="' . $default_form_info['property_frontend_details_pic_certi_height_default'] . '"' : '';
+                                                }
+                                            } else {
+                                                $package_pic_certi = $this->serverUrl() . $this->baseUrl() . '/' . $default_form_id[0]['attach_file_path'] . '/' . $default_form_info['property_frontend_details_pic_certi_default'];
+                                                $package_pic_certi_width_field = ($default_form_info['property_frontend_details_pic_certi_width_default']) ? 'width="' . $default_form_info['property_frontend_details_pic_certi_width_default'] . '"' : '';
+                                                $package_pic_certi_height_field = ($default_form_info['property_frontend_details_pic_certi_height_default']) ? 'height="' . $default_form_info['property_frontend_details_pic_certi_height_default'] . '"' : '';
+                                            }
+                                        } else {
+                                            $package_pic_certi = null;
+                                        }
+                                        if ($package_pic_certi) {
+                                            ?>
+                                            <img src="<?php echo $package_pic_certi; ?>" <?php echo $package_pic_certi_width_field . ' ' . $package_pic_certi_height_field; ?> />
+
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                    <p><?php
+                                        if ($allow_certified == 'Ya') {
+                                            echo $this->translator->translator('property_front_page_label_verified');
+                                        }
+                                        ?></p>
+                                </div>
+                                <!-- Certificate Up -->
+
+                            </div>
+                            <!--Content END UP -->
+                            <!--Else Member Condition Start-->
+                            <?php
+                        } else {
+                            ?>
+                            <div class="margin-top-bottom-8">
+                                <div class="mod-container package-info"><?php echo $this->translator->translator('member_only'); ?></div> 
+                                <div class="pull-center">
+                                    <span><a href="Register" class="btn btn-xs btn-primary"><?php echo $this->translator->translator('member_only_register'); ?></a></span>
+                                    <span><a href="Frontend-Login" class="btn btn-xs btn-success"><?php echo $this->translator->translator('login'); ?></a></span>
+                                    <hr/>
+                                    <?php if ($global_conf['payment_system'] == 'On') { ?>
+                                        <span class="btn btn-success btn-lg"><a class="white no-decoration" href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'emails', 'action' => 'owner', 'property_title' => $this->escape($this->view_datas['property_title']), 'form_id' => $this->translator->translator('contact_owner_form_id')), 'Contact-Owner/:property_title/:form_id', true); ?>"><?php echo $this->translator->translator('property_front_page_book_btn'); ?></a></span>
+                                        <?php } ?> 
+                                </div>                                        
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>                              
+                </div>
+            </div>
+        </div>

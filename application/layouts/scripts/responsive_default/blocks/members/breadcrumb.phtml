@@ -1,0 +1,82 @@
+<?php
+class breadcrumb
+{
+	protected	$_front_template;
+	protected	$_view;
+	protected	$_breadcrumb;
+	
+	public function __construct($view) 
+	{
+		$this->_front_template = Zend_Registry::get('front_template'); 
+		$this->_view =	$view;	
+		$this->_breadcrumb = Eicra_Global_Variable::getSession()->breadcrumb;
+		
+		echo $this->_view->headScript()->setFile('application/layouts/scripts/'.$this->_front_template['theme_folder'].'/vendor/scripts/js/jquery.jBreadCrumb.1.1.js');
+		echo $this->_view->headScript()->setFile('application/layouts/scripts/'.$this->_front_template['theme_folder'].'/vendor/scripts/js/jquery.easing.1.3.js');
+		echo $this->_view->headLink()->setStylesheet('application/layouts/scripts/'.$this->_front_template['theme_folder'].'/css/breadcrumb.css');
+	}
+	
+	public function truncate($phrase,$start_words, $max_words)
+	{
+	   $phrase_array = explode(' ',$phrase);
+	   if(count($phrase_array) > $max_words && $max_words > 0)
+		  $phrase = implode(' ',array_slice($phrase_array, $start_words, $max_words)).'...';  
+	   return $phrase;
+	}
+	
+	public function class_body()
+	{
+?>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			$("#breadCrumb3").jBreadCrumb();
+		})
+	</script>
+    <div class="breadCrumbHolder module">
+        <div id="breadCrumb3" class="breadCrumb module">
+            <ul>
+                <li>
+                    <a href="<?php echo $this->_view->serverUrl().$this->_view->baseUrl(); ?>">Home</a>
+                </li>
+                <?php
+                if($this->_breadcrumb && is_array($this->_breadcrumb))
+                {
+                    $count_b = count($this->_breadcrumb) - 1;
+                    foreach($this->_breadcrumb as $key => $breadcrumb_arr)
+                    {
+                ?>
+                    <li>
+                        <?php
+                        if($count_b == $key)
+                        {
+                            echo $this->_view->escape($breadcrumb_arr[0]);
+                        }
+                        else
+                        {
+                        ?>
+                        	<a href="<?php echo $this->_view->escape($breadcrumb_arr[1]); ?>"><?php echo $this->_view->escape($breadcrumb_arr[0]); ?></a>
+                        <?php
+                        }
+                        ?>
+                    </li>
+                <?php
+                    }
+                }
+                ?>           
+            </ul>
+        </div>
+    </div>
+<?php			
+	}
+}
+try
+{
+	$member_breadcrumb_class = new breadcrumb($this);
+	$member_breadcrumb_class->class_body();
+}
+catch(Exception $e)
+{
+	echo $e->getMessage();
+}	
+?>

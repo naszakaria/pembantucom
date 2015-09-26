@@ -1,0 +1,190 @@
+<?php
+class property_recent_box
+{
+	protected	$_group = 1;
+	protected	$_limit = 2;
+	protected	$_DBconn;
+	protected	$_front_template;
+	protected	$_view;
+	protected	$_business_type_db;
+	protected	$_currency;
+	protected	$_cat_Info;
+	protected	$_mem_db;
+	protected	$_country_db;
+	protected	$_area_db;
+	protected	$_group_db;
+	protected	$translator;
+	
+	public function __construct($view) 
+	{
+		$this->_front_template = Zend_Registry::get('front_template'); 
+		$this->_view =	$view;
+		
+		//DB Connection
+		$this->_DBconn = Zend_Registry::get('msqli_connection');
+		$this->_DBconn->getConnection();
+		
+		$this->translator  = Zend_Registry::get('translator');
+		
+		//DD Class
+		$global_conf 				= Zend_Registry::get('global_conf');
+		$this->_currency 			= new Zend_Currency($global_conf['default_locale']);
+		$this->_business_type_db 	= new Property_Model_DbTable_BusinessType();
+		$this->_cat_Info 			= new Property_Model_DbTable_Category();
+		$this->_area_db	 			= new Property_Model_DbTable_Area();
+		$this->_mem_db 				= new Members_Model_DbTable_MemberList();
+		$this->_country_db 			= new Property_Model_DbTable_Country();
+		$this->_group_db 			= new Property_Model_DbTable_PropertyGroup();
+	}
+	
+	public function truncate($phrase,$start_words, $max_words)
+	{
+	   $phrase_array = explode(' ',$phrase);
+	   if(count($phrase_array) > $max_words && $max_words > 0)
+		  $phrase = implode(' ',array_slice($phrase_array, $start_words, $max_words)).'...';  
+	   return $phrase;
+	}
+	
+	public function class_body()
+	{
+			$groupInfo	=	$this->_group_db->getGroupName($this->_group);
+			
+			$select = $this->_DBconn->select()
+						->from(array('pp' => Zend_Registry::get('dbPrefix').'property_page'), array('*'))
+						->where('pp.active = ?', '1')
+						//->where('pp.group_id = ?', $this->_group)
+						->order("pp.".$groupInfo['latest_file_sort']." ".$groupInfo['latest_file_order'])
+						->joinLeft(array('ct' => Zend_Registry::get('dbPrefix').'cities'), 'pp.area_id = ct.city_id', array('city' => 'ct.city'))
+						->limit($this->_limit);
+			$property_info =  $select->query()->fetchAll();	
+			$maximum_stars_digit = $this->translator->translator('maximum_stars_digit', '', 'Property');
+?>
+<script type="text/javascript">	
+$(function() {
+	$('a.toggle_recent_pro').click(function() {
+		var self = this;
+		$('#recent_pro_list').slideToggle(500,function () {
+			var src = $(self).children("img").attr('src');
+			var input = (src == 'application/layouts/scripts/<?php echo $this->_front_template["theme_folder"]; ?>/images/round_arrow_down.gif') ? 'application/layouts/scripts/<?php echo $this->_front_template["theme_folder"]; ?>/images/round_arrow.gif' : 'application/layouts/scripts/<?php echo $this->_front_template["theme_folder"]; ?>/images/round_arrow_down.gif';
+			$(self).children("img").attr('src',input);
+		});
+		return false;
+	  });			
+});
+</script>
+
+<div class="block block-recent">
+<!--<h3><?php //echo $this->translator->translator('block_recent_title','','', $this->_front_template['theme_folder']); ?></h3>-->
+
+<?php
+if($property_info)
+{
+	foreach($property_info as $entry)
+	{
+		$property_image_val_arr = explode(',',$entry['property_image']);
+		$property_image_no = (!empty($property_image_val_arr[0])) ? count($property_image_val_arr) : '0';
+		if($this->_view->escape($entry['property_primary_image']))
+		{ 
+			$thumb_image = 'data/frontImages/property/property_image/'.$this->_view->escape($entry['property_primary_image']); 
+		}
+		else
+		{ 
+			if($this->_view->escape($entry['property_image']))
+			{					
+				$thumb_image = 'data/frontImages/property/property_image/'.$this->_view->escape($property_image_val_arr[0]); 
+			}
+			else
+			{
+				$thumb_image = 'application/layouts/scripts/'.$this->_front_template['theme_folder'].'/images/mod_property_img/no_image.png'; 
+			}		
+		}
+		if($groupInfo['file_thumb_width'] && $groupInfo['file_thumb_resize_func'] != 'resizeToHeight')
+		{ 
+			$width = 'width="'.$this->_view->escape($groupInfo['file_thumb_width']).'"'; 
+		}
+		else
+		{
+			$width = '';
+		} 
+		if($groupInfo['file_thumb_height'] && $groupInfo['file_thumb_resize_func'] != 'resizeToWidth')
+		{ 
+			$height = 'height="'.$this->_view->escape($groupInfo['file_thumb_height']).'"'; 
+		} 
+		else
+		{
+			$height = '';
+		}
+		
+		$type_info = $this->_business_type_db->getBusinessTypeInfo($entry['property_type']);
+?>
+	
+        <div class="panel panel-default">
+            <div class="panel-body">
+                    <h6><a href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'details','property_title' => $this->_view->escape($entry['property_title']) ),'Property-details/:property_title',true); ?>" title="<?php echo $this->_view->escape($entry['property_name']); ?>" link="" class="preview"><?php echo $this->truncate($this->_view->escape($entry['property_name']), 0, 10); ?></a></h6><span class="location"> - <a href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'details','property_title' => $this->_view->escape($entry['property_title']) ),'Property-details/:property_title',true); ?>"><?php echo $this->_view->escape($entry['city']); ?></a></span><br>
+                    <figure>
+                    	<div class="thumb">
+                            <a href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'details','property_title' => $this->_view->escape($entry['property_title']) ),'Property-details/:property_title',true); ?>" link="<?php echo $thumb_image; ?>"  title="<?php echo $this->_view->escape($entry['property_name']); ?>" width="250" class="preview"><img src="<?php echo $thumb_image; ?>" width="205" height="145" border="0" /></a>
+                            <div class="type"><?php if($type_info && $type_info['business_type']){ echo $this->_view->escape($type_info['business_type']); } ?></div>
+                            <div class="photo-count-container">
+                                <div class="photo-count"><a href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'details','property_title' => $this->_view->escape($entry['property_title']), 'tab' => '1' ),'Property-details/:property_title/:tab',true); ?>"><span class="glyphicon glyphicon-camera"></span> <?php echo $this->translator->translator('property_front_page_property_photo_no', $property_image_no, 'Property'); ?></a></div>
+                            </div>
+                        </div>
+                    </figure>
+            
+                    <div class="details">
+                        <span class="price"><?php echo /*$this->translator->translator('partial_featured_property_price').' '.*/$this->_currency->getSymbol().''.$this->_view->escape($entry['property_price']); ?></span>
+                        <div class="ratings">
+                        <?php
+                            for($i = 1; $i < $maximum_stars_digit; $i++)
+                            {
+                                $property_stars = ($i <= $this->_view->escape($entry['stars'])) ? "<img src='application/layouts/scripts/".$this->_front_template['theme_folder']."/images/mod_property_img/star-small-active.png' border='0' />" : "<img src='application/layouts/scripts/".$this->_front_template['theme_folder']."/images/mod_property_img/star-small-inactive.png' border='0' />";
+                                echo $property_stars.'&nbsp;';
+                            }
+                        ?>
+                        </div>
+                        <p><?php echo $this->truncate($this->_view->escape(strip_tags($entry['property_desc'])), 0, 18); ?></p>
+                        <div class="text-center"><a href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'details','property_title' => $this->_view->escape($entry['property_title']) ),'Property-details/:property_title',true); ?>" class="btn btn-success"><?php echo $this->translator->translator('block_details_link','','', $this->_front_template['theme_folder']); ?></a></div>
+                    </div>  
+            </div>
+        
+            <div class="panel-footer">
+                <span>
+                    <i class="property-icon icon-area"></i> <?php echo $this->_view->escape($entry['property_size']); ?> <?php echo $this->translator->translator('block_search_size_unit', '','', $this->_front_template['theme_folder']); ?>
+                </span>
+                <span class="no-r-bdr">
+                    <i class="property-icon icon-room"></i> <?php echo (int)$this->_view->escape($entry['feature_room_no']); ?> <?php echo $this->translator->translator('partial_featured_property_room'); ?>
+                </span>
+                <span>
+                    <i class="property-icon icon-bath"></i> <?php echo (int)$this->_view->escape($entry['feature_bathroom']); ?> <?php echo $this->translator->translator('partial_featured_property_bathroom'); ?>
+                </span>
+                
+                <span class="no-b-bdr no-r-bdr">
+                    <i class="property-icon icon-garage"></i> <?php echo (int)$this->_view->escape($entry['feature_garage']); ?> <?php echo $this->translator->translator('partial_featured_property_garage', '','', $this->_front_template['theme_folder']); ?>
+                </span>
+            </div>
+        </div>
+    
+<?php
+	}
+}
+?> 
+
+		<a class="btn btn-block btn-warning" href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'category','group_id' => $this->_group ),'All-Property-List/*',true); ?>"><?php echo $this->translator->translator('block_tab_more',$this->_view->escape($groupInfo['property_name']),'', $this->_front_template['theme_folder']); ?></a></span>
+
+</div>
+
+<?php
+	}
+}
+
+
+try
+{
+	$property_recent_box_class = new property_recent_box($this);
+	$property_recent_box_class->class_body();
+}
+catch(Exception $e)
+{
+	echo $e->getMessage();
+}
+?>

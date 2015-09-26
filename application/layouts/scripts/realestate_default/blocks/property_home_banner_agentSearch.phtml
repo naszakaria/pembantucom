@@ -1,0 +1,92 @@
+<?php
+class property_agent_search
+{
+	protected	$_group = 1;
+	protected	$_limit = 1;
+	protected	$_DBconn;
+	protected	$_front_template;
+	protected	$_view;
+        protected	$translator;
+	
+	public function __construct($view) 
+	{
+		$this->_front_template = Zend_Registry::get('front_template'); 
+		$this->_view =	$view;
+		//DB Connection
+		$this->_DBconn = Zend_Registry::get('msqli_connection');
+		$this->_DBconn->getConnection();
+                $this->translator  = Zend_Registry::get('translator');
+	}
+	
+	public function truncate($phrase,$start_words, $max_words)
+	{
+	   $phrase_array = explode(' ',$phrase);
+	   if(count($phrase_array) > $max_words && $max_words > 0)
+		  $phrase = implode(' ',array_slice($phrase_array, $start_words, $max_words)).'...';  
+	   return $phrase;
+	}
+	
+	public function class_body()
+	{
+		$translator = Zend_Registry::get('translator');	
+		$property_front_page_agent_id = $translator->translator('property_front_page_agent_id','','Property');
+		$property_front_page_agent_id_arr = explode(',', $property_front_page_agent_id);
+	
+	?>
+
+
+
+<div class="block-search block-agent-search">
+	<div class="block-content">
+    	<h2><?php echo $translator->translator('block_agent_search_title','','', $this->_front_template['theme_folder']); ?></h2>
+		<div class="agent-bg">
+			<form id="form1" name="form1" method="post" action="<?php echo $this->_view->url( array('module' => 'Property', 'controller' => 'Frontend', 'action'     => 'owners' ), 'Property-Agent-Search',    true) ?>">
+                <h4><?php echo $translator->translator('block_agent_search_label','','', $this->_front_template['theme_folder']); ?></h4>
+                <p>
+                <?php
+				if($property_front_page_agent_id_arr)
+				{
+                  	foreach($property_front_page_agent_id_arr as $property_front_page_agent_id_key => $agents)
+                    {
+                    $agent_arr = explode(';;', $agents);
+                    $checked = ($property_front_page_agent_id_key == '0') ? 'checked="checked"' : '';
+                ?>
+                <input type="hidden" name="role_id" id="role_id_block"  <?php echo $checked; ?> value="<?php echo $agent_arr[0]; ?>"/><?php echo $agent_arr[1]; ?>
+                <?php
+                    }
+				}
+                ?>
+                </p>
+                
+                  <div class="clear"></div>
+				<input type="submit" name="button" id="button" value="<?php echo $translator->translator('block_agent_search_btn','','', $this->_front_template['theme_folder']); ?>" />
+			</form>	
+                  	
+                  
+                  
+                  
+                  <form>                 
+                  
+                    <p><?php echo $translator->translator('block_agent_search_unregistered','','', $this->_front_template['theme_folder']); ?></p>  
+                  
+                    <div class="button-agent">
+                      <span class="upper"><a href="<?php echo $translator->translator('block_agent_search_unregistered_url','','', $this->_front_template['theme_folder']); ?>"><?php echo $translator->translator('block_agent_search_btn','','', $this->_front_template['theme_folder']); ?></a></span>                                                      
+                    </div>
+                  </form>
+       	</div>
+	</div>
+</div>
+
+	<?php
+	}
+}
+try
+{
+	$property_agent_search_class = new property_agent_search($this);
+	$property_agent_search_class->class_body();
+}
+catch(Exception $e)
+{
+	echo $e->getMessage();
+}
+?>

@@ -1,0 +1,430 @@
+<div class="row">
+    <div class="col-md-6">
+        
+    </div>
+    <div class="col-md-6">
+        
+    </div>
+</div>
+<div class="products-middle-tab-area">
+                <!-- Slide Show Start -->
+                <div class="products-slideshow">
+                    <?php
+                    $property_image_val_arr = explode(',', $this->view_datas['property_image']);
+                    if ($this->escape($this->view_datas['property_primary_image'])) {
+                        $thumb_image = 'data/frontImages/property/property_image/' . $this->escape($this->view_datas['property_primary_image']);
+                    } else {
+                        if ($this->escape($this->view_datas['property_image'])) {
+                            $thumb_image = 'data/frontImages/property/property_image/' . $this->escape($property_image_val_arr[0]);
+                        } else {
+                            $thumb_image = 'application/layouts/scripts/' . $front_template['theme_folder'] . '/images/mod_property_img/no_image.png';
+                        }
+                    }
+                    if ($this->group_datas['img_big_width'] && ($this->group_datas['img_big_resize_func'] == 'resizeToWidth' || $this->group_datas['img_big_resize_func'] == 'resize' )) {
+                        $width = 'width="' . $this->escape($this->group_datas['img_big_width']) . '"';
+                    } else {
+                        $width = '';
+                    }
+                    if ($this->group_datas['img_big_height'] && ( $this->group_datas['img_big_resize_func'] == 'resizeToHeight' || $this->group_datas['img_big_resize_func'] == 'resize' )) {
+                        $height = 'height="' . $this->escape($this->group_datas['img_big_height']) . '"';
+                    } else {
+                        $height = '';
+                    }
+                    ?>
+
+                    <div id="container">
+                        <div id="gallery" class="ad-gallery">
+                            <div class="ad-image-wrapper"></div>
+                            <div class="ad-controls"></div>
+                            <div class="ad-nav">
+                                <div class="ad-thumbs">
+                                    <ul class="ad-thumb-list" style="min-width:100%;">
+                                        <li>
+                                            <a href="<?php echo $thumb_image; ?>">
+                                                <img src="<?php echo $thumb_image; ?>"  width="70" height="80" title="<?php echo $this->escape($this->propertyForm->property_name->getValue()); ?>" alt="<?php echo $this->escape($this->escape($this->view_datas['house_location']) . ', ' . $state_info['state_name']) . ', ' . $this->escape($country_info['value']); ?>"  class="image0" /></a>
+                                            </a>
+                                        </li>
+                                        <?php
+                                        foreach ($property_image_val_arr as $key => $value) {
+                                            if ($thumb_image != 'data/frontImages/property/property_image/' . $value) {
+                                                ?>
+                                                <li> 
+                                                    <a href="data/frontImages/property/property_image/<?php echo $value; ?>"> 
+                                                        <img src="data/frontImages/property/property_image/<?php echo $value; ?>"  width="70" height="80" title="<?php echo $this->escape($this->propertyForm->property_name->getValue()); ?>" alt="<?php echo $this->escape($this->escape($this->view_datas['house_location']) . ', ' . $state_info['state_name']) . ', ' . $this->escape($country_info['value']); ?>"  class="image0" /></a> 
+                                                </li>
+                                                <?php
+                                            }
+                                        }
+                                        ?>		
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="switch">
+                            <select id="switch-effect">
+                                <option value="slide-hori">Slide horizontal</option>
+                                <option value="slide-vert">Slide vertical</option>
+                                <option value="resize">Shrink/grow</option>
+                                <option value="fade">Fade</option>
+                                <option value="">None</option>
+                            </select>
+                            <a href="#" id="toggle-slideshow">Slideshow on/off</a> | <a href="#" id="toggle-description">Description on/off</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide Show End -->
+
+                <!-- Maids Match Start -->
+                <div class="match-container">
+                    <div id="matchTabs">
+                        <ul>
+                            <li><a href="<?php echo $tab_base_link; ?>#matchTabs-1"><?php echo $this->translator->translator('property_front_page_match_price'); ?></a></li>                        
+                            <!--<li><a href="#matchTabs-2"><?php //echo $this->translator->translator('property_front_page_match_state');                     ?></a></li>-->
+                            <li><a href="<?php echo $tab_base_link; ?>#matchTabs-3"><?php echo $this->translator->translator('property_front_page_match_agent'); ?></a></li>
+                            <li><a href="<?php echo $tab_base_link; ?>#matchTabs-4"><?php echo $this->translator->translator('property_front_page_match_related'); ?></a></li>
+                        </ul>
+                        <div class="match-tab-container" id="matchTabs-1">
+                            <?php
+                            $propertyMatchPrice = $property_db->getPropertyMatchPrice($this->escape($this->view_datas['id']), $this->price($this->escape($this->view_datas['property_price'])), 10);
+                            if ($propertyMatchPrice) {
+                                foreach ($propertyMatchPrice as $match_info) {
+                                    ?>
+                                    <div class="products-match">
+                                        <span><a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($match_info['property_title'])), 'Property-details/:property_title', true); ?>"   title="<?php echo $this->escape($match_info['property_name']); ?>" width="300"><?php echo $this->escape($match_info['property_name']); ?></a></span>
+                                        <div class="products-star">
+                                            <?php
+                                            $property_stars = (int) $this->escape($match_info['stars']);
+
+                                            for ($i = 1; $i < $maximum_stars_digit; $i++) {
+                                                $print_stars = ($i <= $property_stars ) ? "<img src='application/layouts/scripts/" . $front_template['theme_folder'] . "/images/mod_property_img/star-small-active.png' border='0' />" : "<img src='application/layouts/scripts/" . $front_template['theme_folder'] . "/images/mod_property_img/star-small-inactive.png' border='0' />";
+                                                echo $print_stars . '&nbsp;';
+                                            }
+                                            ?>									
+                                        </div>
+
+                                        <?php
+                                        if (!empty($this->group_datas['review_id'])) {
+                                            $review_match_no = htmlentities($this->review_helper->getNumOfReviews($match_info['id'], $this->group_datas['review_id']));
+                                            ?>
+                                            <div class="products-review">
+                                                <div class="products-review-count"><a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($match_info['property_title']), 'tab' => 7), 'Property-details/:property_title/:tab', true); ?>" ><?php echo $this->translator->translator('common_review_no', $review_match_no); ?></a>&nbsp;</div>
+                                                <div class="products-write-review"><a href="<?php echo $this->url(array('module' => 'Review', 'controller' => 'frontend', 'action' => 'write', 'group_id' => $this->escape($this->group_datas['review_id']), Eicra_File_Constants::ITEM_ID => $match_info['id']), 'Review-Write/:group_id/:item_id', true); ?>"><?php echo $this->translator->translator('common_write_review'); ?></a></div>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+
+                                        <div class="thumb">
+                                            <a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($match_info['property_title'])), 'Property-details/:property_title', true); ?>" class="preview" link="data/frontImages/property/property_image/<?php echo $match_info['property_primary_image']; ?>"  title="<?php echo $this->escape($match_info['property_name']); ?>" width="150"><img src="data/frontImages/property/property_image/<?php echo $match_info['property_primary_image']; ?>"  width="40" height="50" border="0" alt="<?php echo strip_tags($this->escape($match_info['property_name'])); ?>" /></a>
+                                        </div>
+
+                                        <div class="products-desc">
+                                            <?php
+                                            $property_price_arr = explode(',', $match_info['property_price']);
+
+                                            foreach ($property_price_arr as $price_key => $price_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_price') . ' ' . number_format($price_value, 0, ',', '.') . '' . $this->translator->translator('property_front_per_month') . '';
+                                                if ($price_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                            <!--Age-->
+                                            <?php
+                                            $property_bathroom_arr = explode(',', $match_info['feature_bathroom']);
+
+                                            foreach ($property_bathroom_arr as $bathroom_key => $bathroom_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_bathroom') . ' ' . $bathroom_value . '&nbsp;' . $this->ProductForm->feature_room_no->getAttrib('right_label') . '';
+                                                if ($bathroom_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                            <!--Experience-->
+                                            <?php
+                                            $property_experience_arr = explode(',', $match_info['feature_room_no']);
+
+                                            foreach ($property_experience_arr as $experience_key => $experience_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_experience') . ' ' . $experience_value . '&nbsp;' . $this->ProductForm->feature_room_no->getAttrib('right_label') . '';
+                                                if ($experience_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                            <!--Location-->
+                                            <?php
+                                            $property_location_arr = explode(',', $match_info['house_location']);
+
+                                            foreach ($property_location_arr as $location_key => $location_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_location') . ' ' . $location_value . '';
+                                                if ($location_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                        <div class="match-tab-container" id="matchTabs-2" style="display:none;">
+                            <?php
+                            $propertyMatchRegion = $property_db->getPropertyMatchRegion($this->escape($this->view_datas['id']), $this->escape($this->view_datas['state_id']), 10);
+                            if ($propertyMatchRegion) {
+                                foreach ($propertyMatchRegion as $match_info) {
+                                    ?>
+                                    <div class="products-match">                           
+                                        <span><a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($match_info['property_title'])), 'Property-details/:property_title', true); ?>"  title="<?php echo $this->escape($match_info['property_name']); ?>" width="300"><?php echo $this->escape($match_info['property_name']); ?></a></span>
+
+                                        <div class="products-star">
+                                            <?php
+                                            $property_stars = (int) $this->escape($match_info['stars']);
+
+                                            for ($i = 1; $i < $maximum_stars_digit; $i++) {
+                                                $print_stars = ($i <= $property_stars ) ? "<img src='application/layouts/scripts/" . $front_template['theme_folder'] . "/images/mod_property_img/star-small-active.png' border='0' />" : "<img src='application/layouts/scripts/" . $front_template['theme_folder'] . "/images/mod_property_img/star-small-inactive.png' border='0' />";
+                                                echo $print_stars . '&nbsp;';
+                                            }
+                                            ?>										
+                                        </div>
+
+                                        <?php
+                                        if (!empty($this->group_datas['review_id'])) {
+                                            $review_match_no = htmlentities($this->review_helper->getNumOfReviews($match_info['id'], $this->group_datas['review_id']));
+                                            ?>
+                                            <div class="products-review">
+                                                <div class="products-review-count"><a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($match_info['property_title']), 'tab' => 7), 'Property-details/:property_title/:tab', true); ?>" ><?php echo $this->translator->translator('common_review_no', $review_match_no); ?></a>&nbsp;</div>
+                                                <div class="products-write-review"><a href="<?php echo $this->url(array('module' => 'Review', 'controller' => 'frontend', 'action' => 'write', 'group_id' => $this->escape($this->group_datas['review_id']), Eicra_File_Constants::ITEM_ID => $match_info['id']), 'Review-Write/:group_id/:item_id', true); ?>"><?php echo $this->translator->translator('common_write_review'); ?></a></div>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+
+                                        <div class="thumb">
+                                            <a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($match_info['property_title'])), 'Property-details/:property_title', true); ?>" class="preview" link="data/frontImages/property/property_image/<?php echo $match_info['property_primary_image']; ?>"  title="<?php echo $this->escape($match_info['property_name']); ?>" width="300"><img src="data/frontImages/property/property_image/<?php echo $match_info['property_primary_image']; ?>"  width="70" height="50" border="0" alt="<?php echo strip_tags($this->escape($match_info['property_name'])); ?>" /></a>
+                                        </div>
+
+                                        <div class="products-desc">
+                                            <?php
+                                            $related_feature_amenities_arr = explode(',', $match_info['feature_amenities']);
+                                            foreach ($related_feature_amenities_arr as $facilities_key => $facilities_value) {
+                                                echo $this->escape($facilities_value) . '<br />';
+                                                if ($facilities_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                            ?>		   
+                        </div>
+                        <div class="match-tab-container" id="matchTabs-3">
+                            <?php
+                            $propertyMatchAgent = $property_db->getPropertyMatchAgent($this->escape($this->view_datas['id']), $this->escape($this->view_datas['property_owner']), 10);
+                            if ($propertyMatchAgent) {
+                                foreach ($propertyMatchAgent as $match_info) {
+                                    ?>	
+                                    <div class="products-match">
+                                        <span><a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($match_info['property_title'])), 'Property-details/:property_title', true); ?>" title="<?php echo $this->escape($match_info['property_name']); ?>" width="300"><?php echo $this->escape($match_info['property_name']); ?></a></span>
+
+                                        <div class="products-star">
+                                            <?php
+                                            $property_stars = (int) $this->escape($match_info['stars']);
+
+                                            for ($i = 1; $i < $maximum_stars_digit; $i++) {
+                                                $print_stars = ($i <= $property_stars ) ? "<img src='application/layouts/scripts/" . $front_template['theme_folder'] . "/images/mod_property_img/star-small-active.png' border='0' />" : "<img src='application/layouts/scripts/" . $front_template['theme_folder'] . "/images/mod_property_img/star-small-inactive.png' border='0' />";
+                                                echo $print_stars . '&nbsp;';
+                                            }
+                                            ?>								
+                                        </div>
+
+                                        <?php
+                                        if (!empty($this->group_datas['review_id'])) {
+                                            $review_match_no = htmlentities($this->review_helper->getNumOfReviews($match_info['id'], $this->group_datas['review_id']));
+                                            ?>
+                                            <div class="products-review">							
+                                                <div class="products-review-count"><a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($match_info['property_title']), 'tab' => 7), 'Property-details/:property_title/:tab', true); ?>"><?php echo $this->translator->translator('common_review_no', $review_match_no); ?></a>&nbsp;</div>
+                                                <div class="products-write-review"><a href="<?php echo $this->url(array('module' => 'Review', 'controller' => 'frontend', 'action' => 'write', 'group_id' => $this->escape($this->group_datas['review_id']), Eicra_File_Constants::ITEM_ID => $match_info['id']), 'Review-Write/:group_id/:item_id', true); ?>"><?php echo $this->translator->translator('common_write_review'); ?></a></div>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+
+                                        <div class="thumb">
+                                            <a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($match_info['property_title'])), 'Property-details/:property_title', true); ?>" class="preview" link="data/frontImages/property/property_image/<?php echo $match_info['property_primary_image']; ?>"  title="<?php echo $this->escape($match_info['property_name']); ?>" width="150"><img src="data/frontImages/property/property_image/<?php echo $match_info['property_primary_image']; ?>"  width="40" height="50" border="0" alt="<?php echo strip_tags($this->escape($match_info['property_name'])); ?>" /></a>
+                                        </div>
+
+                                        <div class="products-desc">
+                                            <?php
+                                            $property_price_arr = explode(',', $match_info['property_price']);
+
+                                            foreach ($property_price_arr as $price_key => $price_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_price') . ' ' . number_format($price_value, 0, ',', '.') . '' . $this->translator->translator('property_front_per_month') . '';
+                                                if ($price_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                            <!--Age-->
+                                            <?php
+                                            $property_bathroom_arr = explode(',', $match_info['feature_bathroom']);
+
+                                            foreach ($property_bathroom_arr as $bathroom_key => $bathroom_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_bathroom') . ' ' . $bathroom_value . '&nbsp;' . $this->ProductForm->feature_room_no->getAttrib('right_label') . '';
+                                                if ($bathroom_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                            <!--Experience-->
+                                            <?php
+                                            $property_experience_arr = explode(',', $match_info['feature_room_no']);
+
+                                            foreach ($property_experience_arr as $experience_key => $experience_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_experience') . ' ' . $experience_value . '&nbsp;' . $this->ProductForm->feature_room_no->getAttrib('right_label') . '';
+                                                if ($experience_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                            <!--Location-->
+                                            <?php
+                                            $property_location_arr = explode(',', $match_info['house_location']);
+
+                                            foreach ($property_location_arr as $location_key => $location_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_location') . ' ' . $location_value . '';
+                                                if ($location_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                            ?>                    
+                        </div>
+                        <div class="match-tab-container" id="matchTabs-4">
+                            <?php
+                            if ($this->view_datas['related_items']) {
+                                $related_items_arr = explode(',', $this->view_datas['related_items']);
+
+                                foreach ($related_items_arr as $key => $value) {
+                                    $get_related_info = $property_db->getPropertiesInfo($value);
+                                    ?>
+                                    <div class="products-match">                  
+                                        <span><a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($get_related_info['property_title'])), 'Property-details/:property_title', true); ?>" title="<?php echo $this->escape($get_related_info['property_name']); ?>" width="300"><?php echo $this->escape($get_related_info['property_name']); ?></a></span>
+                                        <div class="products-star">
+                                            <?php
+                                            $property_stars = (int) $this->escape($get_related_info['stars']);
+
+                                            for ($i = 1; $i < $maximum_stars_digit; $i++) {
+                                                $print_stars = ($i <= $property_stars ) ? "<img src='application/layouts/scripts/" . $front_template['theme_folder'] . "/images/mod_property_img/star-small-active.png' border='0' />" : "<img src='application/layouts/scripts/" . $front_template['theme_folder'] . "/images/mod_property_img/star-small-inactive.png' border='0' />";
+                                                echo $print_stars . '&nbsp;';
+                                            }
+                                            ?>							
+                                        </div>
+
+                                        <?php
+                                        if (!empty($this->group_datas['review_id'])) {
+                                            $review_match_no = htmlentities($this->review_helper->getNumOfReviews($value, $this->group_datas['review_id']));
+                                            ?>
+
+                                            <div class="products-review">
+                                                <div class="products-review-count"><a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($get_related_info['property_title']), 'tab' => 7), 'Property-details/:property_title/:tab', true); ?>"><?php echo $this->translator->translator('common_review_no', $review_match_no); ?></a>&nbsp;</div>
+                                                <div class="products-write-review"><a href="<?php echo $this->url(array('module' => 'Review', 'controller' => 'frontend', 'action' => 'write', 'group_id' => $this->escape($this->group_datas['review_id']), Eicra_File_Constants::ITEM_ID => $value), 'Review-Write/:group_id/:item_id', true); ?>"><?php echo $this->translator->translator('common_write_review'); ?></a></div>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+
+                                        <div class="thumb">
+                                            <a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'details', 'property_title' => $this->escape($get_related_info['property_title'])), 'Property-details/:property_title', true); ?>" class="preview" link="data/frontImages/property/property_image/<?php echo $get_related_info['property_primary_image']; ?>"  title="<?php echo $this->escape($get_related_info['property_name']); ?>" width="150"><img src="data/frontImages/property/property_image/<?php echo $get_related_info['property_primary_image']; ?>"  width="40" height="50" border="0" alt="<?php echo strip_tags($this->escape($get_related_info['property_name'])); ?>" /></a>
+                                        </div>
+
+                                        <div class="products-desc">
+                                            <?php
+                                            $property_price_arr = explode(',', $get_related_info['property_price']);
+
+                                            foreach ($property_price_arr as $price_key => $price_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_price') . ' ' . number_format($price_value, 0, ',', '.') . '' . $this->translator->translator('property_front_per_month') . '';
+                                                if ($price_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                            <!--Age-->
+                                            <?php
+                                            $property_bathroom_arr = explode(',', $get_related_info['feature_bathroom']);
+
+                                            foreach ($property_bathroom_arr as $bathroom_key => $bathroom_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_bathroom') . ' ' . $bathroom_value . '&nbsp;' . $this->ProductForm->feature_room_no->getAttrib('right_label') . '';
+                                                if ($bathroom_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                            <!--Experience-->
+                                            <?php
+                                            $property_experience_arr = explode(',', $get_related_info['feature_room_no']);
+
+                                            foreach ($property_experience_arr as $experience_key => $experience_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_experience') . ' ' . $experience_value . '&nbsp;' . $this->ProductForm->feature_room_no->getAttrib('right_label') . '';
+                                                if ($experience_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                            <!--Location-->
+                                            <?php
+                                            $property_location_arr = explode(',', $get_related_info['house_location']);
+
+                                            foreach ($property_location_arr as $location_key => $location_value) {
+
+                                                echo $this->translator->translator('property_front_page_label_location') . ' ' . $location_value . '';
+                                                if ($location_key >= 4) {
+                                                    break;
+                                                }
+                                            }
+                                            ?>
+                                            <br/>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                            ?>                    
+                        </div>
+                    </div>
+                </div>
+                <!-- Realestate Match End -->
+            </div>

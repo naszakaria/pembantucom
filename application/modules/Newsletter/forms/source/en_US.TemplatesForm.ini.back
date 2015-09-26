@@ -1,0 +1,44 @@
+[newsletter]
+
+;Add an Newsletter Template Name element
+newsletter.elements.templates_name.type = "text"
+newsletter.elements.templates_name.options.size = 50
+newsletter.elements.templates_name.options.required = true
+newsletter.elements.templates_name.options.label = "Nama Template:"
+newsletter.elements.templates_name.options.title = "Inputkan Nama Template"
+newsletter.elements.templates_name.options.value = ""
+newsletter.elements.templates_name.options.filters.trim.filter = "StringTrim"
+
+;Add an Newsletter Template Title element
+newsletter.elements.templates_title.type = "text"
+newsletter.elements.templates_title.options.size = 50
+newsletter.elements.templates_title.options.required = true
+newsletter.elements.templates_title.options.label = "Judul Template:"
+newsletter.elements.templates_title.options.title = "Inputkan Judul Template"
+newsletter.elements.templates_title.options.value = ""
+newsletter.elements.templates_title.options.filters.trim.filter = "StringTrim"
+
+;Add an Select element
+newsletter.elements.templates_page.type = "select"
+newsletter.elements.templates_page.options.size = 1
+newsletter.elements.templates_page.options.label = "Untuk halaman yang mana:"
+newsletter.elements.templates_page.options.title = "Pilih untuk halaman yang mana"
+newsletter.elements.templates_page.options.value = "0"
+newsletter.elements.templates_page.options.multiOptions.0 = "None"
+newsletter.elements.templates_page.options.multiOptions.register = "Konfirmasi Pendaftaran"
+newsletter.elements.templates_page.options.multiOptions.forgetpass = "Lupa Kata Sandi"
+newsletter.elements.templates_page.options.multiOptions.loginfail = "Terjadi Kegagalan Login"
+newsletter.elements.templates_page.options.multiOptions.activation = "Surat Aktivasi Properti"
+newsletter.elements.templates_page.options.multiOptions.deactivation = "Property Deactivation Letter"
+newsletter.elements.templates_page.options.multiOptions.electric_expire = "Property Electric Meter Expire Letter"
+newsletter.elements.templates_page.options.multiOptions.gas_expire = "Property Gas Meter Expire Letter"
+newsletter.elements.templates_page.options.multiOptions.energy_expire = "Property Energy Meter Expire Letter"
+newsletter.elements.templates_page.options.multiOptions.invoice_template = "Invoice Templates"
+
+; Newsletter Template Description element
+newsletter.elements.templates_desc.type = "textarea"
+newsletter.elements.templates_desc.options.cols = 92
+newsletter.elements.templates_desc.options.rows = 40
+newsletter.elements.templates_desc.options.label = "Konten:"
+newsletter.elements.templates_desc.options.title = "Inputkan Deskripsi:"
+newsletter.elements.templates_desc.options.required = true
