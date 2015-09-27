@@ -256,3 +256,6 @@ Stack trace:
 [27-Sep-2015 02:51:27 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
 [27-Sep-2015 02:51:49 Europe/London] PHP Fatal error:  Call to a member function toArray() on a non-object in /home/busanaco/public_html/pembantu.com/application/modules/Property/models/DbTable/Category.php on line 0
 [27-Sep-2015 02:51:51 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
+[27-Sep-2015 02:53:21 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
+[27-Sep-2015 02:53:44 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
+[27-Sep-2015 02:54:07 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
