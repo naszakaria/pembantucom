@@ -234,3 +234,15 @@
 [27-Sep-2015 01:48:28 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
 [27-Sep-2015 01:48:52 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
 [27-Sep-2015 02:03:03 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
+[27-Sep-2015 02:07:38 Europe/London] PHP Warning:  Invalid argument supplied for foreach() in /home/busanaco/public_html/pembantu.com/application/modules/Property/views/scripts/regionlist/viewstate.phtml on line 372
+[27-Sep-2015 02:13:10 Europe/London] PHP Warning:  Invalid argument supplied for foreach() in /home/busanaco/public_html/pembantu.com/application/modules/Property/views/scripts/regionlist/viewstate.phtml on line 372
+[27-Sep-2015 02:13:56 Europe/London] PHP Warning:  Invalid argument supplied for foreach() in /home/busanaco/public_html/pembantu.com/application/modules/Property/views/scripts/regionlist/viewcity.phtml on line 64
+[27-Sep-2015 02:18:50 Europe/London] PHP Fatal error:  Uncaught exception 'Zend_Db_Adapter_Mysqli_Exception' with message 'Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2 "No such file or directory")' in /home/busanaco/public_html/pembantu.com/library/Zend/Db/Adapter/Mysqli.php:333
+Stack trace:
+#0 /home/busanaco/public_html/pembantu.com/library/Zend/Db/Adapter/Abstract.php(315): Zend_Db_Adapter_Mysqli->_connect()
+#1 /home/busanaco/public_html/pembantu.com/application/Bootstrap.php(0): Zend_Db_Adapter_Abstract->getConnection()
+#2 /home/busanaco/public_html/pembantu.com/library/Zend/Application/Bootstrap/BootstrapAbstract.php(669): Bootstrap->_initRoutes()
+#3 /home/busanaco/public_html/pembantu.com/library/Zend/Application/Bootstrap/BootstrapAbstract.php(622): Zend_Application_Bootstrap_BootstrapAbstract->_executeResource('routes')
+#4 /home/busanaco/public_html/pembantu.com/library/Zend/Application/Bootstrap/BootstrapAbstract.php(586): Zend_Application_Bootstrap_BootstrapAbstract->_bootstrap(NULL)
+#5 /home/busanaco/public_html/pemb in /home/busanaco/public_html/pembantu.com/library/Zend/Db/Adapter/Mysqli.php on line 333
+[27-Sep-2015 02:27:07 Europe/London] PHP Warning:  Invalid argument supplied for foreach() in /home/busanaco/public_html/pembantu.com/application/modules/Property/views/scripts/regionlist/viewstate.phtml on line 372
