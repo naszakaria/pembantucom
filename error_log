@@ -249,3 +249,5 @@ Stack trace:
 [27-Sep-2015 02:33:42 Europe/London] PHP Warning:  Invalid argument supplied for foreach() in /home/busanaco/public_html/pembantu.com/application/modules/Property/views/scripts/regionlist/viewstate.phtml on line 372
 [27-Sep-2015 02:37:49 Europe/London] PHP Warning:  Invalid argument supplied for foreach() in /home/busanaco/public_html/pembantu.com/application/modules/Property/views/scripts/regionlist/viewstate.phtml on line 372
 [27-Sep-2015 02:40:42 Europe/London] PHP Warning:  Invalid argument supplied for foreach() in /home/busanaco/public_html/pembantu.com/application/modules/Property/views/scripts/regionlist/viewstate.phtml on line 372
+[27-Sep-2015 02:44:14 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
+[27-Sep-2015 02:44:39 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
