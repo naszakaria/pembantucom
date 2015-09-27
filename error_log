@@ -228,3 +228,5 @@
 [27-Sep-2015 01:27:49 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
 [27-Sep-2015 01:28:38 Europe/London] PHP Warning:  Invalid argument supplied for foreach() in /home/busanaco/public_html/pembantu.com/application/modules/Property/views/scripts/regionlist/viewstate.phtml on line 372
 [27-Sep-2015 01:36:52 Europe/London] PHP Warning:  Invalid argument supplied for foreach() in /home/busanaco/public_html/pembantu.com/application/modules/Property/views/scripts/regionlist/viewstate.phtml on line 372
+[27-Sep-2015 01:44:08 Europe/London] PHP Warning:  mysql_connect(): Headers and client library minor version mismatch. Headers:50542 Library:100021 in /home/busanaco/public_html/pembantu.com/connect.php on line 6
+[27-Sep-2015 01:44:25 Europe/London] PHP Fatal error:  Call to a member function toArray() on a non-object in /home/busanaco/public_html/pembantu.com/application/modules/Property/models/DbTable/Category.php on line 0
