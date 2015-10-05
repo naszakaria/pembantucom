@@ -38,3 +38,13 @@ Time: 1003.633 sec (16 m 43 s)
 /home/busanaco/public_html/maidmarket.ph/dev/css/jqueryCSS/colorbox/example3/config.php: Removed.
 /home/busanaco/public_html/sedekah.com/userfiles/image/ys.jpg: PHP.Hide-1 FOUND
 /home/busanaco/public_html/sedekah.com/userfiles/image/ys.jpg: Removed.
+
+----------- SCAN SUMMARY -----------
+Known viruses: 4007759
+Engine version: 0.98.7
+Scanned directories: 14600
+Scanned files: 237839
+Infected files: 6
+Data scanned: 5446.77 MB
+Data read: 11418.36 MB (ratio 0.48:1)
+Time: 600.618 sec (10 m 0 s)
