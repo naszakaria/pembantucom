@@ -1,3 +1,42 @@
+-------------------------------------------------------------------------------
+
+/home/busanaco/public_html/pembantu.com/vendor/scripts/kendo/styles/MetroBlack/x                                                                             ml.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/js/jquery/jqueryFileTree/connectors/user                                                                             .php: Php.Malware.Mailbot-1 FOUND
+/home/busanaco/public_html/pembantu.com/js/tiny_mce/plugins/tinybrowser/img/titl                                                                             e.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/js/tiny_mce/plugins/template/db.php: PHP                                                                             .Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/application/modules/Sitemap/models/optio                                                                             ns.php.zip: Php.Malware.Mailbot-1 FOUND
+/home/busanaco/public_html/pembantu.com/application/modules/Database/themes.php:                                                                              Php.Malware.Mailbot-1 FOUND
+/home/busanaco/public_html/pembantu.com/application/modules/Geo/controllers/arti                                                                             cle.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/application/modules/Vote/views/helpers/s                                                                             ession.php: Php.Malware.Mailbot-1 FOUND
+/home/busanaco/public_html/pembantu.com/application/modules/Password/ini.php: PH                                                                             P.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/application/modules/Gallery/layouts/inde                                                                             x.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Sessions/global.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/XmlRpc/Value/Boolean.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Mime.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Application/Bootstrap/Bootstrapper.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Measure/Density.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Measure/Abstract.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Measure/Energy.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Filter/Digits.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Filter/Compress/global.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Gdata/Query.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Service/Abstract.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Http/Exception.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/Http/UserAgent/dump.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/library/Zend/View/Stream.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/static/images/loader/user.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/static/jui/jui-1-9-2/alias.php: PHP.Trojan.Uploader FOUND
+/home/busanaco/public_html/pembantu.com/data/frontImages/advertise/mcith/alias.php: PHP.Trojan.Uploader FOUND
+
+----------- SCAN SUMMARY -----------
+Known viruses: 4007759
+Engine version: 0.98.7
+Scanned directories: 2625
+Scanned files: 48768
+Infected files: 27
+Data scanned: 2169.81 MB
+Data read: 1983.19 MB (ratio 1.09:1)
+Time: 163.605 sec (2 m 43 s)
 
 -------------------------------------------------------------------------------
 
