@@ -165,7 +165,7 @@
             <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane fade active in" id="preview" aria-labelledby="home-tab">
                     <p class="normal-13 margin-top-bottom-8">
-                        <?php echo $setPropertyDescShort; ?>
+                        <?php echo ucfirst($property_desc_short); ?>
                     </p>
                     <ul class="list-group">
                         <?php
@@ -640,7 +640,7 @@
                                 <div class="mod-container package-info"><?php echo $this->translator->translator('member_only'); ?></div> 
                                 <div class="pull-center">
                                     <span><a href="Register" class="btn btn-xs btn-primary"><?php echo $this->translator->translator('member_only_register'); ?></a></span>
-                                    <span><a href="Frontend-Login" class="btn btn-xs btn-success"><?php echo $this->translator->translator('login'); ?></a></span>
+                                    <span><a href="Frontend-Login" class="btn btn-xs btn-success"><?php echo ucfirst($this->translator->translator('member_only_login')); ?></a></span>
                                 </div>                                        
                             </div>
                             <?php
