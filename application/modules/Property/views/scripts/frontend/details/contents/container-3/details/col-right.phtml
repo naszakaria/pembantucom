@@ -498,7 +498,7 @@
                                 <div class="mod-container package-info"><?php echo $this->translator->translator('member_only'); ?></div> 
                                 <div class="pull-center">
                                     <span><a href="Register" class="btn btn-xs btn-primary"><?php echo $this->translator->translator('member_only_register'); ?></a></span>
-                                    <span><a href="Frontend-Login" class="btn btn-xs btn-success"><?php echo $this->translator->translator('login'); ?></a></span>
+                                    <span><a href="Frontend-Login" class="btn btn-xs btn-success"><?php echo ucfirst($this->translator->translator('member_only_login')); ?></a></span>
                                     <hr/>
                                     <?php if ($global_conf['payment_system'] == 'On') { ?>
                                         <span class="btn btn-success btn-lg"><a class="white no-decoration" href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'emails', 'action' => 'owner', 'property_title' => $this->escape($this->view_datas['property_title']), 'form_id' => $this->translator->translator('contact_owner_form_id')), 'Contact-Owner/:property_title/:form_id', true); ?>"><?php echo $this->translator->translator('property_front_page_book_btn'); ?></a></span>
