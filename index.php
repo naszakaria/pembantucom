@@ -1,5 +1,6 @@
 <?php
-require_once 'library/Mobiledetect/Mobile_Detect.php';
+//require_once 'library/Mobiledetect/Mobile_Detect.php';
+require_once 'vendor/mobiledetect/mobiledetectlib/Mobile_Detect.php';
 if (!preg_match('/www\..*?/', $_SERVER['HTTP_HOST'])) {
     @header("location: http://www." . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 }
