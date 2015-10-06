@@ -284,7 +284,7 @@
                                         $kodeNegara = $this->escape($owner_info['country']);
                                         $query = "SELECT * FROM eicra_countries 
                                                 WHERE id = '$kodeNegara'";
-                                        $result = mysql_query($query) or die("Wah error nih!");
+                                        $result = mysqli_query($query) or die("Wah error nih!");
                                         while ($namaKota = mysql_fetch_array($result)) {
                                             $country_name = $namaKota['value'];
                                         }
