@@ -285,7 +285,7 @@
                                         $query = "SELECT * FROM eicra_countries 
                                                 WHERE id = '$kodeNegara'";
                                         $result = mysqli_query($mysqli, $query) or die("Wah error nih!");
-                                        while ($namaKota = mysql_fetch_array($result)) {
+                                        while ($namaKota = mysqli_fetch_array($result)) {
                                             $country_name = $namaKota['value'];
                                         }
                                     }
