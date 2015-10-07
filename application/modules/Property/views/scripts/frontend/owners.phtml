@@ -71,9 +71,9 @@ if ($hasIdentity) {
           WHERE firstName like '%$name%' 
           AND role_id = '107' 
           ORDER BY register_date"; //query to get the search result
-        $result = mysql_query($query) or die("Wah error nih!"); //execute the query $q
+        $result = mysqli_query($mysqli, $query) or die("Wah error nih!"); //execute the query $q
         if ($result) {
-            while ($r = mysql_fetch_array($result)) {
+            while ($r = mysqli_fetch_array($result)) {
                 extract($r);
                 ?>
 
