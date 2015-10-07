@@ -369,6 +369,8 @@ else :
         <table id="sortTable" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" >
             <tbody>
                 <?php
+                $getData = $this->view_datas;
+                if (is_array($getData) || is_object($getData)) {
                 foreach ($this->view_datas as $entry) {
                     $statPub = $this->escape($entry['active']);
                     //echo $statPub;
@@ -642,6 +644,7 @@ else :
                     } else {
                         //echo "Match not found";
                     }
+                }
                 }
                 ?>
             </tbody>
