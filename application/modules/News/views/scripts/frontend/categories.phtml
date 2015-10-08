@@ -27,8 +27,8 @@ $cateDB = new News_Model_DbTable_Category();
 </script>
 
 <div class="mod mod-news">
-	<div class="news-icon">
-        <h1><?php if($this->catInfos){ echo $this->escape($this->catInfos['category_name']); } ?></h1>
+	<div class="news-icon padding-left-50 height-50">
+            <h1 class="padding-top-10 bold-18"><?php if($this->catInfos){ echo $this->escape($this->catInfos['category_name']); } ?></h1>
     </div>
     <div class="clear">&nbsp;</div>
     <!-- Category Panel Start -->
