@@ -1,7 +1,0 @@
-[upload]
-
-; Target element
-upload.elements.upload_file.type = "file"
-upload.elements.upload_file.options.label = "Unggah File:"
-upload.elements.upload_file.options.title = "Unggah File"
-upload.elements.upload_file.options.required = true

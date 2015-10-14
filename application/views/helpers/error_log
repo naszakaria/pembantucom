@@ -1,3 +1,0 @@
-[07-Sep-2015 01:59:58 UTC] PHP Fatal error:  Class 'Zend_View_Helper_Abstract' not found in /home/busanaco/public_html/pembantu.com/application/views/helpers/Template.php on line 0
-[22-Sep-2015 14:14:35 UTC] PHP Fatal error:  Class 'Zend_View_Helper_Abstract' not found in /home/busanaco/public_html/pembantu.com/application/views/helpers/Template.php on line 0
-[09-Oct-2015 13:03:03 UTC] PHP Fatal error:  Class 'Zend_View_Helper_Abstract' not found in /home/busanaco/public_html/pembantu.com/application/views/helpers/Template.php on line 0

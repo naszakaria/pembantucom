@@ -1,1 +1,0 @@
-[11-Dec-2014 16:37:05 UTC] PHP Fatal error:  Class 'Zend_Application_Bootstrap_BootstrapAbstract' not found in /home/busanaco/public_html/pembantu.com/library/Zend/Application/Bootstrap/Bootstrap.php on line 37
