@@ -1,0 +1,29 @@
+<div class="row">
+    <ul>
+        <?php
+        if ($this->group_datas['file_thumb_width'] && ($this->group_datas['file_thumb_resize_func'] != 'resizeToHeight' || $this->group_datas['file_thumb_resize_func'] != 'resize' )) {
+            $width_img = 'width="120"';
+        } else {
+            $width_img = '';
+        }
+        if ($this->group_datas['file_thumb_height'] && ( $this->group_datas['file_thumb_resize_func'] != 'resizeToWidth' || $this->group_datas['file_thumb_resize_func'] != 'resize' )) {
+            $height_img = 'height="90px"';
+        } else {
+            $height_img = '';
+        }
+        if ($this->view_datas['feature_floor_plan_image']) {
+            $img_froor_arr = explode(',', $this->view_datas['feature_floor_plan_image']);
+            $i = 1;
+            foreach ($img_froor_arr as $key => $value) {
+                ?>
+
+                <li>
+                    <a class="change_img preview" link="data/frontImages/property/floor_plan_image/<?php echo $value; ?>" <?php echo $width; ?> <?php echo $height; ?> title="<?php echo $this->escape($this->propertyForm->property_name->getValue()); ?>"><img src="data/frontImages/property/floor_plan_image/<?php echo $value; ?>" <?php echo $width_img . ' ' . $height_img; ?> border="0" class="thumb additional-thumb"/></a>
+                </li>
+                <?php
+                $i++;
+            }
+        }
+        ?>
+    </ul>
+</div> 

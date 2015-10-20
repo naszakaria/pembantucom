@@ -1,0 +1,118 @@
+<?php
+$this->headMeta()->setName('keywords', $this->translator->translator('property_front_page_agent_search'));
+$this->headMeta()->setName('description', $this->translator->translator('property_front_page_agent_search'));
+$this->headTitle()->headTitle($this->translator->translator('property_front_page_agent_search'), 'SET');
+
+$property_front_page_agent_id = $this->translator->translator('property_front_page_agent_id');
+$property_front_page_agent_id_arr = explode(',', $property_front_page_agent_id);
+
+$global_conf = Zend_Registry::get('global_conf');
+$currency = new Zend_Currency($global_conf['default_locale']);
+$auth = Zend_Auth::getInstance();
+$hasIdentity = $auth->hasIdentity();
+$mem_db = new Members_Model_DbTable_MemberList();
+?>
+<?php
+if ($hasIdentity) {
+    ?>
+    <div class="mod">
+        <i class="pull-left fa fa-user fa-3x"></i>            
+        <h1 class="padding-top-10 bold-18"><?php echo $this->translator->translator('property_front_page_agent_search'); ?></h1>     
+<!--        <div class="social">
+             AddThis Button BEGIN 
+            <div class="addthis_toolbox addthis_default_style">
+                <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+                <a class="addthis_button_tweet"></a>
+                <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+                <a class="addthis_counter addthis_pill_style"></a>
+            </div>
+            <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e89660c7edb029a"></script>
+             AddThis Button END 
+        </div>-->
+        <div class="clear"></div>
+
+        <div class="mod-agent-search">
+            <form id="formSearch" name="formSearch" method="post" action="<?php echo $this->url(array('module' => 'Property', 'controller' => 'Frontend', 'action' => 'owners'), 'Property-Agent-Search', true) ?>"> 
+                <h2><?php echo $this->translator->translator('property_front_page_agent_search_label'); ?></h2>      
+                <?php
+                foreach ($property_front_page_agent_id_arr as $property_front_page_agent_id_key => $agents) {
+                    $agent_arr = explode(';;', $agents);
+                    $checked = (($property_front_page_agent_id_key == '0') || ($agent_arr[0] == $this->role_id)) ? 'checked="checked"' : '';
+                    ?>
+                    <input type="hidden" name="role_id" id="role_id_mod" <?php echo $checked; ?> value="<?php echo $agent_arr[0]; ?>"/><?php echo $agent_arr[1]; ?>
+                    <?php
+                }
+                ?>
+                <br />
+                <input type="submit" name="button" id="button" value="<?php echo $this->translator->translator('property_front_page_agent_search_btn_label'); ?>" />
+            </form>
+            <form>
+                <p><?php echo $this->translator->translator('unregistered_agency_search'); ?></p>  
+
+                <div class="button-agent-page">
+                    <span class="btn btn-success white"><a class="white no-decoration" href="<?php echo $this->translator->translator('unregistered_agency_search_url'); ?>"><?php echo $this->translator->translator('property_front_page_agent_search_btn_label'); ?></a></span>                                                      
+                </div>
+            </form>
+        </div>
+
+        <div class="block-ad-agent">
+            <?php echo $this->partial('blocks/ad_agent_search.phtml'); ?>
+        </div>
+
+        <div class="clear">&nbsp;</div>
+
+        <?php
+        include "connect.php";
+        $name = $_POST['name']; //get the nama value from form
+        $query = "SELECT *, eicra_countries.value
+          FROM eicra_user_profile
+          LEFT JOIN eicra_countries
+          ON eicra_user_profile.country=eicra_countries.id
+          WHERE firstName like '%$name%' 
+          AND role_id = '107' 
+          ORDER BY register_date"; //query to get the search result
+        $result = mysql_query($query) or die("Wah error nih!"); //execute the query $q
+        if ($result) {
+            while ($r = mysql_fetch_array($result)) {
+                extract($r);
+                ?>
+
+                <div class='mod-agent-search-result'>
+
+                    <div class='list'>      	
+                        <ul>
+                            <li>
+
+                                <b><a href="<?php echo $this->url(array('module' => 'Property', 'controller' => 'frontend', 'action' => 'agents', 'property_owner' => $user_id), 'Agent-Property-List/:property_owner', true); ?>" class="preview" link="" title="<?php echo $this->translator->translator('property_front_page_agent_search_property_no', $register_date); ?>"><?php echo $companyName; ?></a></b> <br/>
+
+
+                                <?php echo $firstName . ' ' . $lastName; ?><br/>
+                                <?php echo $address; ?><br />
+                                <?php echo $city . ', ' . $state . ', ' . $value; ?><br />
+                                <?php echo $phone; ?><br />
+
+
+
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <?php
+            }
+        }
+        ?>
+    </div>
+    <?php
+} else {
+    ?>
+    <!-- <div class="forbidden-message"><?php echo $this->translator->translator('member_only_view_list_agency'); ?></div>-->
+    <script type="text/javascript">
+        //<![CDATA[
+        setTimeout(function () {
+            location.href = '<?php echo $this->baseUrl() ?>Frontend-Login';
+        }, 0);
+        //]]>
+    </script>
+
+<?php } ?>

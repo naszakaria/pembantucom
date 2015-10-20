@@ -1,0 +1,36 @@
+<?php
+$front_template = Zend_Registry::get('front_template');
+$this->translator = Zend_Registry::get('translator');
+$global_conf = Zend_Registry::get('global_conf');
+$auth = Zend_Auth::getInstance();
+$hasIdentity = $auth->hasIdentity();
+?>
+
+<header id="header">
+    <div class="container">
+        <div class="logo">
+        </div>
+        <div class="support">
+            <?php echo $this->partial('blocks/ad_header.phtml'); ?>
+            <div class="clear"></div>
+
+            <?php
+            $properties = new Property_Model_DbTable_Properties();
+            $listings = $properties->numOfProperty();
+            ?>
+            <span class="listing-count"><span class="no"><?php echo $listings; ?></span> <?php echo $this->translator->translator('header_listings', '', '', $front_template['theme_folder']); ?></span>
+            <?php
+            if ($hasIdentity) {
+                ?>  
+                <span class="listing"><a href="Property/backendpro/add"><span class="icon"></span><?php echo $this->translator->translator('header_add_btn', '', '', $front_template['theme_folder']); ?></a></span>
+                <?php
+            } else {
+                ?>
+                <span class="listing"><a href="Frontend-Login"><span class="icon"></span><?php echo $this->translator->translator('header_add_btn', '', '', $front_template['theme_folder']); ?></a></span> 
+                <?php
+            }
+            ?>   	
+
+        </div>     
+    </div>
+</header>

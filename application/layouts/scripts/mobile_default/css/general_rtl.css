@@ -1,0 +1,887 @@
+/* ___________________________________________________________________________________
+   
+   CSS Framework for Eicra CMS Script [Modules]
+   ___________________________________________________________________________________ */
+
+
+/* Global CMS Module Style ---------------------------------------------------------- */
+
+.mod.feedback .thumb,
+.mod.news .thumb,
+.mod.search .thumb,
+.mod.review .thumb{
+	margin-right:0;
+	margin-left:10px;
+	float:right;
+}
+
+.mod.contact dt{
+	font-weight:normal;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Gallery Thumb -------------------------------------------------------------------- */
+
+.upload-img{
+	float:right;
+	margin-right:0;
+	margin-left:15px;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Site Map ------------------------------------------------------------------------- */
+
+.mod.sitemap ul.parent-item li{
+	background-image:url(../../images/mod_img/arrow-small-rtl.png);
+	background-position:right 10px;
+	padding-right:15px;
+	padding-left:0;
+}
+
+.mod.sitemap ul.parent-item li ul{
+	padding-right:20px;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Membership Packahges ------------------------------------------------------------- */
+
+.mod.packages .label{
+	margin-right:0;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Member Login --------------------------------------------------------------------- */
+
+.mod .login-box .captcha img{
+	float:right;
+	margin-right:0;
+	margin-left:5px;
+}
+
+.mod .login-box .input-group-addon{
+	border-right:1px solid #CCCCCC;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Gallery Module ------------------------------------------------------------------- */
+
+.mod.gallery .gallery-container .image-box .gallery-thumb .more a{
+	background: url(../../images/mod_img/right-arrow-rtl.png) no-repeat;
+}
+
+.mod.gallery .gallery-container .img-label{
+	float:right;
+	clear:right;
+	text-align:left;
+}
+
+.mod.gallery .gallery-container .img-value{
+	margin-right:6px;
+	margin-left:0;
+	float:right;
+}
+
+.mod.gallery #owl-demo{
+	direction:ltr;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* News Module ---------------------------------------------------------------------- */
+
+.mod.news .calendar{
+	margin-right:15px;
+	margin-left:0;
+	float:left;
+}
+
+.mod.news .calendar h1{
+	margin-right:44px;
+	margin-left:0;
+}
+
+.mod-news .calendar .year{
+	left:0;
+	right:44px;
+}
+
+.mod.news .news-title-scroll{
+	padding-right:5px;
+	padding-left:0;
+}
+
+.mod.news .archive .month_list{
+	margin-right:20px;
+	margin-left:0;
+}
+
+.mod.news .archive  .year_name,
+.mod.news .archive .month_name{
+	margin-right:0;
+	margin-left:10px;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Featured News Scroll ------------------------------------------------------------- */
+
+.news_title{
+	padding-right:5px;
+	padding-left:0;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Gallery & News Category Toggle Panel Start --------------------------------------- */
+
+.cat-panel a img{
+	float:right;
+	margin-right:8px;
+	margin-left:10px;
+}
+
+.cat-list ul li{
+	background-position:98% 7px;
+	padding-right:24px;
+}
+
+.cat-list ul li a .count{
+	unicode-bidi:embed;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Loader --------------------------------------------------------------------------- */
+
+.ui-autocomplete-loading{ 
+	background-position:left center;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* ********************************************************************************** */
+
+/* Bootstrap Customization ---------------------------------------------------------- */
+
+.form-control,
+		.well{
+	border-radius:0;
+}
+
+label{
+	font-weight:normal;
+}
+
+.btn{
+	border-radius:0;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Others --------------------------------------------------------------------------- */
+
+.jetmenu .indicator{
+	right:5px !important;
+	left:0 !important;
+}
+
+.resp-arrow{
+	float:left !important;
+}
+
+.packages .ac-container label,
+.packages .ac-container input:checked + label,
+.packages .ac-container input:checked + label:hover{
+	background-position: 100% 14px !important;
+}
+
+.packages .ac-container label:hover:after,
+.packages .ac-container input:checked + label:hover:after{
+	background-image:none !important;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* ********************************************************************************** */
+
+/* ___________________________________________________________________________________
+   
+   New CSS used by Developer
+   ___________________________________________________________________________________ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===================================              ====================================
+
+
+/* ********************************************************************************** */
+
+
+
+/* Member's Layout ****************************************************************** */
+
+.member-block .block-heading{
+	font-size: 13px;
+	font-weight: bold;
+	color: #202020;
+	padding: 0px 0;
+	background: #DFDFDF;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7F7F7', endColorstr='#DFDFDF');
+	background: -webkit-gradient(linear, left top, left bottom, from(#F7F7F7), to(#DFDFDF));
+	background: -moz-linear-gradient(top, #F7F7F7, #DFDFDF);
+	border: 1px solid #CCCCCC;
+	border-bottom: 0;
+	box-shadow: 0 1px 1px #FFFFFF inset;
+	text-shadow: 1px 1px 1px #FFFFFF;
+	border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
+}
+
+.member-block .block-heading .symbol{
+	background:url(../images/mod_img/round-arrow.png);
+	background-position: 4px center;
+	background-repeat:no-repeat;
+	padding:11px 0 10px 35px;
+}
+
+.member-block .block-body{
+	margin:0 0 15px 0;
+	padding:5px;
+	background-color: #FFFFFF;
+	border-top:0;
+    border: 1px solid #CCCCCC;
+    border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 5px 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+	margin-bottom:15px;
+	width:auto;
+    overflow: hidden;
+}
+
+.member-block .block-body .thumb{
+	background-color:#FFF;
+	padding:5px;
+	margin: 2px 4px 2px 0px;
+	float:left;
+}
+
+.member-block .block-body .block-content{	
+	margin:0 auto 5px auto;
+	padding:5px;
+	overflow:hidden;
+}
+
+.member-block .seperator{
+	background:url(../images/dot_border.gif) repeat-x;
+	width:100%;
+	display:inline-block;
+	padding:2px 0 0 0;
+	margin:0 0 0 0;	
+}
+
+.member-block .more a {
+	background: url(../images/arrow-2.gif);
+	background-repeat:no-repeat;
+	background-position:4px 2px;
+	color:#FF6600;
+	font-weight:bold;
+	padding: 0 0 0 15px;
+	margin:8px 0;
+	float:left;
+	clear:left;
+}
+
+.member-block .block-body.last{
+	margin:0 0 0 0;
+}
+
+.member-block.block-news{
+	float:none;
+	width:100%;
+}
+
+.member-block.block-news .block-content .thumb{
+	border:1px solid #DFDFDF;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Account Informations ------------------------------------------------------------- */
+
+.block-my-account{
+	border:1px solid #E6DB55;
+	background-color:#FFFFE8;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	padding:10px;
+	margin:0 0 15px 0;
+	overflow:hidden;
+}
+
+.block-my-account .avatar{
+	float:left;
+	background-color:#FFF;
+	border:1px solid #dddddd;
+	padding:5px;
+	margin:0 10px 0 0;
+}
+
+.block-my-account .info{
+	display:inline-block;
+	line-height:20px;
+	float:left;
+}
+
+.block-my-account .info span{
+	font-weight: bold;
+	color: #333333;
+}
+
+.block-my-account strong{
+	color: #06F;
+}
+
+.block-my-account .calendar{
+	background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/calendar.png");
+	width:80px;
+	height:80px;
+	margin:1px 0 0 15px;
+	text-align:center;
+	font-size:20px;
+	float:right;
+	position:relative;
+}
+
+.block-my-account .calendar .month{
+	font-size:11px;
+	text-transform:uppercase;
+	font-weight:bold;
+	color:#FFF;
+	text-align:center;
+	margin: 2px 0 0 0;
+}
+
+.block-my-account .calendar h1{
+	margin: 2px 0 0 0;
+	padding: 0 0 0 0;
+	width:100%;
+	color:#FFF;
+	font-size: 2em;
+	text-shadow: 0 1px 1px #039;
+}
+
+.block-my-account .calendar .year{
+	font-size:12px;
+	font-weight:bold;
+	color:#FFF;
+	position:absolute;
+	bottom:1px;
+	left:26px;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Member Account Overview ---------------------------------------------------------- */
+
+.block-account-overview ul li a div{
+	width:75%;
+	display:inline-block;
+}
+
+.block-account-overview ul li a{
+	border-bottom: 1px dotted #CCCCCC;
+	list-style: none;
+	color:#333;
+	padding: 10px 4px;
+	display: block;
+}
+
+.block-account-overview ul li a:hover{
+	background-color:#F8F8F8;
+	color:#F60;
+}
+
+.block-account-overview ul li.last a{
+	border-bottom:0;
+}
+
+.block-account-overview ul li span{
+	color:#06F;
+	font-size: 13px;
+	float: right;
+	text-align: right;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* User Control Panel --------------------------------------------------------------- */
+
+.block-control-panel .block-heading .symbol a{
+	color: #4B4B4B;
+	background: #C7C7C7;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7F7F7', endColorstr='#C7C7C7');
+	background: -webkit-gradient(linear, left top, left bottom, from(#F7F7F7), to(#C7C7C7));
+	background: -moz-linear-gradient(top, #F7F7F7, #C7C7C7);
+	border: 1px solid #B2B2B2;
+	text-shadow: 0 1px 1px #FFFFFF;
+	box-shadow: 0 1px 1px #FFFFFF inset;
+	padding: 5px 15px;
+	margin: -6px 10px 0 0;
+	border-radius: 4px;
+	text-decoration: none;
+	float: right;
+}
+
+.block-control-panel .block-heading .symbol a:hover{
+	background: #DFDFDF;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7F7F7', endColorstr='#DFDFDF');
+	background: -webkit-gradient(linear, left top, left bottom, from(#F7F7F7), to(#DFDFDF));
+	background: -moz-linear-gradient(top, #F7F7F7, #DFDFDF);
+	border: 1px solid #C1C1C1;	
+}
+
+.block-control-panel .block-heading .symbol a .cp-icon{
+	background:url(../../../../modules/Administrator/layouts/scripts/images/tools/cp-icon.png);
+	background-position:left center;
+	background-repeat:no-repeat;
+	padding:0 0 0 25px;
+	width:16px;
+	height:16px;
+}
+
+.block-control-panel fieldset {
+    background: none repeat scroll 0 0 transparent;
+	border:1px solid #D5D5D5;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+
+.block-control-panel fieldset legend {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    font-weight: bold;
+    margin: 0;
+    padding: 8px 5px;
+	color:#0158C2;
+}
+
+.block-control-panel .tools-nav{
+	float:left;
+	margin:0 0 15px 8px;
+}
+
+.block-control-panel .tools-nav a{
+	text-decoration:none;
+	border:1px solid #CCCCCC;
+	background-color:#FFFFFF;
+	border-radius:8px;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	width:100px;
+	height:100px;
+	-moz-transition: all 0.9s ease;
+	-webkit-transition: all 0.9s ease;
+	-o-transition: all 0.9s ease;
+	-ms-transition: all 0.9s ease;
+	color:#09C;
+	float:left;
+}
+
+.block-control-panel .tools-nav a:hover{
+	background-color:#F5F5F5;
+	border:1px solid #AAAAAA;
+	-moz-transition: all 0.9s ease;
+	-webkit-transition: all 0.9s ease;
+	-o-transition: all 0.9s ease;
+	-ms-transition: all 0.9s ease;
+	box-shadow: 0px 0px 8px #999;
+	text-decoration:none;
+}
+
+.block-control-panel .tools-nav a p.tools-tip{
+	vertical-align:bottom;
+	display:block;
+	text-align:center;
+	line-height:15px;
+	font-size:11px;
+}
+
+.block-control-panel .tools-nav a p.tools-tip{
+	margin:68px 2px 0 2px;
+}
+
+.block-control-panel .tools-nav a div.icon{
+	background-repeat:no-repeat;
+	position:absolute;
+	width:60px;
+	height:60px;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+}
+
+.block-control-panel .tools-nav a:hover div.icon{
+	margin:15px 0 0 27px;
+}
+
+.block-control-panel .tools-nav div.icon{
+	margin:15px 0 0 27px;
+}
+
+.block-control-panel .tools-nav div.icon.user-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/user-add.png"); }
+
+.block-control-panel .tools-nav div.icon.user-manage-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/user-manage.png"); }
+
+.block-control-panel .tools-nav div.icon.user-search-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/user-search.png"); }
+
+.block-control-panel .tools-nav div.icon.password-change-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/password-change.png"); }
+
+.block-control-panel .tools-nav div.icon.user-profile-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/user-profile.png"); }
+
+.block-control-panel .tools-nav div.icon.user-policy-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/user-policy.png"); }
+
+.block-control-panel .tools-nav div.icon.user-privilege-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/user-privilege.png"); }
+
+.block-control-panel .tools-nav div.icon.pkg-palns-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/pkg-palns.png"); }
+
+.block-control-panel .tools-nav div.icon.article-add-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/article-add.png"); }
+
+.block-control-panel .tools-nav div.icon.article-manage-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/article-manage.png"); }
+
+.block-control-panel .tools-nav div.icon.menu-add-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/menu-add.png"); }
+
+.block-control-panel .tools-nav div.icon.menu-manage-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/menu-manage.png"); }
+
+.block-control-panel .tools-nav div.icon.form-manage-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/form-manage.png"); }
+
+.block-control-panel .tools-nav div.icon.form-add-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/form-add.png"); }
+
+.block-control-panel .tools-nav div.icon.article-link-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/article-link.png"); }
+
+.block-control-panel .tools-nav div.icon.menu-link-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/menu-link.png"); }
+
+.block-control-panel .tools-nav div.icon.pending-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/pending.png"); }
+
+.block-control-panel .tools-nav div.icon.api-settings-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/api-settings.png"); }
+
+.block-control-panel .tools-nav div.icon.cat-manage-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/category.png"); }
+
+.block-control-panel .tools-nav div.icon.cat-add-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/category-add.png"); }
+
+.block-control-panel .tools-nav div.icon.business-manage-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/business-type.png"); }
+
+.block-control-panel .tools-nav div.icon.business-add-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/business-type-add.png"); }
+
+.block-control-panel .tools-nav div.icon.photo-gallery-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/photo-gallery.png"); }
+
+.block-control-panel .tools-nav div.icon.photo-gallery-add-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/photo-gallery-add.png"); }
+
+.block-control-panel .tools-nav div.icon.news-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/news.png"); }
+
+.block-control-panel .tools-nav div.icon.news-add-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/news-add.png"); }
+
+.block-control-panel .tools-nav div.icon.ad-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/ad.png"); }
+
+.block-control-panel .tools-nav div.icon.project-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/project.png"); }
+
+.block-control-panel .tools-nav div.icon.feedback-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/feedback.png"); }
+
+.block-control-panel .tools-nav div.icon.comment-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/comment.png"); }
+
+.block-control-panel .tools-nav div.icon.review-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/review.png"); }
+
+.block-control-panel .tools-nav div.icon.pools-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/poll.png"); }
+
+.block-control-panel .tools-nav div.icon.newsletter-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/newsletter.png"); }
+
+.block-control-panel .tools-nav div.icon.billing-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/billing.png"); }
+	
+.block-control-panel .tools-nav div.icon.comment-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/comment.png"); }
+
+.block-control-panel .tools-nav div.icon.visitor-comment-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/visitor-comments.png"); }
+
+.block-control-panel .tools-nav div.icon.geo-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/geo.png"); }
+
+.block-control-panel .tools-nav div.icon.settings-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/settings.png"); }
+
+.block-control-panel .tools-nav div.icon.template-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/template.png"); }
+
+.block-control-panel .tools-nav div.icon.email-template-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/email-template.png"); }
+
+.block-control-panel .tools-nav div.icon.contact-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/contact.png"); }
+
+.block-control-panel .tools-nav div.icon.editor-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/editor.png"); }
+
+.block-control-panel .tools-nav div.icon.css-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/css.png"); }
+
+.block-control-panel .tools-nav div.icon.js-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/js.png"); }
+
+.block-control-panel .tools-nav div.icon.language-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/language.png"); }
+
+.block-control-panel .tools-nav div.icon.payment-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/payment.png"); }
+
+.block-control-panel .tools-nav div.icon.database-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/database.png"); }
+
+.block-control-panel .tools-nav div.icon.cache-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/cache.png"); }
+
+.block-control-panel .tools-nav div.icon.log-tools{ background-image:url("../../../../modules/Administrator/layouts/scripts/images/dashboard/log.png"); }
+
+.form-button-container{
+	margin:auto;
+	padding:5px 0px;
+	width:98%;
+	text-align:center;
+}
+
+.button-container{
+	float:right;
+	width:auto;
+	padding:0;
+	margin:8px 2px 0 0;
+}
+
+.button-container .button a,
+.button-container .form-button a,
+.form-field .button a{
+	padding:8px 20px;
+}
+
+.button span.icon.loader{
+	background-image: url("../images/loader/btn-loader.gif");
+	width:17px;
+	height:17px;
+	display:inline-block;
+	padding:0;
+}
+
+.button span.icon.loader:after{
+	content:'..';
+	visibility:hidden;
+}
+
+.clr{
+	clear:both;
+}
+
+.editor{
+	width:90%;
+	float:left;
+}
+
+.editor img{
+	float:left;
+}
+
+.upload-img span.main{
+	color:#060;
+}
+
+.upload-img span.related{
+	color:#F60;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Tree Table ----------------------------------------------------------------------- */
+
+.treeTable tr td .expander{
+  background-position: left center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  padding: 0;
+  zoom: 1; /* IE7 Hack */
+}
+
+.treeTable tr.collapsed td .expander{
+  background-image: url(../../../../../js/jquery/tree/images/toggle-expand-dark.png);
+}
+
+.treeTable tr.expanded td .expander{
+  background-image: url(../../../../../js/jquery/tree/images/toggle-collapse-dark.png);
+}
+
+.treeTable tr.selected, .treeTable tr.accept{
+  background-color: #3875d7;
+  color: #fff;
+}
+
+.treeTable tr.collapsed.selected td .expander, .treeTable tr.collapsed.accept td .expander{
+  background-image: url(../../../../../js/jquery/tree/images/toggle-expand-light.png);
+}
+
+.treeTable tr.expanded.selected td .expander, .treeTable tr.expanded.accept td .expander{
+  background-image: url(../../../../../js/jquery/tree/images/toggle-collapse-light.png);
+}
+
+.treeTable .ui-draggable-dragging{
+  color: #000;
+  z-index: 1;
+}
+
+table.example span{
+  background-position: center left;
+  background-repeat: no-repeat;
+  padding: .2em 0 .2em 1.5em;
+}
+
+table.example span.file{
+  background-image: url(../../../../../js/jquery/tree/images/page_white_text.png);
+}
+
+table.example span.folder{
+  background-image:url(../../../../../js/jquery/tree/images/folder.png);
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Toggle Search Form --------------------------------------------------------------- */
+
+.toggle-container{
+	background-color:#FFFFE8;
+	border:1px solid #E6DB55;
+	border-radius: 5px;
+	-mox-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin:0 auto 10px auto;
+}
+
+.toggle-search{
+	width:100%;
+	display:table;
+	padding:5px;
+	margin:auto;
+}
+
+.toggle-search .toggle-row{
+	display:table-row;
+}
+
+.toggle-search .toggle-row .toggle-label,
+.toggle-search .toggle-row .toggle-field{
+	display:table-cell;
+	padding:5px;
+	width:auto;
+}
+
+.toggle-link a{	
+	font-weight:bold;
+	line-height:30px;
+	border:1px solid #E6DB55;
+	border-radius:5px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	padding: 2px 4px 0 30px;
+	margin: 0 0 10px 0;
+	display:inline-block;
+}
+
+.toggle-link a.user{
+	background-color:#FEFADE;
+}
+
+.toggle-link a.user-icon{
+	background: #FFFFE8 url(../images/mod_img/user-search.gif) 2px center no-repeat;
+}
+
+.toggle-button-container{
+	width:99%;
+	margin:5px auto 15px auto;
+	padding-top:15px;
+	text-align:center;
+	border-top:1px solid #9EC9E9;
+}
+
+.highlighted{
+	background-color:#FFF5D7;
+	-moz-transition: all 0.9s ease;
+	-webkit-transition: all 0.9s ease;
+	-o-transition: all 0.9s ease;
+	-ms-transition: all 0.9s ease;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Member Menu ---------------------------------------------------------------------- */
+
+.block-member-menu .block-body{
+	padding:0;
+	border-radius: 0 0 5px 5px;
+	display:inline-block;
+	overflow:visible;
+	width:100%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* IFrame Settings ------------------------------------------------------------------ */
+
+#container.dialog-container{
+	padding:5px;
+}
+
+.iframe-img-manager,
+.iframe-img-upload,
+.iframe-thumb-img-upload,
+.iframe-container,
+.iframe-article,
+.iframe-php-info{
+	background-color:#FFF;
+	width:100%;
+	height:480px;
+	border:0;
+	margin: 0 0 10px 0;
+}
+
+.iframe-article{
+	height:460px;
+}
+
+.iframe-img-manager{
+	height:355px;
+}
+
+.iframe-thumb-img-upload{
+	height:455px;  
+}
+
+.iframe-php-info{
+	height:900px;
+}
+
+/* ---------------------------------------------------------------------------------- */
+

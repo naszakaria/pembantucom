@@ -1,0 +1,83 @@
+<?php
+if (!empty($this->review_datas['review_info'])) {
+    foreach ($this->review_datas['review_info'] as $key => $infos) {
+        $div_class = ($key % 2 == 0) ? 'review-box' : 'review-box2';
+        ?> 
+
+        <div class="<?php echo $div_class; ?>">
+            <div class="review-box-img">
+                <?php
+                $primary_image_field = (!empty($this->review_datas['review_settings_info']['primary_image_field'])) ? $this->review_datas['review_settings_info']['primary_image_field'] : '';
+                $primary_images = (!empty($primary_image_field) && !empty($infos[$primary_image_field])) ? $infos[$primary_image_field] : '';
+                if (empty($primary_images)) {
+                    $img_path = 'application/layouts/scripts/' . $front_template['theme_folder'] . '/images/mod_property_img/avatar.png';
+                } else {
+                    $files_arr = explode(',', $primary_images);
+                    $img_path = $this->escape($this->review_datas['form_info']['attach_file_path']) . '/' . $this->escape($files_arr[0]);
+                }
+                ?>
+                <img src= "<?php echo $img_path ?>" width="80" />
+            </div>
+
+            <div>
+                <div class="review-box-title">
+                    <span>
+                        <?php
+                        if (!empty($this->review_datas['review_settings_info']['name_title_field'])) {
+                            $name_title_field = $this->review_datas['review_settings_info']['name_title_field'];
+                            if (!empty($infos[$name_title_field])) {
+                                echo $this->escape($infos[$name_title_field]);
+                            }
+                        }
+                        ?>
+                    </span>
+
+                    <div>
+
+                        <?php
+                        if (!empty($this->review_datas['review_settings_info']['rating_fields'])) {
+                            $rating_fields_arr = explode(',', $this->review_datas['review_settings_info']['rating_fields']);
+                            if (!empty($infos[$rating_fields_arr[0]])) {
+                                $cnt = $this->escape($infos[$rating_fields_arr[0]]) - 1;
+                                ?>                                         
+                                <div class="review-box-rate"><?php echo str_replace("'", '', $hint_arr[$cnt]); ?></div>
+                                <div class="review-box-star">
+                                    <div id="<?php echo $this->escape($rating_fields_arr[0]) . $infos['id']; ?>_star"  class="review-box-rate-star"></div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            raty('<?php echo $this->escape($rating_fields_arr[0]) . $infos["id"]; ?>', '<?php echo $this->escape($infos[$rating_fields_arr[0]]); ?>');
+                                        });
+                                    </script>
+                                </div>
+
+                                <?php
+                            }
+                        }
+                        ?>
+                    </div>
+
+                </div>
+                <div class="review-box-desc">
+                    <?php
+                    if (!empty($this->review_datas['review_settings_info']['broad_desc_field'])) {
+                        $short_desc_field = $this->review_datas['review_settings_info']['broad_desc_field'];
+                        if (!empty($infos[$short_desc_field])) {
+                            echo $this->escape($infos[$short_desc_field]);
+                        }
+                    }
+                    ?>
+
+                    <div class="review-box-date">
+                        <?php
+                        if (!empty($infos['g_date'])) {
+                            echo $this->escape($infos['g_date']);
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+}
+?>

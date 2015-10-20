@@ -1,0 +1,250 @@
+<?php
+$translator = Zend_Registry::get('translator');
+$front_template = Zend_Registry::get('front_template'); 
+$maximum_stars_digit = $translator->translator('maximum_stars_digit');
+$property_db = new Property_Model_DbTable_Properties();	
+$frontController = Zend_Controller_Front::getInstance();
+$postValue = ($frontController->getRequest()->isPost()) ? $frontController->getRequest()->getPost() : Eicra_Global_Variable::getSession()->property_search_info;
+
+echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/js/modernizr.custom.29473.js');
+echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/css/accordion-sidebar.css');
+
+
+if($postValue && $postValue['filter'] && $postValue['filter']['filters'])
+{
+	foreach($postValue['filter']['filters'] as $fieldObj)
+	{
+		$postValue[$fieldObj['field']]  = $fieldObj['value'];
+	}
+}
+function hasChild($parent_category , $all_categories)
+{
+	$has = false;
+	foreach($all_categories as $key => $value)
+	{
+		if($value['parent'] == $parent_category['id'])
+		{
+			$has = true;
+			break;	
+		}	
+	}
+	return $has;
+}
+
+function childCategory($parent_category , $all_categories, $category_id_post_arr, $view, $space)
+{
+	if(hasChild($parent_category , $all_categories))
+	{
+		foreach($all_categories as $key => $value)
+		{
+			if($value['parent'] == $parent_category['id'])
+			{
+				?>
+					<label for="category_id_arr<?php echo $key.'-'.$key; ?>"><?php echo $space;  ?><input type="checkbox" name="category_id_arr[]" id="category_id_arr<?php echo $key.'-'.$key; ?>" value="<?php echo $value['id']; ?>" <?php if(in_array($value['id'], $category_id_post_arr)){ echo 'checked=""checked'; } ?>/>&nbsp;<?php echo $view->escape($value['category_name']); ?></label><br />
+				<?php
+					childCategory($value, $all_categories, $category_id_post_arr, $view, $space.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');	
+			}	
+		}	
+	}
+}
+$property_form = new Property_Form_ProductForm();
+$business_type_db = new Property_Model_DbTable_BusinessType();
+$category_db = new Property_Model_DbTable_Category();
+$global_conf = Zend_Registry::get('global_conf');
+$currency = new Zend_Currency($global_conf['default_locale']);
+$locale_direction = Eicra_Global_Variable::getSession()->site_direction;	
+?>
+
+<div class="block block-search-filter">
+	<div class="block-body">
+    		<h2><?php echo $translator->translator('block_search_filter_title','','', $front_template['theme_folder']); ?></h2>
+        
+            <div class="block-content">
+            	<div <?php if($locale_direction == 'rtl'){ ?> class="k-rtl" <?php } ?>>
+                    <div class="block-title"><?php echo $translator->translator('block_search_filter_property_size_lot_title','','', $front_template['theme_folder']).'  '.$translator->translator('block_search_size_unit', '', '', $front_template['theme_folder']); ?></div>
+                    <div id="rangeslider_property_lot" style="width:99%">
+                        <input name="property_lot-gte" id="property_lot-gte" operator="gte" />
+                        <input name="property_lot-lte" id="property_lot-lte" operator="lte" />
+                    </div>
+                    <div class="clear"><br></div>
+                    <div class="block-title"><?php echo $translator->translator('block_search_filter_property_estate_surface_title','','', $front_template['theme_folder']).' ('.$translator->translator('block_search_filter_property_estate_surface_unit', '','', $front_template['theme_folder']).')'; ?></div>
+                    <div id="rangeslider_property_estate_surface" style="width:99%">
+                        <input name="property_estate_surface-gte" id="property_estate_surface-gte" operator="gte" />
+                        <input name="property_estate_surface-lte" id="property_estate_surface-lte" operator="lte" />
+                    </div>
+                    <div class="clear"><br></div>
+                    <div class="block-title"><?php echo $translator->translator('block_search_filter_property_land_surface_title','','', $front_template['theme_folder']).' ('.$translator->translator('block_search_filter_property_land_surface_unit', '','', $front_template['theme_folder']).')'; ?></div>
+                    <div id="rangeslider_property_land_surface" style="width:99%">
+                        <input name="property_land_surface-gte" id="property_land_surface-gte" operator="gte" />
+                        <input name="property_land_surface-lte" id="property_land_surface-lte" operator="lte" />
+                    </div>
+                    <div class="clear"><br></div>
+                    <div class="block-title"><?php echo $translator->translator('block_search_filter_property_other_distance_hospital_title','','', $front_template['theme_folder']).'  '.$translator->translator('block_search_filter_property_distance_unit', '', '', $front_template['theme_folder']); ?></div>
+                    <div id="rangeslider_other_distance_hospital" style="width:99%">
+                        <input name="other_distance_hospital-gte" id="other_distance_hospital-gte" operator="gte" />
+                        <input name="other_distance_hospital-lte" id="other_distance_hospital-lte" operator="lte" />
+                    </div>
+                    <div class="clear"><br></div>
+                    <div class="block-title"><?php echo $translator->translator('block_search_filter_property_other_distance_airport_title','','', $front_template['theme_folder']).' ('.$translator->translator('block_search_filter_property_distance_unit', '','', $front_template['theme_folder']).')'; ?></div>
+                    <div id="rangeslider_other_distance_airport" style="width:99%">
+                        <input name="other_distance_airport-gte" id="other_distance_airport-gte" operator="gte" />
+                        <input name="other_distance_airport-lte" id="other_distance_airport-lte" operator="lte" />
+                    </div>
+                    <div class="clear"><br></div>
+                    <div class="block-title"><?php echo $translator->translator('block_search_filter_property_other_distance_railway_title','','', $front_template['theme_folder']).' ('.$translator->translator('block_search_filter_property_distance_unit', '','', $front_template['theme_folder']).')'; ?></div>
+                    <div id="rangeslider_other_distance_railway" style="width:99%">
+                        <input name="other_distance_railway-gte" id="other_distance_railway-gte" operator="gte" />
+                        <input name="other_distance_railway-lte" id="other_distance_railway-lte" operator="lte" />
+                    </div>
+                    <div class="clear"><br></div>
+                    <div class="block-title"><?php echo $translator->translator('block_search_filter_property_other_distance_school_title','','', $front_template['theme_folder']).' ('.$translator->translator('block_search_filter_property_distance_unit', '','', $front_template['theme_folder']).')'; ?></div>
+                    <div id="rangeslider_other_distance_school" style="width:99%">
+                        <input name="other_distance_school-gte" id="other_distance_school-gte" operator="gte" />
+                        <input name="other_distance_school-lte" id="other_distance_school-lte" operator="lte" />
+                    </div>
+                    <div class="clear"><br></div>
+                </div>
+            </div>
+            <section class="ac-container-sidebar">
+            <div>
+            	<input id="ac-1" name="" type="checkbox" checked/>
+                <label for="ac-1"><?php echo $translator->translator('block_search_stars','','', $front_template['theme_folder']); ?></label>
+                <article class="ac-small">
+                <p>
+				<?php
+				$stars_post_arr = ($postValue['stars_arr'] && !is_array($postValue['stars_arr'])) ? explode(',', $postValue['stars_arr']) : ( (is_array($postValue['stars_arr'])) ? $postValue['stars_arr'] : array());
+				for($i = ($maximum_stars_digit - 1); $i > 0 ; $i--)
+				{
+					$h_num = $property_db->numOfProperty(array('field' => 'stars', 'operator' => '=', 'value' => $i), false);
+					$checked = (in_array($i, $stars_post_arr)) ? 'checked="checked"' : '';
+				?>
+                <label for="stars_arr<?php echo $i; ?>"><input type="checkbox" name="stars_arr[]" id="stars_arr<?php echo $i; ?>" value="<?php echo $i; ?>" <?php echo $checked; ?>/>
+                <?php
+					for($j = 1; $j < $maximum_stars_digit; $j++)
+					{
+						$img_path = ($j > $i) ? 'application/layouts/scripts/'.$front_template['theme_folder'].'/images/mod_property_img/star-small-inactive.png' : 'application/layouts/scripts/'.$front_template['theme_folder'].'/images/mod_property_img/star-small-active.png';
+				?>
+                		<img src="<?php echo $img_path; ?>" />
+                <?php
+					}
+					echo  $this->numbers($i).' '.$translator->translator('block_search_stars','','', $front_template['theme_folder']).' ('.$this->numbers($h_num).')';
+				?>
+                </label><br />
+                <?php				
+				}
+				?>                
+                </p>
+                </article>              
+            </div>
+            
+            <div>
+            	<input id="ac-6" name="" type="checkbox" />
+                <label for="ac-6"><?php $title_lang = $translator->translator('block_search_category','','', $front_template['theme_folder']); echo str_replace(':', '', $title_lang); ?></label>
+                <article class="ac-medium">
+                <p>
+                <?php
+					$category_id_post_arr = ($postValue['category_id_arr'] && !is_array($postValue['category_id_arr'])) ? explode(',', $postValue['category_id_arr']) : ( (is_array($postValue['category_id_arr'])) ? $postValue['category_id_arr'] : array());
+					$category_id_info = $category_db->getOptions(null, 'category_name', 'ASC', '1');
+					
+					if($category_id_info)
+					{
+						foreach($category_id_info as $key => $value)
+						{
+							if(!empty($value) && $value['parent'] == 0) 
+							{
+				?>
+                	<label for="category_id_arr<?php echo $key; ?>"><input type="checkbox" name="category_id_arr[]" id="category_id_arr<?php echo $key; ?>" value="<?php echo $value['id']; ?>" <?php if(in_array($value['id'], $category_id_post_arr)){ echo 'checked=""checked'; } ?>/>&nbsp;<?php echo $this->escape($value['category_name']); ?></label><br />
+                <?php
+								childCategory($value, $category_id_info, $category_id_post_arr, $this, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+							}
+						}
+					}
+				?>
+                </p>
+                </article>
+            </div>
+            <div>
+            	<input id="ac-2" name="" type="checkbox"/>
+                <label for="ac-2"><?php echo $translator->translator('block_search_filter_feature_amenities_title','','', $front_template['theme_folder']); ?></label>
+                <article class="ac-xl-large">
+                <p>
+				<?php
+					$property_form->feature_amenities->setSeparator('<br />');
+					if($postValue['feature_amenities'])
+					{
+						$postValue['feature_amenities'] = (is_array($postValue['feature_amenities'])) ? $postValue['feature_amenities'] : explode(',', $postValue['feature_amenities']);
+						$property_form->feature_amenities->setValue($postValue['feature_amenities']);
+					}
+					echo $property_form->feature_amenities;
+				?>
+                </p>
+                </article>              
+            </div>
+            
+            <div>
+            	<input id="ac-3" name="" type="checkbox" />
+                <label for="ac-3"><?php echo $translator->translator('block_search_filter_feature_other_amenities_title','','', $front_template['theme_folder']); ?></label>
+                <article class="ac-xl-large">
+                <p>
+				<?php
+					$property_form->feature_other_amenities->setSeparator('<br />');
+					if($postValue['feature_other_amenities'])
+					{
+						$postValue['feature_other_amenities'] = (is_array($postValue['feature_other_amenities'])) ? $postValue['feature_other_amenities'] : explode(',', $postValue['feature_other_amenities']);
+						$property_form->feature_other_amenities->setValue($postValue['feature_other_amenities']);
+					}
+					echo $property_form->feature_other_amenities;
+				?>
+                </p>
+                </article>
+            </div>
+            
+            <div>
+            	<input id="ac-4" name="" type="checkbox" />
+                <label for="ac-4"><?php echo $translator->translator('block_search_filter_accomodation_type_title','','', $front_template['theme_folder']); ?></label>
+                <article class="ac-medium">
+                <p>
+                <label><input type="radio" name="property_type" value="" <?php if(empty($postValue['property_type'])){ echo 'checked=""checked'; } ?>/> <?php echo $translator->translator('block_search_filter_accomodation_type_all_title','','', $front_template['theme_folder']); ?></label><br />
+				<?php
+					$business_type_info = $business_type_db->getOptions(null, 'business_type', 'ASC');
+					if($business_type_info)
+					{
+						foreach($business_type_info as $key => $value)
+						{
+				?>
+                			<label><input type="radio" name="property_type" value="<?php echo $value['id']; ?>" <?php if($postValue['property_type'] == $value['id']){ echo 'checked=""checked'; } ?> /><?php echo $this->escape($value['business_type']); ?></label><br />
+                <?php
+						}
+					}
+				?>
+                </p>
+                </article>
+            </div>
+            <div>
+            	<input id="ac-5" name="" type="checkbox" />
+                <label for="ac-5"><?php echo $translator->translator('block_search_filter_feature_furnishing','','', $front_template['theme_folder']); ?></label>
+                <article class="ac-small">
+                <p>
+                <label><input type="radio" name="feature_furnishing" value="" <?php if(empty($postValue['feature_furnishing'])){ echo 'checked=""checked'; } ?>/> <?php echo $translator->translator('block_search_filter_accomodation_type_all_title','','', $front_template['theme_folder']); ?></label><br />
+				<?php
+					$feature_furnishing_info = $property_form->feature_furnishing->getMultiOptions();
+					if($feature_furnishing_info)
+					{
+						foreach($feature_furnishing_info as $key => $value)
+						{
+							if(!empty($key)) 
+							{
+				?>
+                <label><input type="radio" name="feature_furnishing" value="<?php echo $key; ?>" <?php if($postValue['feature_furnishing'] == $key){ echo 'checked=""checked'; } ?> /><?php echo $this->escape($value); ?></label><br />
+                <?php
+							}
+						}
+					}
+				?>
+                </p>
+                </article>
+            </div>
+            
+            </section>
+    </div>
+</div>

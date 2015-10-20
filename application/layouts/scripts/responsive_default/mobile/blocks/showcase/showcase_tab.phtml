@@ -1,0 +1,75 @@
+<?php
+$front_template = Zend_Registry::get('front_template');
+$this->translator = Zend_Registry::get('translator');
+$global_conf = Zend_Registry::get('global_conf');
+$auth = Zend_Auth::getInstance();
+$acount_link = 'Members/index/profile';
+$my_account_link = ($auth->hasIdentity()) ? '<a href="Members/index/profile" class="topbar_logout_btn">' . $this->translator->translator('header_account', '', '', $front_template['theme_folder']) . '|' . '</a>' : '<a href="">' . '</a>';
+$sugnIn_link = ($auth->hasIdentity()) ? '<a href="javascript:void(0);" class="topbar_logout_btn">' . $this->translator->translator('header_signout', '', '', $front_template['theme_folder']) . '</a>' : '<a href="Frontend-Login">' . $this->translator->translator('header_signin', '', '', $front_template['theme_folder']) . '</a>';
+$sugnIn_link_agency = ($auth->hasIdentity()) ? '<a href="javascript:void(0);" class="topbar_logout_btn">' . $this->translator->translator('header_logout', '', '', $front_template['theme_folder']) . '</a>' : '<a href="Sign-In">' . $this->translator->translator('header_login', '', '', $front_template['theme_folder']) . '</a>';
+$add_url = $this->baseUrl() . 'Frontend-Login';
+$devider = ' |';
+?>
+
+<div class="panel-group margin-bottom-20" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading cursor-point" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <span class="caret margin-top-bottom-6 pull-right"></span>
+                    <?php echo strtoupper($this->translator->translator('block_recent_title', '', '', $front_template['theme_folder'])); ?>
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <?php echo $this->partial('mobile/blocks/showcase/contents/property_home_content_recent.phtml'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading cursor-point" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <span class="caret margin-top-bottom-6 pull-right"></span>
+                    <?php echo strtoupper($this->translator->translator('tab_commercial_title', '', '', $front_template['theme_folder'])); ?>
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+                <?php echo $this->partial('mobile/blocks/showcase/contents/property_home_content_commercial.phtml'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading cursor-point" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <span class="caret margin-top-bottom-6 pull-right"></span>
+                    <?php echo strtoupper($this->translator->translator('tab_residential_title', '', '', $front_template['theme_folder'])); ?>
+                </a>
+            </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div class="panel-body">
+                <?php echo $this->partial('mobile/blocks/showcase/contents/property_home_content_residential.phtml'); ?>
+            </div>
+        </div>
+    </div>
+     <div class="panel panel-default">
+        <div class="panel-heading cursor-point" role="tab" id="headingFour" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    <span class="caret margin-top-bottom-6 pull-right"></span>
+                    <?php echo strtoupper($this->translator->translator('tab_pending_title', '', '', $front_template['theme_folder'])); ?>
+                </a>
+            </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+            <div class="panel-body">
+                <?php echo $this->partial('mobile/blocks/showcase/contents/property_home_content_pending.phtml'); ?>
+            </div>
+        </div>
+    </div>
+</div>

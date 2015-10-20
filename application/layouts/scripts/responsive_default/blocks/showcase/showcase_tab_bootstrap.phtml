@@ -1,0 +1,44 @@
+<?php
+$front_template = Zend_Registry::get('front_template');
+$this->translator = Zend_Registry::get('translator');
+$global_conf = Zend_Registry::get('global_conf');
+$auth = Zend_Auth::getInstance();
+$acount_link = 'Members/index/commercial';
+$my_account_link = ($auth->hasIdentity()) ? '<a href="Members/index/commercial" class="topbar_logout_btn">' . $this->translator->translator('header_account', '', '', $front_template['theme_folder']) . '|' . '</a>' : '<a href="">' . '</a>';
+$sugnIn_link = ($auth->hasIdentity()) ? '<a href="javascript:void(0);" class="topbar_logout_btn">' . $this->translator->translator('header_signout', '', '', $front_template['theme_folder']) . '</a>' : '<a href="Frontend-Login">' . $this->translator->translator('header_signin', '', '', $front_template['theme_folder']) . '</a>';
+$sugnIn_link_agency = ($auth->hasIdentity()) ? '<a href="javascript:void(0);" class="topbar_logout_btn">' . $this->translator->translator('header_logout', '', '', $front_template['theme_folder']) . '</a>' : '<a href="Sign-In">' . $this->translator->translator('header_login', '', '', $front_template['theme_folder']) . '</a>';
+$add_url = $this->baseUrl() . 'Frontend-Login';
+$devider = ' |';
+$tab_title_recent_title = $this->translator->translator('block_recent_title', '', '', $front_template['theme_folder']);
+$tab_title_immediately_available = $this->translator->translator('tab_commercial_title', '', '', $front_template['theme_folder']);
+$tab_title_already_available = $this->translator->translator('tab_residential_title', '', '', $front_template['theme_folder']);
+$tab_title_inval = $this->translator->translator('tab_pending_title', '', '', $front_template['theme_folder']);
+?>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Featured Tab Start-->	
+        <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+            <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#container-3_recent" class="grey-dark-background" id="container-3_recent-tab" role="tab" data-toggle="tab" aria-controls="container-3_recent" aria-expanded="true"><?php echo strtoupper($tab_title_recent_title); ?></a></li>
+                <li role="presentation" class=""><a href="#container-3_commercial" class="grey-dark-background" role="tab" id="container-3_commercial-tab" data-toggle="tab" aria-controls="container-3_commercial" aria-expanded="false"><?php echo strtoupper($tab_title_immediately_available); ?></a></li>
+                <li role="presentation" class=""><a href="#container-3_residential" class="grey-dark-background" role="tab" id="container-3_residential-tab" data-toggle="tab" aria-controls="container-3_residential" aria-expanded="false"><?php echo strtoupper($tab_title_already_available); ?></a></li>
+                <li role="presentation" class=""><a href="#container-3_pending" class="grey-dark-background" role="tab" id="container-3_pending-tab" data-toggle="tab" aria-controls="container-3_pending" aria-expanded="false"><?php echo strtoupper($tab_title_inval); ?></a></li>                
+            </ul>
+            <div id="myTabContent" class="tab-content margin-top-bottom-8">
+                <div role="tabpanel" class="tab-pane fade active in" id="container-3_recent" aria-labelledby="home-tab">
+                   <?php echo $this->partial('blocks/showcase/contents/property_home_content_recent.phtml'); ?>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="container-3_commercial" aria-labelledby="commercial-tab">
+                    <?php echo $this->partial('blocks/showcase/contents/property_home_content_commercial.phtml'); ?>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="container-3_residential" aria-labelledby="residential-tab">
+                    <?php echo $this->partial('blocks/showcase/contents/property_home_content_residential.phtml'); ?>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="container-3_pending" aria-labelledby="pending-tab">
+                    <?php echo $this->partial('blocks/showcase/contents/property_home_content_pending.phtml'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

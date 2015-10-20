@@ -1,0 +1,226 @@
+/* ___________________________________________________________________________________
+   
+   CSS Framework for Eicra Realestate Script [Templates, Blocks & Product Modules] 
+   ___________________________________________________________________________________ */
+   
+
+/*	GLOBAL STYLES ******************************************************************** */
+
+@charset "utf-8";
+
+html{
+	direction:rtl; 
+}
+
+body{
+	direction:rtl;
+    font-family: Tahoma,Arial,Helvetica,sans-serif;
+}
+
+input[type="checkbox"],
+input[type="radio"]{
+	margin-right:15px;
+	margin-left:8px;
+}
+
+select option{
+	padding-right:4px;
+	padding-left:0px;
+}
+
+fieldset{
+	background:#FCFCFC;
+	border:1px solid #79AD2E;
+	margin:0 0 25px 0;
+	padding:0 15px 5px 15px;
+	position:relative;
+}
+
+legend{
+	font-size:12px;
+	background:#83B931;
+	border:1px solid #79AD2E;
+    color: #FFFFFF;
+	font-weight:bold;
+	padding: 7px 20px;
+	margin:0 0 10px 0;
+	width:auto;
+}
+
+/* ********************************************************************************** */
+
+/* Global Block Style --------------------------------------------------------------- */
+
+.block figure .photo-count-container,
+	   figure .photo-count-container{
+	left:inherit;
+	right:9px;
+}
+
+.block figure .type{
+	left:inherit;
+	right:9px;
+}
+
+.block .panel-footer span.no-r-bdr{
+	border-left:0;
+}
+
+.block .property-icon,
+	   .property-icon{
+    margin-right: 0px;
+	margin-left: 4px;
+	background-position:right center;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Footer --------------------------------------------------------------------------- */
+
+.go-top a{
+	right:0;
+	left:10px;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* ********************************************************************************** */
+
+
+/* OTHER BLOCKS STYLE *************************************************************** */
+
+/* Language Flag -------------------------------------------------------------------- */
+
+
+.flags .dropdown dl{ 
+	float:left;
+}
+
+.dropdown dd ul{ 
+	right:-195px;
+}
+
+.dropdown dd ul li{
+	border-left:0;
+	text-align:left;
+}
+
+.dropdown span.flag{
+	float:left;
+}
+
+.dropdown span.flag span.glyphicon{
+	margin-right:10px;
+	margin-left:0;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Realestate Home Search ----------------------------------------------------------- */
+
+.block-search .ui-combobox-input,
+.block-sidebar-search .ui-combobox-input{
+	padding: 0.68em;
+}
+
+.block-search .ui-combobox-toggle,
+.block-sidebar-search .ui-combobox-toggle{
+	right:inherit;
+	left: 0px;
+}
+
+.block-search .ui-button,
+.block-sidebar-search .ui-button{
+	float:left;
+}
+
+.block-search-filter .ac-container article .checkbox input[type="checkbox"],
+.block-search-filter .ac-container article .radio input[type="radio"]{
+	margin-left:0;
+	margin-right:-21px;
+}
+
+.block-search-filter .ac-container{
+	text-align:right;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Block List ----------------------------------------------------------------------- */
+
+.block-list ul li{
+	background-image:url(../../images/list-arrow-rtl.gif);
+	background-position:right;
+	padding-right:20px;
+	padding-left:0;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* ********************************************************************************** */
+
+
+/* PRODUCT MODULES ****************************************************************** */
+
+/* Global Module Style -------------------------------------------------------------- */
+
+.mod .glyphicon.calendar {
+	margin-right:0;
+	margin-left:4px;
+}
+
+.products-vote span input[type="button_btn"]{
+	margin-right:0 !important;
+	margin-left:2px !important;
+	float:right;
+}
+
+#ribbons {
+	right:-78%;
+	left:0;
+	line-height:3px !important;
+}
+
+#ribbons::after{
+	right: 0;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Product Match -------------------------------------------------------------------- */
+
+.match-container ul{
+	margin-right:0;
+	padding-right:0;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* Accordion ------------------------------------------------------------------------ */
+
+.ac-container label,
+.ac-container input:checked + label,
+.ac-container input:checked + label:hover{
+	background-position: 100% 13px !important;
+}
+
+.ac-container label:hover:after,
+.ac-container input:checked + label:hover:after{
+	background-image:none !important;
+}
+
+.ac-container-sidebar > div > label,
+.ac-container-sidebar input:checked + label,
+.ac-container-sidebar input:checked + label:hover{
+	background-image: url(../../images/list-arrow-rtl.gif) !important;
+	background-position: 98% center !important;
+}
+
+/* ---------------------------------------------------------------------------------- */
+
+/* ********************************************************************************** */
+
+/* ___________________________________________________________________________________
+   
+   New CSS used by Developer
+   ___________________________________________________________________________________ */

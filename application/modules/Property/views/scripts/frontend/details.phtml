@@ -1,0 +1,248 @@
+<?php
+$version = Zend_Registry::get('version');
+$feature_other_amenities_title_arr = explode(',', $this->view_datas['feature_other_amenities']);
+
+function property_truncate($phrase, $start_words, $max_words) {
+    $phrase_array = explode(' ', $phrase);
+    if (count($phrase_array) > $start_words && $max_words > 0) {
+        $phrase = implode(' ', array_slice($phrase_array, $start_words, $max_words)) . '...';        
+    }
+    return $phrase;
+}
+
+function property_price_format($curSymbol, $price, $priceSuffixText) {
+    $price = $curSymbol . ' ' . number_format($price, 0, ',', '.') . ' ' . $priceSuffixText;
+    return $price;
+}
+
+function property_string_join($firstString, $secondString) {
+    $joined_string = $firstString . ' ' . $secondString;
+    return $joined_string;
+}
+function property_substract($phrase, $length)
+{
+  if(strlen($phrase) > $length)
+  {
+    $phrase=substr($phrase,0,$length) . '...';    
+  }
+  return $phrase;
+}
+
+if ($this->view_datas['country_id']) {
+    try {
+        $country_db = new Property_Model_DbTable_Country();
+        $country_info = $country_db->getCountryName($this->view_datas['country_id']);
+    } catch (Exception $e) {
+        
+    }
+}
+if (!empty($this->view_datas['property_name'])) {
+    $this->headTitle()->headTitle($this->escape($this->businessTypeInfo['business_type'] . ' di '), 'SET');
+}
+
+if (!empty($feature_other_amenities_title_arr[0])) {
+    foreach ($feature_other_amenities_title_arr as $key => $value) {
+        $this->headTitle()->headTitle($this->escape($value) . ', ');
+    }
+}
+if (!empty($this->view_datas['property_name'])) {
+    $this->headTitle()->headTitle(' - ' . $this->escape($this->view_datas['property_name']));
+}
+if (!empty($this->view_datas['property_name'])) {
+    $this->headMeta()->setName('description', $this->view_datas['property_name'] . ' - ' . $this->escape($this->businessTypeInfo['business_type']) . ' ' . $this->escape($state_info['state_name']) . '
+' . $this->view_datas['feature_other_amenities'] . ' ' . $this->translator->translator('property_came_from') . ' ' . $this->escape($state_info['state_name']) . ' ' . $this->translator->translator('property_have_skill') . ' ' . $this->view_datas['feature_amenities']);
+}
+
+if (!empty($this->view_datas['property_name'])) {
+    $this->headMeta()->setName('keywords', $this->translator->translator('property_list_keywords') . ', ' . $this->escape($this->businessTypeInfo['business_type']) . ' ' . $this->escape($state_info['state_name']) . ', ' . $this->view_datas['property_name'] . ' ' . $this->translator->translator('property_pembantu_sufix') . ' ' . $this->escape($state_info['state_name']));
+}
+$tab_base_link = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
+$front_template = Zend_Registry::get('front_template');
+include_once 'details/library-assets.phtml';
+
+function isnot_int($property_owner) {
+    $r = true;
+    if (is_numeric($property_owner)) {
+        if (is_int((int) $property_owner)) {
+            $r = false;
+        }
+    }
+    return $r;
+}
+
+if ($this->view_datas['state_id']) {
+    try {
+        $state_db = new Property_Model_DbTable_State();
+        $state_info = $state_db->getStateInfo($this->view_datas['state_id']);
+    } catch (Exception $e) {
+        
+    }
+}
+$global_conf = Zend_Registry::get('global_conf');
+$currency = new Zend_Currency($global_conf['default_locale']);
+$business_type_db = new Property_Model_DbTable_BusinessType();
+$cat_Info = new Property_Model_DbTable_Category();
+$mem_db = new Members_Model_DbTable_MemberList();
+$property_db = new Property_Model_DbTable_Properties();
+$nextProperty = $property_db->getNextProperty($this->view_datas['id'], $this->view_datas['group_id'], null);
+$prevProperty = $property_db->getPrevProperty($this->view_datas['id'], $this->view_datas['group_id'], null);
+$auth = Zend_Auth::getInstance();
+$hasIdentity = $auth->hasIdentity();
+$packages = new Members_Controller_Helper_Packages();
+$general_db = new Members_Model_DbTable_General();
+$forms_db = new Members_Model_DbTable_Forms();
+$mem_info = (isnot_int($this->view_datas['property_owner'])) ? $mem_db->getMemberInfo($this->view_datas['entry_by']) : $mem_db->getMemberInfo($this->view_datas['property_owner']);
+$module = $this->module;
+$controller = $this->controller;
+$action = $this->action;
+$maximum_stars_digit = $this->translator->translator('maximum_stars_digit');
+$vote = new Vote_Controller_Helper_ShowVoteButton('inline', 'property_page');
+$property_type_arr = explode(',', $this->translator->translator('property_front_page_rent_id'));
+$curSymbol = $currency->getSymbol();
+$getPropertyPrice = $this->price($this->escape($this->view_datas['property_price']));
+$propertyPrice = $curSymbol . ' ' . number_format($getPropertyPrice, 0, ',', '.') . '' . $this->translator->translator('property_front_per_month') . '';
+$getDownPayment = $this->price($this->escape($this->view_datas['payment_processing_fee']));
+$downPayment = property_price_format($curSymbol, $getDownPayment, '');
+$getPropertyDesc = $this->view_datas['property_desc'];
+$setPropertyDesc = stripslashes($this->view_datas['property_desc']);
+$setPropertyDescShort = property_truncate($getPropertyDesc, 0, 20);
+$property_desc_short = strtolower($setPropertyDescShort);
+$property_desc = strtolower($setPropertyDesc);
+$getPropertyName = $this->escape($this->view_datas['property_name']);
+$property_name = strtolower($getPropertyName);
+$getReplacementGuarateeSufText = $this->translator->translator('property_front_month');
+$getReplacementGuarantee = $this->escape($this->view_datas['feature_parking']);
+$replacement_guarantee = property_price_format('', $getReplacementGuarantee, $getReplacementGuarateeSufText);
+$getWorkAlways = $this->escape($this->view_datas['feature_bedroom']);
+$getWorkAlwaysLabel = $this->ProductForm->feature_bedroom->getAttrib('font_end_label');
+$setWorkAlwaysSearchArr = array('1', '2');
+$setWorkAlwaysReplaceArr = array('Ya', 'Tidak');
+$work_always = str_replace($setWorkAlwaysSearchArr, $setWorkAlwaysReplaceArr, $getWorkAlways);
+$getPropertyStatus = $this->escape($this->view_datas['house_name']);
+$getPropertyStatusLabel = $this->translator->translator('property_front_page_label_house_name');
+$getPropertyHaveChild = $this->escape($this->view_datas['property_code']);
+$getPropertyHaveChildLabel = $this->ProductForm->property_code->getAttrib('font_end_label');
+$getPropertyReligion = $this->escape($this->view_datas['property_tipology']);
+$getPropertyReligionLabel = $this->ProductForm->property_tipology->getAttrib('font_end_label');
+$getPropertyCurrLocationLabel = $this->ProductForm->house_location->getAttrib('font_end_label');
+$getPropertyCurrLocation = $this->escape($this->view_datas['house_location']);
+$getPropertyProv = $this->escape($state_info['state_name']);
+$getPropertyProvLabel = $this->translator->translator('property_front_page_label_province');
+$getPropertyFearDog = $this->escape($this->view_datas['feature_furnishing']);
+$getPropertyFearDogLabel = $this->ProductForm->feature_furnishing->getAttrib('font_end_label');
+$getPropertyWorkOverseasLabel = $this->translator->translator('property_front_page_label_postcodex');
+$getPropertyWorkOverseas = $this->escape($this->view_datas['post_code']);
+$getPropertyEnglishSkill = $this->escape($this->view_datas['feature_reception']);
+$getPropertyEnglishSkillLabel = $this->ProductForm->feature_reception->getAttrib('font_end_label');
+$getPropertySkillsLabel = $this->translator->translator('skills');
+$getPropertySkills = $this->escape($this->view_datas['feature_amenities']);
+$getPropertyAvailToWorkInLabel = $this->translator->translator('available_to_work_in');
+$getPropertyAvailToWorkIn = $this->escape($this->view_datas['feature_other_amenities']);
+$getPropertyProfesionLabel = $this->translator->translator('property_front_page_label_type');
+$getPropertyProfesion = $this->escape($this->businessTypeInfo['business_type']);
+$getPropertyAge = $this->escape($this->view_datas['feature_bathroom']);
+$getPropertyAgeLabel = $this->ProductForm->feature_bathroom->getAttrib('font_end_label');
+$getPropertyAgeRightLabel = $this->ProductForm->feature_room_no->getAttrib('right_label');
+$setPropertyAge = property_string_join($getPropertyAge, $getPropertyAgeRightLabel);
+$getPropertyExperienceLabel = $this->translator->translator('property_front_page_label_room');
+$getPropertyExperience = $this->escape($this->view_datas['feature_room_no']);
+$getPropertyExperienceRightLabel = $this->ProductForm->feature_room_no->getAttrib('right_label');
+$setPropertyExperience = property_string_join($getPropertyExperience, $getPropertyExperienceRightLabel);
+$getPropertyLatestEducLabel = $this->translator->translator('property_front_page_label_glazing');
+$getPropertyLatestEduc = $this->escape($this->view_datas['feature_glazing']);
+$property_latest_educ = str_replace('_', ' ', $getPropertyLatestEduc);
+$getPropertyHeightLabel = $this->ProductForm->property_size->getAttrib('font_end_label');
+$getPropertyHeight = $this->escape($this->view_datas['property_size']);
+$getPropertyHeightRightLabel = $this->ProductForm->property_size->getAttrib('right_label');
+$setPropertyHeight = property_string_join($getPropertyHeight, $getPropertyHeightRightLabel);
+$getPropertyWeightLabel = $this->ProductForm->property_lot->getAttrib('font_end_label');
+$getPropertyWeight = $this->escape($this->view_datas['property_lot']);
+$getPropertyWeightRightLabel = $this->ProductForm->property_lot->getAttrib('right_label');
+$setPropertyWeight = property_string_join($getPropertyWeight, $getPropertyWeightRightLabel);
+$getPropertyAddedOnLabel = $this->ProductForm->available_added_on->getAttrib('font_end_label');
+$getPropertyAddedOn = $this->escape($this->view_datas['property_date']);
+$setPropertyAddedOn = strtotime($getPropertyAddedOn);
+$property_added_on = strftime('%d-%m-%Y', $setPropertyAddedOn);
+$getPropertyEthOrigLabel = $this->translator->translator('property_front_page_label_dining');
+$getPropertyEthOrig = $this->escape($this->view_datas['feature_dinning_space']);
+$getPropertyPoliceLetterLabel = $this->translator->translator('property_front_page_label_kitchen');
+$getPropertyPoliceLetter = $this->escape($this->view_datas['feature_kitchen']);
+$property_police_letter = str_replace('_', ' ', $getPropertyPoliceLetter);
+$getPropertyDocLetterLabel = $this->translator->translator('property_front_page_label_garden');
+$getPropertyDocLetter = $this->escape($this->view_datas['feature_garden']);
+$setPropertydocLetterSearchArr = array('_', 'doctor');
+$setPropertydocLetterReplaceArr = array(' ', 'doctor\'s');
+$property_doc_letter = str_replace($setPropertydocLetterSearchArr, $setPropertydocLetterReplaceArr, $getPropertyDocLetter);
+$getPropertyRefLetterLabel = $this->translator->translator('property_front_page_label_garage');
+$getPropertyRefLetter = $this->escape($this->view_datas['feature_garage']);
+$property_ref_letter = str_replace('_', ' ', $getPropertyRefLetter);
+$property_image_val_arr = explode(',', $this->view_datas['property_image']);
+$property_image_no = (empty($property_image_val_arr[0])) ? '0' : count($property_image_val_arr);
+$getPropertyActivityTabLabel = $this->translator->translator('property_front_page_property_floor');
+$getPropertyProfileTabLabel = $this->translator->translator('property_front_page_property_gallery');
+$getPropertyDetailsTabLabel = $this->translator->translator('property_front_page_Title_detail');
+$getPropertySkillsAreaLabel = $this->translator->translator('property_front_page_property_brochure');
+$property_skills_arr = explode(',', $getPropertySkills);
+$getPropertyReviewLabel = $this->translator->translator('property_front_page_property_reviews_tab');
+$property_available_to_work_in = explode(',', $getPropertyAvailToWorkIn);
+$property_floor_image_val_arr = explode(',', $this->view_datas['feature_floor_plan_image']);
+$property_floor_image_no = (empty($property_floor_image_val_arr[0])) ? '0' : count($property_floor_image_val_arr);
+$getPropertyType = $this->escape($this->businessTypeInfo['business_type']);
+$property_type_passive_text = 'Pembantu';
+$related_text = 'Terkait';
+$with_text = 'dengan';
+$location_text = 'Lokasi';
+$match_text = 'Sama';
+$agency_text = 'Penyalur';
+$sallary_match_text = 'Gaji Mendekati';
+$cdnExt = 'http://static.busana.com/';
+//$getData = $this->view_datas['id'];
+//print_r($getData);
+require_once 'helper/icon-color.phtml';
+//Dynamic Form
+if (!empty($this->group_datas['dynamic_form'])) {
+    $this->group_datas['form_id'] = $this->group_datas['dynamic_form'];
+    $proForm = new Property_Form_ProductForm($this->group_datas);
+    $dynamic_valu_db = new Members_Model_DbTable_FieldsValue();
+    $this->view_datas = $dynamic_valu_db->getFieldsValueInfo($this->view_datas, $this->view_datas['id']);
+    $proForm->populate($this->view_datas);
+}
+if ($this->view_datas['area_id']) {
+    try {
+        $area_db = new Property_Model_DbTable_Area();
+        $area_info = $area_db->getAreaInfo($this->view_datas['area_id']);
+    } catch (Exception $e) {
+        
+    }
+}
+$this->tab = (($this->tab == 7 || $this->tab == 5) && (empty($property_type_arr[0]) || !in_array($this->view_datas['property_type'], $property_type_arr))) ? ($this->tab - 1) : $this->tab;
+
+
+?>
+
+<?php
+include_once 'details/inline-script.phtml';
+include_once 'details/inline-css.phtml';
+$allow_obj = new Property_View_Helper_Allow();
+if (!$allow_obj->allowRule('details', null, null, $this->group_datas['role_id'])) :
+    ?>
+    <?php echo $this->translator->translator('Member_Access_deny_desc'); ?>
+<?php else : ?>
+    <?php if ($this->view_datas['active'] == '1') : ?>
+        <div class="mod mod-details">
+            <?php
+            include_once 'details/pager.phtml';
+            require_once 'details/query-default-hidden.phtml';
+            include_once 'details/container-1.phtml';
+//            include_once 'details/container-tabs.phtml';
+//            include_once 'details/container-2.phtml';
+            include_once 'details/container-3.phtml';
+            include_once 'details/container-4.phtml';
+            include 'details/pager.phtml';
+            ?>
+        </div>
+        <div id="dialog_container" title="<?php echo $this->translator->translator('common_dialog_msg', 'Message'); ?>"></div>
+    <?php else : ?>
+        <h2><?php echo $this->translator->translator('common_not_approved'); ?></h2>
+    <?php endif; ?>	
+<?php endif; ?>

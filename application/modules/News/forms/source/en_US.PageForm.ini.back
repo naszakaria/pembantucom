@@ -1,0 +1,100 @@
+[page]
+
+; Group element
+page.elements.group_id.type = "select"
+page.elements.group_id.options.size = 1
+page.elements.group_id.options.class = "page_select_group"
+page.elements.group_id.options.label = "Pilih Kelompok:"
+page.elements.group_id.options.title = "Pilih Kelompok"
+page.elements.group_id.options.required = true
+
+; Category element
+page.elements.category_id.type = "hidden"
+page.elements.category_id.options.size = 1
+page.elements.category_id.options.name = "category_id"
+page.elements.category_id.options.id = "page_parent"
+page.elements.category_id.options.label = "Pilih Kategori Induk Dari Kategori Pohon :"
+page.elements.category_id.options.value = "0"
+
+;Add an Page Name element
+page.elements.page_name.type = "text"
+page.elements.page_name.options.size = 50
+page.elements.page_name.options.required = true
+page.elements.page_name.options.label = "Nama Halaman:"
+page.elements.page_name.options.title = "Inputkan Nama Halaman"
+page.elements.page_name.options.value = ""
+page.elements.page_name.options.filters.trim.filter = "StringTrim"
+
+
+; Thmbnil element
+page.elements.page_thumb.type = "hidden"
+page.elements.page_thumb.options.size = 1
+page.elements.page_thumb.options.id = "page_thumb"
+page.elements.page_thumb.options.label = "Unggah foto kecil :"
+page.elements.page_thumb.options.value = ""
+page.elements.page_thumb.options.required = false
+
+;Add an Page Title element
+page.elements.page_title.type = "text"
+page.elements.page_title.options.size = 50
+page.elements.page_title.options.label = "Judul Halaman:"
+page.elements.page_title.options.title = "Inputkan Judul Halaman"
+page.elements.page_title.options.required = true
+page.elements.page_title.options.value = ""
+page.elements.page_title.options.filters.trim.filter = "StringTrim"
+
+;Add an Page Date element
+page.elements.page_date.type = "text"
+page.elements.page_date.options.size = 50
+page.elements.page_date.options.label = "Tanggal:"
+page.elements.page_date.options.title = "Inputkan Tanggal"
+page.elements.page_date.options.required = false
+page.elements.page_date.options.value = ""
+page.elements.page_date.options.filters.trim.filter = "StringTrim"
+
+; Page Description element
+page.elements.page_desc.type = "textarea"
+page.elements.page_desc.options.cols = 60
+page.elements.page_desc.options.rows = 15
+page.elements.page_desc.options.label = "Konten:"
+page.elements.page_desc.options.title = "Inputkan Konten:"
+page.elements.page_desc.options.required = true
+
+;Add page related items
+page.elements.related_items.type = "select"
+page.elements.related_items.options.size = 12
+page.elements.related_items.options.required = false
+page.elements.related_items.options.style = "Lebar:470px;"
+page.elements.related_items.options.multiple	= "multiple"
+page.elements.related_items.options.label = "Pilih Pembantu Terkait:"
+page.elements.related_items.options.title = "Pilih Pembantu Terkait"
+page.elements.related_items.options.filters.trim.filter = "StringTrim"
+
+;Meta Title element
+page.elements.meta_title.type = "text"
+page.elements.meta_title.options.size = 50
+page.elements.meta_title.options.label = "Judul Meta:"
+page.elements.meta_title.options.title = "Inputkan Judul Meta:"
+page.elements.meta_title.options.validators.strlen.validator = "StringLength"
+page.elements.meta_title.options.filters.StripTags.filter = "StripTags"
+page.elements.meta_title.options.filters.trim.filter = "StringTrim"
+
+;meta Key element
+page.elements.meta_keywords.type = "text"
+page.elements.meta_keywords.options.size = 50
+page.elements.meta_keywords.options.label = "Kata Kunci:"
+page.elements.meta_keywords.options.title = "Inputkan Kata Kunci:"
+page.elements.meta_keywords.options.validators.strlen.validator = "StringLength"
+page.elements.meta_keywords.options.validators.strlen.options.min = "6"
+page.elements.meta_keywords.options.validators.strlen.options.max = "100"
+page.elements.meta_keywords.options.filters.StripTags.filter = "StripTags"
+page.elements.meta_keywords.options.filters.trim.filter = "StringTrim"
+
+;meta_desc element
+page.elements.meta_desc.type = "textarea"
+page.elements.meta_desc.options.cols = 60
+page.elements.meta_desc.options.rows = 15
+page.elements.meta_desc.options.label = "Description:"
+page.elements.meta_desc.options.title = "Enter Meta Description:"
+page.elements.meta_desc.options.filters.StripTags.filter = "StripTags"
+page.elements.meta_desc.options.filters.trim.filter = "StringTrim"

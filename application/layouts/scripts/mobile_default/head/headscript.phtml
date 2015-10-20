@@ -1,0 +1,83 @@
+<?php
+$front_template = Zend_Registry::get('front_template');
+$global_conf = Zend_Registry::get('global_conf'); 
+$locale = Eicra_Global_Variable::getSession()->sess_lang;
+$locale_arr = explode('_', $locale);
+$locale_direction = Eicra_Global_Variable::getSession()->site_direction;
+$style_direction = ($locale_direction == 'rtl') ? '_'.$locale_direction : '';
+
+echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/jquery/jquery-1-9-1/jquery.js', '');
+echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'//vendor/scripts/js/top-nav.js', '');
+echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/jui/jui-1-10-3/green/jquery-ui.custom.js', '');
+echo $this->headScript()->setFile('application/layouts/scripts/'.$front_template['theme_folder'].'//vendor/scripts/js/jquery.mmenu.js', '');
+
+echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/js/slicker.js', '');
+echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/js/common.js', '');
+echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/js/common_mobile.js', '');
+
+echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/bootstrap/css/bootstrap.min.css');
+echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/vendor/scripts/jui/jui-1-10-3/green/jquery-ui.custom.css');
+echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'//css/template.css');
+echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'//css/general.css');
+
+echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'//css/jquery.mmenu.css');
+echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'//css/jquery.mmenu.widescreen.css', 'all and (min-width: 900px)');
+echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'//css/jquery.mmenu.themes.css', 'all and (min-width: 900px)');
+
+/*********************************************************Kendo Start*********************************************/
+$kendo_theme = 'Metro';
+echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/kendo/js/kendo.all.min.js', '');
+echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/kendo/js/cultures/kendo.culture.'.$locale_arr[0].'.min.js', '');
+echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/kendo/js/cultures/kendo.culture.'.implode('-', $locale_arr).'.min.js', '');
+echo $this->headScript()->setFile($this->baseUrl().'/vendor/scripts/kendo/js/cultures/kendo.culture.'.str_ireplace('_', '-', $global_conf['default_locale']).'.min.js', '');
+echo $this->headScript()->setFile($this->baseUrl().'/application/modules/Portfolio/js/uploader.js', '');
+echo $this->headLink()->setStylesheet($this->baseUrl().'/vendor/scripts/kendo/src/styles/kendo.common.css');
+echo $this->headLink()->setStylesheet($this->baseUrl().'/vendor/scripts/kendo/src/styles/kendo.'.strtolower($kendo_theme).'.css');
+echo $this->headLink()->setStylesheet($this->baseUrl().'/vendor/scripts/kendo/src/styles/kendo.mobile.all.css');
+/*********************************************************Kendo End*********************************************/
+
+
+if($locale_direction == 'rtl')
+{
+	/*********************************************************Kendo Right Start*********************************************/
+	//echo $this->headLink()->setStylesheet($this->baseUrl().'/vendor/scripts/kendo/styles/kendo.rtl.min.css');
+	/*********************************************************Kendo Right End*********************************************/
+	echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'/bootstrap/css/bootstrap'.$style_direction.'.css');
+    echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'//css/template'.$style_direction.'.css');
+    echo $this->headLink()->setStylesheet('application/layouts/scripts/'.$front_template['theme_folder'].'//css/general'.$style_direction.'.css'); 
+}	
+
+?>
+
+<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+	$(function() {
+		$('nav#menu').mmenu({
+			classes: 'mm-light'
+		});
+	});
+</script>
+
+<style type="text/css">
+	@media all and (min-width: 900px) {
+		html, body {
+			height: 100%;
+		}
+		#menu {
+			background: #eee;
+		}
+		#page {
+			border-left: 1px solid #ccc;
+			min-height: 100%;
+		}
+		/* hide open-button */
+		a[href="#menu"]
+		{
+			display: none !important;
+		}
+	}
+</style>

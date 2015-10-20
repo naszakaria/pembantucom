@@ -1,0 +1,428 @@
+<?php
+$menu_db_class = new Menu_Model_DbTable_Menu(); $menu_name = ($this->menu_id)? $menu_db_class->getMenuName($this->menu_id) : null; 
+if($menu_name)
+{
+	$this->headTitle()->headTitle($menu_name,'SET');
+}
+else if(!empty($this->role_info))
+{
+	$this->headTitle()->headTitle($this->role_info['role_name'].' '.$this->translator->translator('common_registration_title'),'SET');
+}
+else
+{
+	$this->headTitle()->headTitle($this->translator->translator('common_registration_title'),'SET');
+}
+if(!empty($this->form_info['meta_keywords'])) { $this->headMeta()->setName('keywords',$this->form_info['meta_keywords']);}
+if(!empty($this->form_info['meta_desc'])) { $this->headMeta()->setName('description',$this->form_info['meta_desc']); }
+echo $this->headScript()->setFile($this->baseUrl().'/js/jquery/uploadify/jquery.uploadify.v2.1.4.js');
+echo $this->headScript()->setFile($this->baseUrl().'/js/jquery/uploadify/swfobject.js');
+echo $this->headScript()->setFile($this->baseUrl().'/js/jquery/qtip2/jquery.qtip.js');
+$version = Zend_Registry::get('version');  
+$front_template = Zend_Registry::get('front_template');
+$global_conf = Zend_Registry::get('global_conf');
+$currency = new Zend_Currency($global_conf['default_locale']);
+?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$('a.reset_btn').click(function() {			
+		 resetFields();	
+		 removeError();	
+	});
+	function resetFields()
+	{
+		$( "#MemberForm" )[ 0 ].reset();		
+	}
+	
+	function removeError()
+	{
+		$('#actionMessage').html('');
+		
+		var filename = '';
+		var filevalue = '';		
+		$.each($('#MemberForm').serializeArray(), function(i, field) {	
+				if(field.name.match(/\[\]$/))
+				{
+					var filearr = field.name.split('[]');
+					filename = filearr[0];					
+				}
+				else
+				{
+					filename 	= 	field.name;
+				} 			
+				$('#'+filename).removeClass('ui-state-error');
+				$('#'+filename+'_err').html('');									
+		});				
+	}
+	
+	function addError(key,errMsg)
+	{
+		var err_id = key+'_err';
+		var field_name = key;
+		$('#'+field_name).addClass('ui-state-error');
+		$('#'+err_id).append(errMsg);
+	}
+	
+	function openLoaderDialog()
+	{
+		$('#dialog_container').dialog({
+					autoOpen: true,
+					modal: true,
+					resizable: false,
+					show: 'fade',									
+					open: function(event, ui)
+						 {
+						 	$("#progressbar").progressbar({
+								value:100
+				
+							});							
+						  }
+				});
+	}
+	
+	function closeLoaderDialog()
+	{
+		$('#dialog_container').dialog('option','hide','explode').dialog('close');
+	}
+	
+	function getFormData()
+	{
+		var fieldObj = {};
+		var filename = '';
+		var filevalue = '';
+		$.each($('form').serializeArray(), function(i, field) {	
+			if(field.name.match(/\[\]$/))
+			{
+				var filearr = field.name.split('[]');
+				filename = filearr[0];
+				filevalue = $('#'+filename).val();
+				if($('input[name="'+filename+'[]"]').is(':checkbox'))
+				{
+					var val_arr = [];
+					$('input[name="'+filename+'[]"]:checkbox:checked').each(function(i){
+					 val_arr[i] = $(this).val();
+					});
+					filevalue = (val_arr[0] != null) ? val_arr.join(',') : null;					
+				}
+			}
+			else
+			{
+				filename 	= 	field.name;
+				filevalue 	= 	field.value;
+			}			
+			fieldObj[filename] =  filevalue;			
+		});
+		return fieldObj;
+	}
+	
+	$('a.add_user_btn').click(function() {
+			var formData = getFormData();	
+			if(!formData.role_id){ 	formData.role_id = '<?php echo $this->selected_role_id; ?>'; }		
+		$.ajax({
+			url: "<?php echo $this->url( array('module' => 'Members','controller' => 'Frontend', 'action'     => 'register', 'subject' => 'Hello World' ), 'adminrout',    true) ?>",
+			  	type: 'POST',
+			  	data: formData,
+				beforeSend: function(){
+					removeError();
+					openLoaderDialog();
+				 },
+				success: function(response){
+					//alert(response);					
+					var json_arr = eval("("+response+")");					
+					refreshCaptcha(json_arr);				
+					if((json_arr.status == 'ok') && (formData.role_id == '107')) 
+					{
+						if(json_arr.package_msg == 'ok')
+						{
+							var package_name = json_arr.package_info[0].field_value;
+
+							var package_price	=	parseFloat(json_arr.package_info[1].field_value);
+							if(package_price != 100000)
+							{
+                                                          document.location.href = "/keanggotaan/2";
+							}
+							else
+							{
+                                				closeLoaderDialog();
+							}
+						}
+						else
+						{
+							closeLoaderDialog();
+                                                  	
+                                                  	
+						}
+						$('#actionMessage').html(succMsgDesign(json_arr.msg));						
+						resetFields();							
+					}
+                                        else if ((json_arr.status == 'ok') && (formData.role_id == '104')) 
+                                        {
+                                            closeLoaderDialog();
+                                          document.location.href = "/keanggotaan";
+                                        }
+					else if(json_arr.status == 'errV')
+					{
+						closeLoaderDialog();
+						$('#actionMessage').html(errMsgDesign("<?php echo $this->translator->translator('common_err'); ?>"));
+												
+						for(var i= 0; i < json_arr.msg.length; i++)
+						{
+							addError(json_arr.msg[i].key,json_arr.msg[i].value);							
+						}
+					}
+					else if(json_arr.status == 'errP')
+					{
+						closeLoaderDialog();
+						$('#actionMessage').html(errMsgDesign("<?php echo $this->translator->translator('common_err'); ?>"));
+						addError('confirmPassword',json_arr.msg);
+					}
+					else
+					{
+						closeLoaderDialog();
+						$('#actionMessage').html(errMsgDesign(json_arr.msg));
+					}
+				},
+				error: function(xhr, status, error){
+					closeLoaderDialog();
+					var msg = "Error! " + xhr.status + " " + error;
+					$('#actionMessage').html(errMsgDesign(msg));
+				}
+		});
+	});
+	
+});
+
+function refreshCaptcha(json_arr)
+{
+	if(json_arr.captcha && json_arr.captcha.status && json_arr.captcha.status == 'ok')
+	{
+		var captcha_name = json_arr.captcha.captcha_name;
+		$('input[name="'+captcha_name+'[id]"]').parents('span:first').children('img:first').attr('src', json_arr.captcha.ImgUrl+json_arr.captcha.id+json_arr.captcha.Suffix);
+		$('input[name="'+captcha_name+'[id]"]').val(json_arr.captcha.id);
+		$('#'+captcha_name+'_err').html('');		
+	}
+}
+
+function openMsgDialog(msg)
+{
+	$('#dialog_msg').html(msg).dialog({
+		autoOpen: true,
+		modal: false,
+		show: 'fade',
+		resizable: 'false',				
+		buttons: { "<?php echo html_entity_decode($this->translator->translator('common_ok'), ENT_QUOTES, 'UTF-8'); ?>": function() { $(this).dialog('option', 'hide', 'explode').dialog("close"); } },
+		open: function(event, ui)
+			 {
+				setTimeout(function() 
+				{									
+					if($('#' + event.target.id).dialog('isOpen'))
+					{
+						$('#' + event.target.id).dialog('option', 'hide', 'explode').dialog('close');										
+					}
+				}, 5000);
+			  }
+	});
+}
+function calender(id)
+{
+	$("#"+id).datepicker({
+		showOn: 'button',
+		buttonImage: 'application/layouts/scripts/<?php echo $front_template['theme_folder']; ?>/images/mod_img/calendar-small.png',
+		buttonImageOnly: true,
+		monthNamesShort:<?php echo $this->translator->translator("common_calender_monthNamesShort"); ?>,
+		monthNames:<?php echo $this->translator->translator("common_calender_monthNames"); ?>,
+		dayNamesMin:<?php echo $this->translator->translator("common_calender_dayNamesMin"); ?>,
+		showAnim: 'slide',
+		buttonText: 'Calender',
+		dateFormat:'yy-mm-dd',
+		autoSize:false,
+		showButtonPanel:false,
+		changeMonth: true,
+		changeYear: true
+	});
+	
+	$("img[class='ui-datepicker-trigger']").each(function()
+	 { 
+	  	$(this).attr('style', '');
+	 });
+}
+
+function dynamicUpload(field_name,file_format,script_link,size_limit,upload_path)
+{	
+	$('#'+field_name).uploadify({
+    'uploader'  : '<?php echo $this->baseUrl(); ?>/js/jquery/uploadify/uploadify.swf',
+    'script'    : script_link,
+    'cancelImg' : '<?php echo $this->baseUrl(); ?>/js/jquery/uploadify/cancel.png',
+    'folder'    : upload_path,
+	'fileExt'   : file_format,
+	'fileDesc'    : 'File Formats ('+file_format+')',
+	'sizeLimit' : parseInt(size_limit),
+	'removeCompleted' : false,
+	'fileDataName' : field_name,
+	'wmode'       : 'transparent',
+	'hideButton'  : false,
+	'method'    : 'post',
+    'auto'      : true,
+	'multi'       : false,
+	'onError'     : function (event,ID,fileObj,errorObj) {
+      openMsgDialog(errorObj.type + ' Error: ' + errorObj.info);
+    },
+	'onComplete'  : function(event, ID, fileObj, response, data) {	
+		var json_arr = eval("("+response+")");		
+		if(json_arr.status == 'ok')
+		{
+			var texts = '<span>&nbsp;'+$('#'+field_name+ID).find('.fileName').text()+'</span>';
+			var img_code = (is_image(json_arr.newName)) ? '<span><img src="'+upload_path+'/'+json_arr.newName+'" width="20" height="10" /></span>' : '';
+			$('#'+field_name+ID).find('.fileName').html(img_code+texts);	
+			var file_code = '<input type="hidden" name="'+field_name+'" id="'+field_name+'" value="'+json_arr.newName+'" />';
+			$('#'+field_name+'_selected_file').html(file_code);	 
+		}
+		else
+		{
+			var texts = '&nbsp;'+$('#'+field_name+ID).find('.fileName').text();
+			$('#'+field_name+ID).find('.fileName').html(json_arr.msg+texts);
+			$("#" + field_name + ID).addClass('uploadifyError');
+		}	  
+    },
+	'onAllComplete' : function(event,data) {
+      //openMsgDialog(data.filesUploaded+ ' files uploaded successfully!');
+    }
+  });
+}
+function is_image(filename)
+{
+	var ext = getFileExtension(filename);
+	if(ext == 'jpg' || ext == 'JPG' || ext == 'png' || ext == 'PNG' || ext == 'bmp' || ext == 'BMP' || ext == 'gif' || ext == 'GIF')
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function getFileExtension(filename)
+{
+	return filename.replace(/^.*?\.([a-zA-Z0-9]+)$/, "$1");
+}
+</script>
+
+<div class="mod">
+	<div class="registration-icon padding-left-50 height-50">
+            <h1 class="padding-top-10 bold-18"><?php if(!empty($this->role_info)){ echo $this->role_info['role_name'].' '.$this->translator->translator('Member_frontend_register_title'); }else{ echo $this->translator->translator('Member_frontend_register_title'); } ?></h1>
+    </div>
+	
+    <div class="clear"></div>
+
+	
+    <form name="MemberForm" id="MemberForm">
+        <?php 
+            $file_type_arr = explode(',',$this->form_info['attach_file_type']);
+            $j= 0;
+            foreach($file_type_arr as $key => $value)
+            {
+                $file_type_arr[$j] = '*.'.$value;
+                $j++;
+            } 
+            $file_format = implode(';',$file_type_arr);	
+            $staticGroupsObj = $this->registrationForm->getDisplayGroups(); 
+            $sorted_group_arr = array();
+            foreach($staticGroupsObj as $staticGroup)
+            {
+                $sorted_group_arr[$staticGroup->getOrder()] = $staticGroup;
+            }
+            ksort($sorted_group_arr);																		
+            $i=1;									
+            foreach($sorted_group_arr as $staticGroup)
+            {
+                $elementsObj = $staticGroup->getElements();
+        ?>
+        <fieldset>
+            <legend><?php echo $this->translator->translator($staticGroup->getLegend());  ?></legend>
+                <?php
+                    foreach($elementsObj as $element)
+                    {
+                        if($element->getAttrib('frontend') == '1')
+                        {
+                ?>
+                <div>
+                    <div class="form-label-container">                           	
+                        <div style="<?php echo $this->escape($this->form_info['label_style']); ?>" class="<?php echo $this->escape($this->form_info['label_class']); ?> label_class">
+                            <?php echo $this->escape($element->getLabel()); if($element->isRequired() ){ ?><span class="star_class">*</span><?php } ?>
+                        </div>
+                    </div>
+                    
+                    <div class="form-field-container">
+                        <?php
+                        $e_name_arr = explode('_',$element->getName());																				
+                        $sumbol = (in_array('price',$e_name_arr,true)) ? $currency->getSymbol() : '';
+                        if($element->getType() == 'Zend_Form_Element_File')
+                        {																				
+                        ?>
+                        <script type="text/javascript">
+                        $(function(){
+                            /**************************FILE UPLOAD START******************************/																					
+                            dynamicUpload('<?php echo $element->getName(); ?>',"<?php echo $file_format; ?>","<?php echo $this->url( array('module' => 'Members','controller' => 'forms', 'action'     => 'uploadfile', 'form_id' => $this->escape($this->form_info['id']), 'field_name' => $element->getName() ), 'adminrout',    true); ?>","<?php echo $this->escape($this->form_info['attach_file_max_size']); ?>","<?php echo $this->escape($this->form_info['attach_file_path']); ?>");
+                            /**************************FILE UPLOAD END*********************************/
+                        });
+                        </script>
+                        <?php
+                            }
+                        $id_f = $element->getAttrib('id');
+                        $id_arr = explode('_',$id_f);
+                        if(in_array('date',$id_arr))
+                        {
+                        ?>
+                        <script type="text/javascript">
+                            $(function() {
+                                calender('<?php echo $id_f; ?>');
+                            });
+                        </script>
+                        <?php
+                        }
+                        ?>
+                        <div class="form-field">
+                        	<?php if($element->getType() == 'Zend_Form_Element_Captcha'){ ?>
+                          	<div class="captcha"><?php } ?>
+                                                
+                            <span class="ui-widget"><?php echo $element.$sumbol; ?></span>&nbsp;<span id="<?php echo $element->getName(); ?>_selected_file"></span>
+                            
+                            <?php if($element->getType() == 'Zend_Form_Element_Captcha'){ ?>
+                                <div class="form-field-info"><?php if($element->getAttrib('info')){ ?><div class="ui-widget ui-helper-clearfix"><div class="ui-state-default ui-corner-all info-class" title="<?php echo $this->escape($element->getAttrib('info')); ?>"><p><span class="ui-icon ui-icon-info"></span></p></div></div><?php } ?></div>
+                            </div>
+                            <?php } ?><br />
+                                                
+                            <span class="input-errors" id="<?php echo $element->getName().'_err'; ?>"></span>
+                        </div>
+                        
+                        <?php if($element->getType() != 'Zend_Form_Element_Captcha'){ ?>
+                        <div class="form-field-info">
+                            <?php if($element->getAttrib('info')){ ?><div class="ui-widget ui-helper-clearfix"><div class="ui-state-default ui-corner-all info-class" title="<?php echo $this->escape($element->getAttrib('info')); ?>"><p><span class="ui-icon ui-icon-info"></span></p></div></div><?php } ?>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+                <?php
+                        }
+                    }
+                ?>
+                <div class="clear">&nbsp;</div>
+        </fieldset>     
+        <?php
+           $group_no = ($this->escape($this->form_info['group_no'])) ? (int)$this->escape($this->form_info['group_no']) : 1; 
+            }
+        ?>    
+    </form>
+<div id="actionMessage">&nbsp;</div>
+<div class="forbidden-message"><?php echo $this->translator->translator('registration_message_before_submit'); ?></div>
+<div class="clear btn-container">
+    <span class="form-button ui-widget-content-1"><a href="javascript:  void(0);" class="reset_btn"><?php echo $this->translator->translator('common_reset'); ?></a></span>
+    <span class="form-button ui-widget-content-1"><a href="javascript: void(0);" class="add_user_btn"><?php echo $this->translator->translator('common_submit'); ?></a></span>
+</div>
+
+<div id="dialog_msg" title="<?php echo $this->translator->translator('common_dialog_msg','Message'); ?>"></div>
+<div id="dialog_container" style="display:none" title="<?php echo $this->translator->translator('common_processing_language'); ?>">
+	<div id="progressbar"></div>	
+</div>
+</div>

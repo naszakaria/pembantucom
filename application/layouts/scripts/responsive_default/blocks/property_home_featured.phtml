@@ -1,0 +1,174 @@
+<?php
+class property_featured_box
+{
+	protected	$_group = 1;
+	protected	$_limit = 3;
+	protected	$_DBconn;
+	protected	$_front_template;
+	protected	$_view;
+	protected	$_business_type_db;
+	protected	$_currency;
+	protected	$_cat_Info;
+	protected	$_mem_db;
+	protected	$_country_db;
+	protected	$_area_db;
+	protected	$_group_db;
+	protected	$translator;
+	
+	public function __construct($view) 
+	{
+		$this->_front_template = Zend_Registry::get('front_template'); 
+		$this->_view =	$view;
+		
+		//DB Connection
+		$this->_DBconn = Zend_Registry::get('msqli_connection');
+		$this->_DBconn->getConnection();
+		
+		$this->translator  = Zend_Registry::get('translator');
+		
+		//DD Class
+		$global_conf 		= Zend_Registry::get('global_conf');
+		$this->_currency 	= new Zend_Currency($global_conf['default_locale']);
+		$this->_business_type_db 	= new Property_Model_DbTable_BusinessType();		
+		$this->_mem_db 		= new Members_Model_DbTable_MemberList();		
+		$this->_group_db 	= new Property_Model_DbTable_PropertyGroup();
+		
+	}
+	
+	public function truncate($phrase,$start_words, $max_words)
+	{
+	   $phrase_array = explode(' ',$phrase);
+	   if(count($phrase_array) > $max_words && $max_words > 0)
+		  $phrase = implode(' ',array_slice($phrase_array, $start_words, $max_words)).'...';  
+	   return $phrase;
+	}
+	
+	public function class_body()
+	{
+			$groupInfo	=	$this->_group_db->getGroupName($this->_group);
+			$this->_limit = $groupInfo['featured_file_num_per_page'];
+			$select = $this->_DBconn->select()
+						->from(array('pp' => Zend_Registry::get('dbPrefix').'property_page'), array('*'))
+						->where('pp.active = ?', '1')
+						->where('pp.featured = ?', '1')
+						//->where('pp.group_id = ?', $this->_group)
+						->order("pp.".$groupInfo['featured_file_sort']." ".$groupInfo['featured_file_order'])
+						->joinLeft(array('st' => Zend_Registry::get('dbPrefix').'states'), 'pp.state_id = st.state_id', array('state_name' => 'st.state_name'))
+						->joinLeft(array('ct' => Zend_Registry::get('dbPrefix').'cities'), 'pp.area_id = ct.city_id', array('city' => 'ct.city'))
+						->limit($this->_limit);
+			$property_info =  $select->query()->fetchAll();			
+			$maximum_stars_digit = $this->translator->translator('maximum_stars_digit', '', 'Property');			
+			
+		echo $this->_view->headScript()->setFile('application/layouts/scripts/'.$this->_front_template['theme_folder'].'/vendor/scripts/js/jquery.bxslider.js');
+		echo $this->_view->headScript()->setFile('application/layouts/scripts/'.$this->_front_template['theme_folder'].'/vendor/scripts/js/jquery.fitvids.js');
+		echo $this->_view->headScript()->setFile('application/layouts/scripts/'.$this->_front_template['theme_folder'].'/vendor/scripts/js/jquery.easing.1.3.js');
+//		echo $this->_view->headLink()->setStylesheet('application/layouts/scripts/'.$this->_front_template['theme_folder'].'/css/jquery.bxslider.css');	
+?>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.slider4').bxSlider({
+	slideWidth: 250,
+	minSlides: 2,
+	maxSlides: 4,
+	moveSlides: 1,
+	slideMargin: 10
+  });
+});
+</script>
+
+<div class="block block-featured">
+	<h3><?php echo $this->translator->translator('block_featured_title','','', $this->_front_template['theme_folder']); ?></h3>
+    
+    <div class="block-body">
+    	<div class="slider4">
+        <?php
+		if($property_info)
+		{
+            foreach($property_info as $entry)
+            {
+                $property_image_val_arr = explode(',',$entry['property_image']);
+                $property_image_no = (!empty($property_image_val_arr[0])) ? count($property_image_val_arr) : '0';
+                if($this->_view->escape($entry['property_primary_image']))
+                { 
+                    $thumb_image = 'data/frontImages/property/property_image/'.$this->_view->escape($entry['property_primary_image']); 
+                }
+                else
+                { 
+                    if($this->_view->escape($entry['property_image']))
+                    {					
+                        $thumb_image = 'data/frontImages/property/property_image/'.$this->_view->escape($property_image_val_arr[0]); 
+                    }
+                    else
+                    {
+                        $thumb_image = 'application/layouts/scripts/'.$this->_front_template['theme_folder'].'/images/mod_property_img/no_image.png';
+                    }		
+                }
+                if($groupInfo['file_thumb_width'] && $groupInfo['file_thumb_resize_func'] != 'resizeToHeight')
+                { 
+                    $width = 'width="'.$this->_view->escape($groupInfo['file_thumb_width']).'"'; 
+                }
+                else
+                {
+                    $width = '';
+                } 
+                if($groupInfo['file_thumb_height'] && $groupInfo['file_thumb_resize_func'] != 'resizeToWidth')
+                { 
+                    $height = 'height="'.$this->_view->escape($groupInfo['file_thumb_height']).'"'; 
+                } 
+                else
+                {
+                    $height = '';
+                }
+				$type_info = $this->_business_type_db->getBusinessTypeInfo($entry['property_type']);
+        ?>
+            <div class="slide">
+                <div class="col">
+                    <h6><a href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'details','property_title' => $this->_view->escape($entry['property_title']) ),'Property-details/:property_title',true); ?>" title="<?php echo $this->_view->escape($entry['property_name']); ?>" link="" class="preview"><?php echo $this->truncate($this->_view->escape($entry['property_name']), 0, 3); ?></a></h6>
+                                       
+                    <figure>
+                        <a href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'details','property_title' => $this->_view->escape($entry['property_title']) ),'Property-details/:property_title',true); ?>" link="<?php echo $thumb_image; ?>"  title="<?php echo $this->_view->escape($entry['property_name']); ?>" width="250" class="preview"><img src="<?php echo $thumb_image; ?>"  height="150" border="0"/></a>
+                        <div class="type"><?php if($type_info && $type_info['business_type']){ echo $this->_view->escape($type_info['business_type']); } ?></div>
+                        <div class="photo-count-container">
+                            <div class="photo-count"><a href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'details','property_title' => $this->_view->escape($entry['property_title']), 'tab' => '1' ),'Property-details/:property_title/:tab',true); ?>"><span class="fa fa-camera"></span>  <?php echo $this->translator->translator('property_front_page_property_photo_no', $property_image_no, 'Property'); ?></a></div>
+                        </div>
+                    </figure>
+                   
+                    <div class="details">
+                    	<div class="ratings">
+						<?php
+                            for($i = 1; $i < $maximum_stars_digit; $i++)
+                            {
+                                $property_stars = ($i <= $this->_view->escape($entry['stars'])) ? "<img src='application/layouts/scripts/".$this->_front_template['theme_folder']."/images/mod_property_img/star-small-active.png' border='0' />" : "<img src='application/layouts/scripts/".$this->_front_template['theme_folder']."/images/mod_property_img/star-small-inactive.png' border='0' />";
+                                echo $property_stars.'&nbsp;';
+                            }
+                        ?>
+                        </div>
+                        <span class="price"><?php echo $this->translator->translator('partial_featured_property_price').' '.$this->_currency->getSymbol(). ' ' .$this->_view->escape($entry['property_price']); ?></span><br />
+                        <?php echo $this->translator->translator('partial_featured_property_location'); ?> <span class="location"><a href="<?php echo $this->_view->url(array('module' => 'Property','controller' =>'frontend', 'action' => 'details','property_title' => $this->_view->escape($entry['property_title']) ),'Property-details/:property_title',true); ?>"><?php echo $this->_view->escape($entry['city'].' / '.$entry['state_name']); ?></a></span><br />
+                        <?php echo (int)$this->_view->escape($entry['feature_room_no']); ?> <?php echo $this->translator->translator('partial_featured_property_room'); ?><?php echo (int)$this->_view->escape($entry['feature_bathroom']); ?> <?php echo $this->translator->translator('partial_featured_property_bathroom'); ?>
+                    </div>
+                </div>
+            </div>
+      <?php
+        }
+		}
+      ?>
+      </div>
+    </div>
+</div>
+
+<?php
+	}
+}
+
+try
+{
+	$property_featured_box_class = new property_featured_box($this);
+	$property_featured_box_class->class_body();
+}
+catch(Exception $e)
+{
+	echo $e->getMessage();
+}
+?>

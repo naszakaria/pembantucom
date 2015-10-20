@@ -1,0 +1,237 @@
+<?php
+class top_menu
+{
+	protected	$_front_template;
+	protected	$_view;
+	protected	$_breadcrumb;
+	protected	$_group_id = 19;	
+	protected	$translator;
+	protected	$_menu;
+	protected	$_right_menu = 'Contact-Us';
+	protected	$_locale_direction;
+	protected   $_panel_module_arr = array('News');
+	protected   $_content_module_arr = array('Articles');
+	protected   $_content_arr = array(
+										'Articles' => array(
+																'DbTable'				=> 'ArticleList',
+																'function'				=> 'getListInfo',
+																'condition_field_id'	=> 'article_id',
+																'desc_field_id'			=> 'article_content'
+															)
+									);
+	
+	public function __construct($view) 
+	{
+		$this->_front_template = Zend_Registry::get('front_template'); 
+		$this->_view =	$view;	
+		$this->_breadcrumb = Eicra_Global_Variable::getSession()->breadcrumb;
+		$this->translator = Zend_Registry::get('translator');
+		$this->_menu = new Eicra_View_Helper_Menu($this->_group_id);
+		$this->_locale_direction = Eicra_Global_Variable::getSession()->site_direction;
+		
+		echo $this->_view->headLink()->appendStylesheet('application/layouts/scripts/'.$this->_front_template['theme_folder'].'//css/top-nav.css');
+		
+	}
+	
+	public function truncate($phrase, $start_words, $max_words, $char = false, $charset = 'UTF-8')
+	{
+		if($char)
+		{
+			if(mb_strlen($phrase, $charset) > $length) {
+				  $dot = (strlen($phrase) > ($max_words - $start_words)) ? '...' : '';
+				  $phrase = mb_substr($phrase, $start_words, $max_words, $charset) . $dot;
+				}
+		}
+		else
+		{
+		   $phrase_array = explode(' ',$phrase);
+		   if(count($phrase_array) > $max_words && $max_words > 0)
+			  $phrase = implode(' ',array_slice($phrase_array, $start_words, $max_words)).'...';  
+		}
+	   return $phrase;
+	}
+	
+	public function createSubMenu($parent)
+	{		
+		$menu_obj = $this->_menu->getMenuData($parent, $this->_view);		
+		$side_class = ($this->_locale_direction == 'rtl') ? 'left ' : ''; 
+		$ul_class = ($this->_locale_direction == 'rtl') ? 'slide_left' : ''; 
+		$mrnu_html = '<ul class="dropdown" style="display: none;">';
+		foreach($menu_obj as $key => $menu_arr)
+		{
+			$is_child = $this->_menu->checkChild($menu_arr['menu_id']);
+			if($menu_arr['show_after_login'] != '1')
+			{
+				$mrnu_html .= '<li>';
+					$mrnu_html .= '<a href="'.$menu_arr['link'].'">';
+						$mrnu_html .= ($menu_arr['menu_image']) ? '<img src="data/frontImages/menuImages/'.$menu_arr['menu_image'].'" border="0">' : '';
+						$mrnu_html .= $this->_view->escape($menu_arr['menu_name']);
+						$mrnu_html .= ($is_child) ? '<span class="indicator glyphicon glyphicon-chevron-right"></span>' : '';
+					$mrnu_html .= '</a>';					
+					$mrnu_html .= ($is_child) ? $this->createSubMenu($menu_arr['menu_id']) : '';
+				$mrnu_html .= '</li>';
+			}
+		}
+		$mrnu_html .= '</ul>';
+		
+		return $mrnu_html;
+	}
+	
+	public function panelSubMenu($parent)
+	{
+		$menu_obj = $this->_menu->getMenuData($parent, $this->_view);		
+				
+		$mrnu_html = '<div class="megamenu full-width" style="display: none;">
+							<div class="row">';								
+								foreach($menu_obj as $key => $menu_arr)
+								{			
+									$is_child = $this->_menu->checkChild($menu_arr['menu_id']);	
+									if($menu_arr['show_after_login'] != '1')
+									{	
+										$mrnu_html .= '<div class="col1">
+															<h5 class="title"><a href="'.$menu_arr['link'].'" title="" target="'.$menu_arr['target'].'"><span class="glyphicon glyphicon-th-large"></span> '.$this->_view->escape($menu_arr['menu_name']).'</a></h5>';
+															if($is_child)
+															{
+																$sub_menu_obj = $this->_menu->getMenuData($menu_arr['menu_id'], $this->_view);
+																$mrnu_html .= '<ul>';
+																	foreach($sub_menu_obj as $sub_menu_obj_key => $sub_menu_obj_arr)
+																	{
+																				if($sub_menu_obj_arr['show_after_login'] != '1')
+																				{
+																					$mrnu_html .= '<li><a href="'.$sub_menu_obj_arr['link'].'" title="" target="'.$sub_menu_obj_arr['target'].'"><span class="glyphicon glyphicon-chevron-right"></span> '.$this->_view->escape(trim($sub_menu_obj_arr['menu_name'])).'</a></li>';
+																				}
+																	}
+																$mrnu_html .= '</ul>';
+															}
+										$mrnu_html .= '</div>';
+									}
+								}
+		$mrnu_html .= 		'</div>
+					</div>';
+		return $mrnu_html;
+	}
+	
+	public function contentSubMenu($parent)
+	{
+		$menu_obj = $this->_menu->getMenuData($parent, $this->_view);		
+				
+		$mrnu_html = '<div class="megamenu half-width" style="display: none;">';								
+								foreach($menu_obj as $key => $menu_arr)
+								{			
+									$is_child = $this->_menu->checkChild($menu_arr['menu_id']);	
+									if($menu_arr['show_after_login'] != '1')
+									{	
+										$mrnu_html .= '<div class="row">
+														<div class="col2"><img src="data/frontImages/menuImages/'.$menu_arr['menu_image'].'" border="0"></div>
+														 <div class="col4">
+															<h5 class="title"><a href="'.$menu_arr['link'].'" title="" target="'.$menu_arr['target'].'"><span class="glyphicon glyphicon-th-large"></span> '.$this->_view->escape($menu_arr['menu_name']).'</a></h5>';
+															if($is_child)
+															{
+																$sub_menu_obj = $this->_menu->getMenuData($menu_arr['menu_id'], $this->_view);
+																$mrnu_html .= '<ul>';
+																	foreach($sub_menu_obj as $sub_menu_obj_key => $sub_menu_obj_arr)
+																	{
+																				if($sub_menu_obj_arr['show_after_login'] != '1')
+																				{
+																					$mrnu_html .= '<li><a href="'.$sub_menu_obj_arr['link'].'" title="" target="'.$sub_menu_obj_arr['target'].'"><span class="glyphicon glyphicon-chevron-right"></span> '.$this->_view->escape($sub_menu_obj_arr['menu_name']).'</a></li>';
+																				}
+																	}
+																$mrnu_html .= '</ul>';
+															}
+															else
+															{
+																if(empty($menu_arr['external_link']) && $this->_content_arr[$menu_arr['module_name']])
+																{
+																	$page_id_string = $menu_arr['page_id'];
+																	$page_id_arr = explode(',', $page_id_string);
+																	$db_class	= $menu_arr['module_name'].'_Model_DbTable_'.$this->_content_arr[$menu_arr['module_name']]['DbTable'];
+																	$db_table = new $db_class();
+																	$search_params = array(
+																							'filter'	=> array(
+																													'filters'	=>	array(array('field' => $this->_content_arr[$menu_arr['module_name']]['condition_field_id'], 'operator' => 'eq', 'value' => $page_id_arr[0])),
+																													'logic'		=>	'and'	
+																												)
+																						);
+																	$db_class_func	=	$this->_content_arr[$menu_arr['module_name']]['function'];
+																	
+																	$list_info	=	$db_table->$db_class_func('1', $search_params);
+																	
+																	if($list_info)
+																	{																																			
+																		foreach($list_info as $list_info_arr)
+																		{																																				
+																			$mrnu_html .= $this->truncate($this->_view->escape(strip_tags($list_info_arr[$this->_content_arr[$menu_arr['module_name']]['desc_field_id']])), 0, 200, true).'<br /><a href="'.$menu_arr['link'].'" title="" target="'.$menu_arr['target'].'">'.$this->translator->translator('common_readmore').' &raquo;</a>';
+																		}																		
+																	}
+																}
+															}
+										$mrnu_html .= 	'</div>
+													</div>';										
+									}
+								}
+		$mrnu_html .= 		'</div>';
+		return $mrnu_html;
+	}
+	
+	public function class_body()
+	{		
+		$menu_obj = $this->_menu->getMenuData('0', $this->_view);
+		$frontController = Zend_Controller_Front::getInstance();
+		$menu_title = $frontController->getRequest()->getParam('menu_id');
+?>
+		<nav>
+             <ul class="jetmenu blue">
+             	 <?php				
+					if($menu_obj)
+					{
+						$side_class = ($this->_locale_direction == 'rtl') ? 'left ' : ''; 
+						$ul_class = ($this->_locale_direction == 'rtl') ? 'slide_left' : ''; 
+				?>
+                		<?php                        
+							foreach($menu_obj as $key => $menu_arr)
+							{
+								$is_child = $this->_menu->checkChild($menu_arr['menu_id']);		
+								$active_class = ($menu_title == $menu_arr['menu_title'])	?	'active'	:	'';	
+								$right_class = ($this->_right_menu == $menu_arr['menu_title']) ? 'right'	:	'';							
+						 ?>
+             				<li style="display: block;" class="<?php echo $active_class.' '.$right_class; ?>"><a href="<?php echo ($is_child) ? 'javascript:void(0);' : $menu_arr['link']; ?>" title="<?php if($menu_arr['menu_default'] == '1'){ echo $this->_view->escape($menu_arr['menu_name']); } ?>"><?php if($menu_arr['menu_default'] == '1'){ ?><span class="glyphicon glyphicon-home"></span> <?php }else{ echo $this->_view->escape($menu_arr['menu_name']); } if($is_child){ ?> <span class="indicator glyphicon glyphicon-chevron-down"></span><?php } ?></a>
+             					<?php 
+									if($is_child)
+									{ 
+										if(in_array($menu_arr['module_name'], $this->_panel_module_arr))
+										{											
+											$mrnu_html = $this->panelSubMenu($menu_arr['menu_id']);
+										}
+										else if(in_array($menu_arr['module_name'], $this->_content_module_arr))
+										{											
+											$mrnu_html = $this->contentSubMenu($menu_arr['menu_id']);
+										}
+										else
+										{								
+											$mrnu_html = $this->createSubMenu($menu_arr['menu_id']); 
+										}
+										echo $mrnu_html;
+									} 
+								?>
+                            </li>
+						<?php     
+							}                        
+						?> 
+				<?php
+                	}
+                ?>
+             </ul>
+        </nav>			
+<?php			
+	}
+}
+try
+{
+	$top_menu_class = new top_menu($this);
+	$top_menu_class->class_body();
+}
+catch(Exception $e)
+{
+	echo $e->getMessage();
+}	
+?>

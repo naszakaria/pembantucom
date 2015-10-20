@@ -1,0 +1,570 @@
+[property]
+
+; Group element
+property.elements.group_id.type = "select"
+property.elements.group_id.options.size = 1
+property.elements.group_id.options.class = "property_select_group ui-widget-content ui-corner-all"
+property.elements.group_id.options.label = "Pilih Kelompok:"
+property.elements.group_id.options.title = "Pilih kelompok yang sesuai"
+property.elements.group_id.options.required = true
+property.elements.group_id.options.value = ""
+
+; Category element
+property.elements.category_id.type = "hidden"
+property.elements.category_id.options.size = 1
+property.elements.category_id.options.required = true
+property.elements.category_id.options.name = "category_id"
+property.elements.category_id.options.id = "property_parent"
+property.elements.category_id.options.label = "Kategori:"
+property.elements.category_id.options.font_end_label = "Kategori:"
+property.elements.category_id.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.category_id.options.value = "1"
+property.elements.category_id.options.attribs.right_label = "Pilih kategori dari Pohon Kategori di sebelah kiri!"
+
+;Add an Property Name element
+property.elements.property_name.type = "text"
+property.elements.property_name.options.size = 50
+property.elements.property_name.options.required = true
+property.elements.property_name.options.label = "Nama:"
+property.elements.property_name.options.title = "Masukkan nama lengkap"
+property.elements.property_name.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_name.options.value = ""
+property.elements.property_name.options.filters.trim.filter = "StringTrim"
+property.elements.property_name.options.filters.StripTags.filter = "StripTags"
+
+;Add an Property Title element
+property.elements.property_title.type = "text"
+property.elements.property_title.options.size = 50
+property.elements.property_title.options.required = true
+property.elements.property_title.options.label = "Nama Panggilan:"
+property.elements.property_title.options.title = "Masukkan nama panggilan atau alias"
+property.elements.property_title.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_title.options.value = ""
+property.elements.property_title.options.filters.trim.filter = "StringTrim"
+property.elements.property_title.options.filters.StripTags.filter = "StripTags"
+
+; Add an Property Owner element
+property.elements.property_owner.type = "select"
+property.elements.property_owner.options.size = 1
+property.elements.property_owner.options.label = "Penyalur:"
+property.elements.property_owner.options.title = "Masukkan penyalur atau agen"
+property.elements.property_owner.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_owner.options.required = false
+
+;Add an Property Type element
+property.elements.property_type.type = "select"
+property.elements.property_type.options.size = 1
+property.elements.property_type.options.style = "width:150px;"
+property.elements.property_type.options.label = "Tipe:"
+property.elements.property_type.options.title = "Pilih tipe pembantu"
+property.elements.property_type.options.font_end_label = "Tipe Pembantu:"
+property.elements.property_type.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_type.options.value	=	""
+property.elements.property_type.options.required = true
+
+;Add an Property Code element
+property.elements.property_code.type = "radio"
+property.elements.property_code.options.required = true
+property.elements.property_code.options.label = "Punya Anak:"
+property.elements.property_code.options.title = "Apakah punya anak?"
+property.elements.property_code.options.attribs.font_end_label = "Memiliki Anak:"
+property.elements.property_code.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_code.options.value = ""
+property.elements.property_code.options.MultiOptions.ya = "Ya"
+property.elements.property_code.options.MultiOptions.tidak = "Tidak"
+property.elements.property_code.options.filters.trim.filter = "StringTrim"
+property.elements.property_code.options.filters.StripTags.filter = "StripTags"
+
+;Add an Property Size element
+property.elements.property_size.type = "text"
+property.elements.property_size.options.size = 10
+property.elements.property_size.options.required = true
+property.elements.property_size.options.label = "Tinggi:"
+property.elements.property_size.options.title = "Masukkan tinggi badan"
+property.elements.property_size.options.attribs.font_end_label = "Tinggi:"
+property.elements.property_size.options.attribs.right_label = "cm"
+property.elements.property_size.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_size.options.validators.float.validator = "float"
+property.elements.property_size.options.value = ""
+property.elements.property_size.options.filters.trim.filter = "StringTrim"
+property.elements.property_size.options.filters.StripTags.filter = "StripTags"
+
+;Add an Property Size Lot element
+property.elements.property_lot.type = "text"
+property.elements.property_lot.options.size = 10
+property.elements.property_lot.options.required = true
+property.elements.property_lot.options.label = "Berat:"
+property.elements.property_lot.options.title = "Masukkan berat badan"
+property.elements.property_lot.options.attribs.font_end_label = "Berat:"
+property.elements.property_lot.options.attribs.right_label = "kg"
+property.elements.property_lot.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_lot.options.validators.float.validator = "float"
+property.elements.property_lot.options.value = ""
+property.elements.property_lot.options.filters.trim.filter = "StringTrim"
+property.elements.property_lot.options.filters.StripTags.filter = "StripTags"
+
+;Add an Property Year Built element | Year of Birth
+property.elements.property_build_year.type = "text"
+property.elements.property_build_year.options.size = 4
+property.elements.property_build_year.options.required = false
+property.elements.property_build_year.options.label = "Tahun Lahir:"
+property.elements.property_build_year.options.title = "Masukkan tahun kelahiran"
+property.elements.property_build_year.options.attribs.font_end_label = "Tahun Lahir :"
+property.elements.property_build_year.options.attribs.right_label = ""
+property.elements.property_build_year.options.maxlength = "4"
+property.elements.property_build_year.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_build_year.options.value = ""
+property.elements.property_build_year.options.validators.int.validator = "Int"
+property.elements.property_build_year.options.validators.strlen.validator = "StringLength"
+property.elements.property_build_year.options.validators.strlen.options.min = "0"
+property.elements.property_build_year.options.validators.strlen.options.max = "4"
+property.elements.property_build_year.options.filters.trim.filter = "StringTrim"
+property.elements.property_build_year.options.filters.StripTags.filter = "StripTags"
+
+;Add an Property Estate surface element
+property.elements.property_estate_surface.type = "text"
+property.elements.property_estate_surface.options.size = 50
+property.elements.property_estate_surface.options.required = false
+property.elements.property_estate_surface.options.label = "Property Estate surface:"
+property.elements.property_estate_surface.options.title = "Enter Property Estate surface"
+property.elements.property_estate_surface.options.attribs.font_end_label = "Estate surface :"
+property.elements.property_estate_surface.options.attribs.right_label = "mq"
+property.elements.property_estate_surface.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_estate_surface.options.validators.float.validator = "float"
+property.elements.property_estate_surface.options.value = ""
+property.elements.property_estate_surface.options.filters.trim.filter = "StringTrim"
+property.elements.property_estate_surface.options.filters.StripTags.filter = "StripTags"
+
+
+;Add an Property Land surface element
+property.elements.property_land_surface.type = "text"
+property.elements.property_land_surface.options.size = 50
+property.elements.property_land_surface.options.required = false
+property.elements.property_land_surface.options.label = "Property Land surface:"
+property.elements.property_land_surface.options.title = "Enter Property Land surface"
+property.elements.property_land_surface.options.attribs.font_end_label = "Land Surface :"
+property.elements.property_land_surface.options.attribs.right_label = "ha"
+property.elements.property_land_surface.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_land_surface.options.validators.float.validator = "float"
+property.elements.property_land_surface.options.value = ""
+property.elements.property_land_surface.options.filters.trim.filter = "StringTrim"
+property.elements.property_land_surface.options.filters.StripTags.filter = "StripTags"
+
+;Add an Property Tipology element
+property.elements.property_tipology.type = "radio"
+property.elements.property_tipology.options.size = 1
+property.elements.property_tipology.options.required = true
+property.elements.property_tipology.options.label = "Agama:"
+property.elements.property_tipology.options.title = "Masukkan agama"
+property.elements.property_tipology.options.attribs.font_end_label = "Agama:"
+property.elements.property_tipology.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_tipology.options.value = ""
+property.elements.property_tipology.options.MultiOptions.islam = "Islam"
+property.elements.property_tipology.options.MultiOptions.katolik = "Katolik"
+property.elements.property_tipology.options.MultiOptions.kristen = "Kristen"
+property.elements.property_tipology.options.MultiOptions.hindu = "Hindu"
+property.elements.property_tipology.options.MultiOptions.budha = "Budha"
+property.elements.property_tipology.options.MultiOptions.lainnya = "Lainnya"
+
+
+
+;Picture element
+property.elements.property_image.type = "hidden"
+property.elements.property_image.options.size = 1
+property.elements.property_image.options.title = "Anda bisa mengupload beberapa gambar sekaligus. Untuk mengupload lebih dari satu gambar silakan tekan Ctrl + klik"
+property.elements.property_image.options.id = "property_image"
+property.elements.property_image.options.label = "Unggah Foto Profil:"
+property.elements.property_image.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_image.options.value = ""
+property.elements.property_image.options.required = true
+property.elements.property_image.options.attribs.right_label = "(Minimal Tinggi 300px & Lebar 200px)"
+
+
+
+;Picture element For Floor Plan
+property.elements.feature_floor_plan_image.type = "hidden"
+property.elements.feature_floor_plan_image.options.size = 1
+property.elements.feature_floor_plan_image.options.title = "Anda bisa mengupload beberapa gambar sekaligus. Untuk meng-upload lebih dari satu gambar silakan tekan Ctrl + klik"
+property.elements.feature_floor_plan_image.options.id = "feature_floor_plan_image"
+property.elements.feature_floor_plan_image.options.label = "Unggah Foto Kegiatan:"
+property.elements.feature_floor_plan_image.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.feature_floor_plan_image.options.value = ""
+property.elements.feature_floor_plan_image.options.required = false
+
+;Add Product related items
+property.elements.related_items.type = "select"
+property.elements.related_items.options.size = 12
+property.elements.related_items.options.required = false
+property.elements.related_items.options.style = "width:450px;"
+property.elements.related_items.options.multiple	= "multiple"
+property.elements.related_items.options.label = "Pilih Pembantu Terkait:"
+property.elements.related_items.options.title = "Pilih pembantu terkait. Cukup klik sekali untuk membuat pilihan"
+property.elements.related_items.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.related_items.options.filters.trim.filter = "StringTrim"
+
+;Add an Property Price element | Age
+property.elements.property_price.type = "text"
+property.elements.property_price.options.size = 50
+property.elements.property_price.options.required = true
+property.elements.property_price.options.attribs.right_label = "Rp"
+property.elements.property_price.options.label = "Gaji yang Diharapkan per Bulan:"
+property.elements.property_price.options.title = "Sebutkan gaji yang diharapkan. Ketik “0” jika Anda tidak tahu"
+property.elements.property_price.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_price.options.value = ""
+property.elements.property_price.options.validators.float.validator = "float"
+property.elements.property_price.options.filters.trim.filter = "StringTrim"
+
+; Property Description element
+property.elements.property_desc.type = "textarea"
+property.elements.property_desc.options.cols = 60
+property.elements.property_desc.options.rows = 15
+property.elements.property_desc.options.label = "Paragraf Singkat Tentang Pembantu:"
+property.elements.property_desc.options.title = "Manfaatkan ruang ini untuk mempromosikan pembantu Anda. Paragraf ini akan muncul di ringkasan dan di bawah fotonya. Tidak boleh menulis nomor atau alamat yang dapat dihubungi di sini."
+property.elements.property_desc.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_desc.options.required = true
+property.elements.property_desc.options.filters.trim.filter = "StringTrim"
+
+
+;PROPERTY ADDRESS INFO
+;Property Country Element
+property.elements.country_id.type = "select"
+property.elements.country_id.options.size = 1
+property.elements.country_id.options.class = "country_id ui-widget-content ui-corner-all"
+property.elements.country_id.options.required = true
+property.elements.country_id.options.label = "Negara:"
+property.elements.country_id.options.title = "Pilih salah satu negara"
+
+;Property State Element
+property.elements.state_id.type = "select"
+property.elements.state_id.options.size = 1
+property.elements.state_id.options.class = "state_id ui-widget-content ui-corner-all"
+property.elements.state_id.options.required = true
+property.elements.state_id.options.label = "Provinsi:"
+property.elements.state_id.options.title = "Pilih salah satu provinsi"
+
+;Property Area/City Element
+property.elements.area_id.type = "select"
+property.elements.area_id.options.size = 1
+property.elements.area_id.options.class = "area_id ui-widget-content ui-corner-all"
+property.elements.area_id.options.required = false
+property.elements.area_id.options.label = "Kota/Kabupaten:"
+property.elements.area_id.options.title = "Ketik nama kota/kabupaten tempat pembantu berada saat ini"
+
+;Add an House Name element
+property.elements.house_name.type = "select"
+property.elements.house_name.options.size = 1
+property.elements.house_name.options.style  = "width:170px;"
+property.elements.house_name.options.required = true
+property.elements.house_name.options.label = "Status:"
+property.elements.house_name.options.title = "Masukkan status pembantu"
+property.elements.house_name.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.house_name.options.value = ""
+property.elements.house_name.options.multiOptions._ = "Pilih Status"
+property.elements.house_name.options.multiOptions.lajang = "Lajang"
+property.elements.house_name.options.multiOptions.menikah = "Menikah"
+property.elements.house_name.options.multiOptions.Janda/Duda = "Janda/Duda"
+
+;Add an Telephone element
+property.elements.house_phone.type = "text"
+property.elements.house_phone.options.size = 50
+property.elements.house_phone.options.label = "Telepon:"
+property.elements.house_phone.options.title = "Masukkan nomor telepon"
+property.elements.house_phone.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.house_phone.options.value = ""
+;property.elements.house_phone.options.validators.regex.validator = "regex"
+;property.elements.house_phone.options.validators.regex.options.pattern = "/^[+]{0,1}[0-9]*$/"
+property.elements.house_phone.options.filters.trim.filter = "StringTrim"
+
+;Add an Fax element
+property.elements.house_fax.type = "text"
+property.elements.house_fax.options.size = 50
+property.elements.house_fax.options.label = "Fax:"
+property.elements.house_fax.options.title = "Masukkan nomor fax"
+property.elements.house_fax.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.house_fax.options.value = ""
+;property.elements.house_fax.options.validators.regex.validator = "regex"
+;property.elements.house_fax.options.validators.regex.options.pattern = "/^[+]{0,1}[0-9]*$/"
+property.elements.house_fax.options.filters.trim.filter = "StringTrim"
+
+;Add an Email Address element
+property.elements.house_email.type = "text"
+property.elements.house_email.options.size = 50
+property.elements.house_email.options.label = "Alamat Email:"
+property.elements.house_email.options.title = "Masukkan alamat email"
+property.elements.house_email.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.house_email.options.value = ""
+property.elements.house_email.options.validators.EmailAddress.validator = "EmailAddress"
+property.elements.house_email.options.filters.trim.filter = "StringTrim"
+
+;Add an Property Location element
+property.elements.house_location.type = "text"
+property.elements.house_location.options.size = 50
+property.elements.house_location.options.required = true
+property.elements.house_location.options.label = "Lokasi:"
+property.elements.house_location.options.title = "Masukkan lokasi tanpa tanda koma"
+property.elements.house_location.options.attribs.font_end_label = "Lokasi Saat Ini:"
+property.elements.house_location.options.attribs.right_label = ""
+property.elements.house_location.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.house_location.options.value = ""
+property.elements.house_loaction.options.validators.regex.validator = "regex"
+property.elements.house_location.options.validators.regex.options.pattern = "/[0-9a-zA-Z\s\'.;-]+/"
+property.elements.house_location.options.filters.trim.filter = "StringTrim"
+
+;Add an House No element
+property.elements.house_no.type = "text"
+property.elements.house_no.options.size = 50
+property.elements.house_no.options.required = false
+property.elements.house_no.options.label = "Nomor Rumah:"
+property.elements.house_no.options.title = "Masukkan nomor rumah"
+property.elements.house_no.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.house_no.options.value = ""
+property.elements.house_no.options.filters.trim.filter = "StringTrim"
+property.elements.house_no.options.filters.StripTags.filter = "StripTags"
+
+;Add an POST CODE element
+property.elements.post_code.type = "radio"
+property.elements.post_code.options.required = true
+property.elements.post_code.options.label = "Pengalaman Bekerja di Luar Negeri:"
+property.elements.post_code.options.title = "Apakah ada pengalaman bekerja di luar negeri?"
+property.elements.post_code.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.post_code.options.value = ""
+property.elements.post_code.options.filters.trim.filter = "StringTrim"
+property.elements.post_code.options.filters.StripTags.filter = "StripTags"
+property.elements.post_code.options.MultiOptions.ada = "Ada"
+property.elements.post_code.options.MultiOptions.tidak= "Tidak Ada"
+
+;Type the Number of starts to be given for this Property. Not more then 05
+property.elements.stars.type 			= "select"
+property.elements.stars.options.style  = "width:120px;"
+property.elements.stars.options.class  	= "ui-widget-content ui-corner-all"
+property.elements.stars.options.label 	= "Tingkat Keahlian:"
+property.elements.stars.options.title 	= "Kalau ragu-ragu, pilih tingkat yang lebih rendah"
+property.elements.stars.options.filters.StripTags.filter = "StripTags"
+property.elements.stars.options.filters.trim.filter = "StringTrim"
+property.elements.stars.options.validators.strlen.validator = "StringLength"
+property.elements.stars.options.validators.strlen.options.min = "1"
+property.elements.stars.options.validators.strlen.options.max = "2"
+property.elements.stars.options.validators.Digits.validator = "Digits"
+property.elements.stars.options.required = true
+property.elements.stars.options.attribs.font_end_label = "Tingkat Keahlian:"
+property.elements.stars.options.value          = ""
+property.elements.stars.options.multiOptions._ = "Pilih Tingkatan"
+property.elements.stars.options.multiOptions.1 = "Tidak Mampu"
+property.elements.stars.options.multiOptions.2 = "Tidak Mahir"
+property.elements.stars.options.multiOptions.3 = "Cukup Mahir"
+property.elements.stars.options.multiOptions.4 = "Mahir"
+property.elements.stars.options.multiOptions.5 = "Mahir Sekali"
+
+;Add an Property Address element
+property.elements.property_address.type = "textarea"
+property.elements.property_address.options.cols = 60
+property.elements.property_address.options.rows = 15
+property.elements.property_address.options.label = "Alamat:"
+property.elements.property_address.options.title = "Masukkan alamat"
+property.elements.property_address.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.property_address.options.required = false
+
+;FEATURE INFORMATION
+;Add an Property Feature Amenities element
+property.elements.feature_amenities.type = "MultiCheckbox"
+property.elements.feature_amenities.options.label = "Keahlian & Kemampuan:"
+property.elements.feature_amenities.options.title = "Centang semua keahlian dan kemampuan yang terdapat pada daftar di bawah ini"
+property.elements.feature_amenities.options.font_end_label = "<b>Keahlian</b>"
+property.elements.feature_amenities.options.value	=	""
+property.elements.feature_amenities.options.required = true
+property.elements.feature_amenities.options.separator = "</div><div class="property-features">"
+property.elements.feature_amenities.options.multiOptions.house_keeping = "Merapikan Rumah"
+property.elements.feature_amenities.options.multiOptions.cooking = "Memasak"
+property.elements.feature_amenities.options.multiOptions.washing = "Mencuci Manual"
+property.elements.feature_amenities.options.multiOptions.ironing = "Menyeterika"
+property.elements.feature_amenities.options.multiOptions.gardening = "Mengurus Taman"
+property.elements.feature_amenities.options.multiOptions.washing_car = "Mencuci Mobil"
+property.elements.feature_amenities.options.multiOptions.handle_pork = "Memasak Babi"
+property.elements.feature_amenities.options.multiOptions.care_of_young_children = "Merawat Anak Kecil"
+property.elements.feature_amenities.options.multiOptions.care_elderly = "Merawat Lansia"
+property.elements.feature_amenities.options.multiOptions.care_for_infants = "Merawat Bayi"
+property.elements.feature_amenities.options.multiOptions.sit_babies = "Mengasuh Bayi"
+property.elements.feature_amenities.options.multiOptions.care_dog = "Mengurus Anjing"
+property.elements.feature_amenities.options.multiOptions.simple_sewing = "Menjahit Sederhana"
+property.elements.feature_amenities.options.multiOptions.tell_tales = "Mendongeng"
+property.elements.feature_amenities.options.multiOptions.teach_kid_read_write = "Mengajari Anak Baca Tulis"
+
+
+;Other Amenities and Facilities 
+property.elements.feature_other_amenities.type = "MultiCheckbox"
+property.elements.feature_other_amenities.options.label = "Bersedia Bekerja di:"
+property.elements.feature_other_amenities.options.title = "Centang nama kota yang sesuai"
+property.elements.feature_other_amenities.options.font_end_label = "<b>Kota Kerja</b>"
+property.elements.feature_other_amenities.options.value	=	""
+property.elements.feature_other_amenities.options.required = true
+property.elements.feature_other_amenities.options.separator = "</div><div class="property-features">"
+property.elements.feature_other_amenities.options.multiOptions.jakarta = "Jakarta"
+property.elements.feature_other_amenities.options.multiOptions.surabaya = "Surabaya"
+property.elements.feature_other_amenities.options.multiOptions.bandung = "Bandung"
+property.elements.feature_other_amenities.options.multiOptions.medan = "Medan"
+property.elements.feature_other_amenities.options.multiOptions.semarang = "Semarang"
+property.elements.feature_other_amenities.options.multiOptions.ambon = "Ambon"
+property.elements.feature_other_amenities.options.multiOptions.balikpapan = "Balikpapan"  
+property.elements.feature_other_amenities.options.multiOptions.bandaaceh = "Banda Aceh"
+property.elements.feature_other_amenities.options.multiOptions.bandarlampung = "Bandar Lampung"
+property.elements.feature_other_amenities.options.multiOptions.banjar = "Banjar"
+property.elements.feature_other_amenities.options.multiOptions.banjarbaru = "Banjar Baru"
+property.elements.feature_other_amenities.options.multiOptions.banjarmasin = "Banjar Masin"
+property.elements.feature_other_amenities.options.multiOptions.batam = "Batam"
+property.elements.feature_other_amenities.options.multiOptions.batu = "Batu"
+property.elements.feature_other_amenities.options.multiOptions.baubau = "Bau-Bau"  
+property.elements.feature_other_amenities.options.multiOptions.bekasi = "Bekasi"
+property.elements.feature_other_amenities.options.multiOptions.bengkulu = "Bengkulu"
+property.elements.feature_other_amenities.options.multiOptions.bima = "Bima"
+property.elements.feature_other_amenities.options.multiOptions.binjai = "Binjai"
+property.elements.feature_other_amenities.options.multiOptions.bitung = "Bitung"
+property.elements.feature_other_amenities.options.multiOptions.blitar = "Blitar"
+property.elements.feature_other_amenities.options.multiOptions.bogor = "Bogor"
+property.elements.feature_other_amenities.options.multiOptions.bontang = "Bontang"
+property.elements.feature_other_amenities.options.multiOptions.bukittinggi = "Bukit Tinggi"
+property.elements.feature_other_amenities.options.multiOptions.cilegon = "Cilegon"
+property.elements.feature_other_amenities.options.multiOptions.cimahi = "Cimahi"
+property.elements.feature_other_amenities.options.multiOptions.cirebon = "Cirebon"
+property.elements.feature_other_amenities.options.multiOptions.denpasar = "Denpasar"
+property.elements.feature_other_amenities.options.multiOptions.depok = "Depok"
+property.elements.feature_other_amenities.options.multiOptions.dumai = "Dumai"
+property.elements.feature_other_amenities.options.multiOptions.gorontalo = "Gorontalo"
+property.elements.feature_other_amenities.options.multiOptions.gunungsitoli = "Gunung Sitoli"
+property.elements.feature_other_amenities.options.multiOptions.jambi = "Jambi"
+property.elements.feature_other_amenities.options.multiOptions.jayapura = "Jayapura"
+property.elements.feature_other_amenities.options.multiOptions.kediri = "Kediri"
+property.elements.feature_other_amenities.options.multiOptions.kendari = "Kendari"
+property.elements.feature_other_amenities.options.multiOptions.kotaklaten = "Kota Klaten"
+property.elements.feature_other_amenities.options.multiOptions.kotamobagu = "Kotamobagu"
+property.elements.feature_other_amenities.options.multiOptions.kupang = "Kupang"  
+property.elements.feature_other_amenities.options.multiOptions.langsa = "Langsa"
+property.elements.feature_other_amenities.options.multiOptions.lhokseumawe = "Lhokseumawe"
+property.elements.feature_other_amenities.options.multiOptions.lubuklinggau = "Lubuklinggau"
+property.elements.feature_other_amenities.options.multiOptions.madiun = "Madiun"
+property.elements.feature_other_amenities.options.multiOptions.magelang = "Magelang"
+property.elements.feature_other_amenities.options.multiOptions.makassar = "Makassar"
+property.elements.feature_other_amenities.options.multiOptions.malang = "Malang"  
+property.elements.feature_other_amenities.options.multiOptions.manado = "Manado"
+property.elements.feature_other_amenities.options.multiOptions.mataram = "Mataram"
+property.elements.feature_other_amenities.options.multiOptions.metro = "Metro"
+property.elements.feature_other_amenities.options.multiOptions.mojokerto = "Mojokerto"
+property.elements.feature_other_amenities.options.multiOptions.padang = "Padang"
+property.elements.feature_other_amenities.options.multiOptions.padangsidempuan = "Padang Sidempuan"
+property.elements.feature_other_amenities.options.multiOptions.pagalaram = "Pagalaram"
+property.elements.feature_other_amenities.options.multiOptions.palangkaraya = "Palangkaraya"  
+property.elements.feature_other_amenities.options.multiOptions.palembang = "Palembang"
+property.elements.feature_other_amenities.options.multiOptions.palopo = "Palopo"
+property.elements.feature_other_amenities.options.multiOptions.palu = "Palu"
+property.elements.feature_other_amenities.options.multiOptions.pangkalpinang = "Pangkalpinang"
+property.elements.feature_other_amenities.options.multiOptions.parepare = "Parepare"
+property.elements.feature_other_amenities.options.multiOptions.pasuruan = "Pasuruan"
+property.elements.feature_other_amenities.options.multiOptions.payakumbuh = "Payakumbuh"
+property.elements.feature_other_amenities.options.multiOptions.pakalongan = "Pakalongan"
+property.elements.feature_other_amenities.options.multiOptions.pekanbaru = "Pekanbaru"
+property.elements.feature_other_amenities.options.multiOptions.pematangsiantar = "Pematangsiantar"
+property.elements.feature_other_amenities.options.multiOptions.pontianak = "Pontianak"
+property.elements.feature_other_amenities.options.multiOptions.prabumulih = "Prabumulih"
+property.elements.feature_other_amenities.options.multiOptions.probolinggo = "Probolinggo"
+property.elements.feature_other_amenities.options.multiOptions.purwokerto = "Purwokerto"
+property.elements.feature_other_amenities.options.multiOptions.salatiga = "Salatiga"
+property.elements.feature_other_amenities.options.multiOptions.samarinda = "Samarinda"
+property.elements.feature_other_amenities.options.multiOptions.serang = "Serang"
+property.elements.feature_other_amenities.options.multiOptions.singkawang = "Singkawang"
+property.elements.feature_other_amenities.options.multiOptions.sorong = "Sorong"
+property.elements.feature_other_amenities.options.multiOptions.sukabumi = "Sukabumi"
+property.elements.feature_other_amenities.options.multiOptions.surakarta = "Surakarta"
+property.elements.feature_other_amenities.options.multiOptions.tangerang = "Tangerang"
+property.elements.feature_other_amenities.options.multiOptions.tangerangselatan = "Tangerang Selatan"
+property.elements.feature_other_amenities.options.multiOptions.tanjungbalai = "Tanjungbalai"  
+property.elements.feature_other_amenities.options.multiOptions.tanjungpinang = "Tanjungpinang"
+property.elements.feature_other_amenities.options.multiOptions.tarakan = "Tarakan"
+property.elements.feature_other_amenities.options.multiOptions.tasikmalaya = "Tasikmalaya"
+property.elements.feature_other_amenities.options.multiOptions.tebingtinggi = "Tebingtinggi"
+property.elements.feature_other_amenities.options.multiOptions.tegal = "Tegal"
+property.elements.feature_other_amenities.options.multiOptions.ternate = "Ternate"
+property.elements.feature_other_amenities.options.multiOptions.yogyakarta = "Yogyakarta"
+property.elements.feature_other_amenities.options.multiOptions.luar_negeri= "Luar Negeri"
+
+
+
+
+;Add an Property Highlights element
+property.elements.feature_highlights.type = "text"
+property.elements.feature_highlights.options.size 	= 50
+property.elements.feature_highlights.options.label 	= "Highlights:"
+property.elements.feature_highlights.options.title 	= "Enter Highlights"
+property.elements.feature_highlights.options.class  = "ui-widget-content ui-corner-all"
+property.elements.feature_highlights.options.value 	= ""
+property.elements.feature_highlights.options.filters.trim.filter = "StringTrim"
+property.elements.feature_highlights.options.filters.StripTags.filter = "StripTags"
+
+;Add an Property Bedroom element
+property.elements.feature_bedroom.type = "radio"
+property.elements.feature_bedroom.options.required = true
+property.elements.feature_bedroom.options.label = "Mau Kerja Tanpa Hari Libur:"
+property.elements.feature_bedroom.options.title = "Mau kerja tanpa hari libur dari Senin sampai Minggu?"
+property.elements.feature_bedroom.options.attribs.font_end_label = "Mau Kerja tanpa Hari Libur:"
+property.elements.feature_bedroom.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.feature_bedroom.options.value = ""
+property.elements.feature_bedroom.options.multiOptions.1 = "Ya"
+property.elements.feature_bedroom.options.multiOptions.2 = "Tidak"
+property.elements.feature_bedroom.options.validators.int.validator = "int"
+property.elements.feature_bedroom.options.filters.trim.filter = "StringTrim"
+
+
+;Add an Property Room No element
+property.elements.feature_room_no.type = "text"
+property.elements.feature_room_no.options.size = 5
+property.elements.feature_room_no.options.label = "Pengalaman:"
+property.elements.feature_room_no.options.title = "Masukkan jumlah tahun pengalaman di sini"
+property.elements.feature_room_no.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.feature_room_no.options.value = "0"
+property.elements.feature_room_no.options.validators.int.validator = "int"
+property.elements.feature_room_no.options.filters.trim.filter = "StringTrim"
+property.elements.feature_room_no.options.attribs.right_label = "tahun"
+property.elements.feature_room_no.options.required = true
+
+;Add an Property Reception element
+property.elements.feature_reception.type = "radio"
+property.elements.feature_reception.options.required = true
+property.elements.feature_reception.options.label = "Mengerti Bahasa Inggris:"
+property.elements.feature_reception.options.attribs.font_end_label = "Mengerti Bahasa Inggris:"
+property.elements.feature_reception.options.title = "Mengerti Bahasa Inggris lisan?"
+property.elements.feature_reception.options.value = ""
+property.elements.feature_reception.options.multiOptions.ya = "Ya"
+property.elements.feature_reception.options.multiOptions.tidak = "Tidak"
+property.elements.feature_reception.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.feature_reception.options.filters.StripTags.filter = "StripTags"
+property.elements.feature_reception.options.filters.trim.filter = "StringTrim"
+
+;Add an Property Dinning Space element
+property.elements.feature_dinning_space.type = "select"
+property.elements.feature_dinning_space.options.style = "width:130px"
+property.elements.feature_dinning_space.options.label = "Suku Asal:"
+property.elements.feature_dinning_space.options.title = "Masukkan suku ayah"
+property.elements.feature_dinning_space.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.feature_dinning_space.options.filters.StripTags.filter = "StripTags"
+property.elements.feature_dinning_space.options.filters.trim.filter = "StringTrim"
+property.elements.feature_dinning_space.options.MultiOptions._ = "Pilih Suku"
+property.elements.feature_dinning_space.options.MultiOptions.jawa = "Jawa"
+property.elements.feature_dinning_space.options.MultiOptions.sunda = "Sunda"
+property.elements.feature_dinning_space.options.MultiOptions.Tionghoa = "NTT"
+property.elements.feature_dinning_space.options.MultiOptions.batak = "Batak"
+property.elements.feature_dinning_space.options.MultiOptions.padang = "Padang"
+property.elements.feature_dinning_space.options.MultiOptions.madura = "Madura"
+property.elements.feature_dinning_space.options.MultiOptions.melayu = "Melayu"
+property.elements.feature_dinning_space.options.MultiOptions.lainnya = "Lainnya"
+property.elements.feature_dinning_space.options.required = true
+
+
+;Add an Property Kitchen element
+property.elements.feature_kitchen.type = "radio"
+property.elements.feature_kitchen.options.label = "Surat Polisi:"
+property.elements.feature_kitchen.options.title = "Surat Polisi"
+property.elements.feature_kitchen.options.value = ""
+property.elements.feature_kitchen.options.multiOptions.berkelakuan_baik = "Berkelakuan Baik"
+property.elements.feature_kitchen.options.multiOptions.perlu_surat_polisi= "Tanpa Surat Polisi"
+property.elements.feature_kitchen.options.class  = 	"ui-widget-content ui-corner-all"
+property.elements.feature_kitchen.options.filters.StripTags.filter = "StripTags"
+property.elements.feature_kitchen.options.filters.trim.filter = "StringTrim"
+property.elements.fea

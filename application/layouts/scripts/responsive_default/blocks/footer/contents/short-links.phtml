@@ -1,0 +1,31 @@
+<?php
+$front_template = Zend_Registry::get('front_template');
+$this->translator = Zend_Registry::get('translator');
+$global_conf = Zend_Registry::get('global_conf');
+$license = new Zend_Session_Namespace('License');
+$validation_data = $license->license_data;
+?>
+<h3><?php echo $this->translator->translator('footer_link_important', '', '', $front_template['theme_folder']); ?></h3>
+<span class="col-sm-6">
+    <ul>
+        <li><a href="#"><?php echo $this->translator->translator('footer_link_find_property', '', '', $front_template['theme_folder']); ?></a></li>
+        <li><a href="pembantu-rumah-tangga"><?php echo $this->translator->translator('footer_link_sell_property', '', '', $front_template['theme_folder']); ?></a></li>               
+        <li><a href="baby-sitter"><?php echo $this->translator->translator('footer_link_buy_property', '', '', $front_template['theme_folder']); ?></a></li>
+        <li><a href="perawat-lansia"><?php echo $this->translator->translator('footer_link_left_property', '', '', $front_template['theme_folder']); ?></a></li>     
+        <li><a href="semua-profesi"><?php echo $this->translator->translator('footer_link_latest_property', '', '', $front_template['theme_folder']); ?></a></li>
+        <li><a href="tips-artikel"><?php echo $this->translator->translator('footer_link_news', '', '', $front_template['theme_folder']); ?></a></li>
+        <li><a href="FAQ"><?php echo $this->translator->translator('footer_link_list', '', '', $front_template['theme_folder']); ?></a></li>
+
+    </ul>
+</span>
+<span class="col-sm-6">
+    <ul>
+        <li><a href="peta-situs"><?php echo $this->translator->translator('footer_link_sitemap', '', '', $front_template['theme_folder']); ?></a></li>
+        <li><a href="testimoni"><?php echo $this->translator->translator('footer_link_feedback', '', '', $front_template['theme_folder']); ?></a></li>
+        <li><a href="syarat-dan-ketentuan"><?php echo $this->translator->translator('footer_link_terms', '', '', $front_template['theme_folder']); ?></a></li>
+        <li><a href="kebijakan-privasi"><?php echo $this->translator->translator('footer_link_privacy', '', '', $front_template['theme_folder']); ?></a></li>
+        <li><a href="tentang-kami"><?php echo $this->translator->translator('footer_link_about', '', '', $front_template['theme_folder']); ?></a></li>
+        <li><a href="hubungi-kami"><?php echo $this->translator->translator('footer_link_contact', '', '', $front_template['theme_folder']); ?></a></li>
+        
+    </ul>
+</span>
