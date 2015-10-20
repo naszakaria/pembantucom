@@ -1,0 +1,253 @@
+<?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Ldap
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Ldap.php 24593 2012-01-05 20:35:02Z matthew $
+ */
+
+/**
+ * @category   Zend
+ * @package    Zend_Ldap
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Ldap
+{
+    const SEARCH_SCOPE_SUB  = 1;
+    const SEARCH_SCOPE_ONE  = 2;
+    const SEARCH_SCOPE_BASE = 3;
+
+    const ACCTNAME_FORM_DN        = 1;
+    const ACCTNAME_FORM_USERNAME  = 2;
+    const ACCTNAME_FORM_BACKSLASH = 3;
+    const ACCTNAME_FORM_PRINCIPAL = 4;
+
+    /**
+     * String used with ldap_connect for error handling purposes.
+     *
+     * @var string
+     */
+    private $_connectString;
+
+    /**
+     * The options used in connecting, binding, etc.
+     *
+     * @var array
+     */
+    protected $_options = null;
+
+    /**
+     * The raw LDAP extension resource.
+     *
+     * @var resource
+     */
+    protected $_resource = null;
+
+    /**
+     * FALSE if no user is bound to the LDAP resource
+     * NULL if there has been an anonymous bind
+     * username of the currently bound user
+     *
+     * @var boolean|null|string
+     */
+    protected $_boundUser = false;
+
+    /**
+     * Caches the RootDSE
+     *
+     * @var Zend_Ldap_Node
+     */
+    protected $_rootDse = null;
+
+    /**
+     * Caches the schema
+     *
+     * @var Zend_Ldap_Node
+     */
+    protected $_schema = null;
+
+    /**
+     * @deprecated will be removed, use {@see Zend_Ldap_Filter_Abstract::escapeValue()}
+     * @param  string $str The string to escape.
+     * @return string The escaped string
+     */
+    public static function filterEscape($str)
+    {
+        /**
+         * @see Zend_Ldap_Filter_Abstract
+         */
+        require_once 'Zend/Ldap/Filter/Abstract.php';
+        return Zend_Ldap_Filter_Abstract::escapeValue($str);
+    }
+
+    /**
+     * @deprecated will be removed, use {@see Zend_Ldap_Dn::checkDn()}
+     * @param  string $dn   The DN to parse
+     * @param  array  $keys An optional array to receive DN keys (e.g. CN, OU, DC, ...)
+     * @param  array  $vals An optional array to receive DN values
+     * @return boolean True if the DN was successfully parsed or false if the string is
+     * not a valid DN.
+     */
+    public static function explodeDn($dn, array &$keys = null, array &$vals = null)
+    {
+        /**
+         * @see Zend_Ldap_Dn
+         */
+        require_once 'Zend/Ldap/Dn.php';
+        return Zend_Ldap_Dn::checkDn($dn, $keys, $vals);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param  array|Zend_Config $options Options used in connecting, binding, etc.
+     * @return void
+     * @throws Zend_Ldap_Exception if ext/ldap is not installed
+     */
+    public function __construct($options = array())
+    {
+        if (!extension_loaded('ldap')) {
+            /**
+             * @see Zend_Ldap_Exception
+             */
+            require_once 'Zend/Ldap/Exception.php';
+            throw new Zend_Ldap_Exception(null, 'LDAP extension not loaded',
+                Zend_Ldap_Exception::LDAP_X_EXTENSION_NOT_LOADED);
+        }
+        $this->setOptions($options);
+    }
+
+    /**
+     * Destructor.
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        $this->disconnect();
+    }
+
+    /**
+     * @return resource The raw LDAP extension resource.
+     */
+    public function getResource()
+    {
+        if (!is_resource($this->_resource) || $this->_boundUser === false) {
+            $this->bind();
+        }
+        return $this->_resource;
+    }
+
+    /**
+     * Return the LDAP error number of the last LDAP command
+     *
+     * @return int
+     */
+    public function getLastErrorCode()
+    {
+        $ret = @ldap_get_option($this->_resource, LDAP_OPT_ERROR_NUMBER, $err);
+        if ($ret === true) {
+            if ($err <= -1 && $err >= -17) {
+                /**
+                 * @see Zend_Ldap_Exception
+                 */
+                require_once 'Zend/Ldap/Exception.php';
+                /* For some reason draft-ietf-ldapext-ldap-c-api-xx.txt error
+                 * codes in OpenLDAP are negative values from -1 to -17.
+                 */
+                $err = Zend_Ldap_Exception::LDAP_SERVER_DOWN + (-$err - 1);
+            }
+            return $err;
+        }
+        return 0;
+    }
+
+    /**
+     * Return the LDAP error message of the last LDAP command
+     *
+     * @param  int   $errorCode
+     * @param  array $errorMessages
+     * @return string
+     */
+    public function getLastError(&$errorCode = null, array &$errorMessages = null)
+    {
+        $errorCode = $this->getLastErrorCode();
+        $errorMessages = array();
+
+        /* The various error retrieval functions can return
+         * different things so we just try to collect what we
+         * can and eliminate dupes.
+         */
+        $estr1 = @ldap_error($this->_resource);
+        if ($errorCode !== 0 && $estr1 === 'Success') {
+            $estr1 = @ldap_err2str($errorCode);
+        }
+        if (!empty($estr1)) {
+            $errorMessages[] = $estr1;
+        }
+
+        @ldap_get_option($this->_resource, LDAP_OPT_ERROR_STRING, $estr2);
+        if (!empty($estr2) && !in_array($estr2, $errorMessages)) {
+            $errorMessages[] = $estr2;
+        }
+
+        $message = '';
+        if ($errorCode > 0) {
+            $message = '0x' . dechex($errorCode) . ' ';
+        } else {
+            $message = '';
+        }
+        if (count($errorMessages) > 0) {
+            $message .= '(' . implode('; ', $errorMessages) . ')';
+        } else {
+            $message .= '(no error message from LDAP)';
+        }
+        return $message;
+    }
+
+    /**
+     * Get the currently bound user
+     *
+     * FALSE if no user is bound to the LDAP resource
+     * NULL if there has been an anonymous bind
+     * username of the currently bound user
+     *
+     * @return false|null|string
+     */
+    public function getBoundUser()
+    {
+        return $this->_boundUser;
+    }
+
+    /**
+     * Sets the options used in connecting, binding, etc.
+     *
+     * Valid option keys:
+     *  host
+     *  port
+     *  useSsl
+     *  username
+     *  password
+     *  bindRequiresDn
+     *  baseDn
+     *  accountCanonicalForm
+     *  accountDomainName
+     *  accountDomainNameShort
+     *  accountFilterFormat
+     *  allowEmptyPassword
+ 
